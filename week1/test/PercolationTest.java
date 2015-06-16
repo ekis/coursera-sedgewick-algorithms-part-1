@@ -4,12 +4,11 @@ public class PercolationTest {
 
     @Test
     public void testPercolation() {
-        System.out.println("Junit works");
+        new Percolation(5);
+        System.out.println("");
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testPercolationConstructionFail() {
-        new Percolation(-1);
+    public void testRowMajorMapping() {
+        Percolation p = new Percolation(5);
     }
-
 }
