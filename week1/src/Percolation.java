@@ -1,3 +1,5 @@
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+
 // by convention, the row and column indices i and j are integers between 1 and N, where (1, 1) is the upper-left site.
 public class Percolation {
 

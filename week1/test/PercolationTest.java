@@ -14,13 +14,13 @@ public class PercolationTest {
         Percolation p = new Percolation(3);
         testOpen(1, 1, p);
         testOpen(1, 2, p);
-        testOpen(1, 3, p);
-        testOpen(2, 1, p);
-        testOpen(2, 2, p);
-        testOpen(2, 3, p);
-        testOpen(3, 1, p);
-        testOpen(3, 2, p);
-        testOpen(3, 3, p);
+//        testOpen(1, 3, p);
+//        testOpen(2, 1, p);
+//        testOpen(2, 2, p);
+//        testOpen(2, 3, p);
+//        testOpen(3, 1, p);
+//        testOpen(3, 2, p);
+//        testOpen(3, 3, p);
     }
 
     private static void testOpen(int i, int j, Percolation p) {
