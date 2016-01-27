@@ -19,13 +19,15 @@ public class Percolation {
     }
 
     // open site (row i, column j) if it is not open already
+    // connect it with its adjacent open sites
     public void open(int i, int j) {
+        System.out.println(String.format("Opening site at [R, C]:(%s, %s)", i, j));
         throwIfOutOfBounds(i, j);
         opened[i - 1][j - 1] = true;
-        //open(left()).at(i, j);
-        //open(right()).at(i, j);
-        //open(up()).at(i, j);
-        //open(down()).at(i, j);
+        open(left()).at(i, j);
+        open(right()).at(i, j);
+        open(up()).at(i, j);
+        open(down()).at(i, j);
     }
 
     // is site (row i, column j) open?
@@ -45,16 +47,73 @@ public class Percolation {
         return uf.connected(0, endIndex - 1);
     }
 
+    private OpenSiteTask open(final AdjacentTask task) {
+        return (i, j) -> {
+            int adjacent = task.getAdjacentIndex(i, j);
+            if (adjacent == -1) {
+                System.out.println(String.format("Adjacent element at (%s, %s) has errors.", i, j));
+                return;
+            }
+            int target = mapTo1D(i, j);
+            System.out.println(String.format("Executing union at [A, T]: (%s, %s)", adjacent, target));
+            uf.union(adjacent, target);
+        };
+    }
+
+    private AdjacentTask left() {
+        return (i, j) -> adjacent("Left", i, j - 1);
+    }
+
+    private AdjacentTask right() {
+        return (i, j) -> adjacent("Right", i, j + 1);
+    }
+
+    private AdjacentTask up() {
+        return (i, j) -> adjacent("Up", i - 1, j);
+    }
+
+    private AdjacentTask down() {
+        return (i, j) -> adjacent("Down", i + 1, j);
+    }
+
+    private int adjacent(String s, int i, int j) {
+        int adjacent = mapTo1D(i, j);
+        if (isOutOfRangeOrClosed(i, j)) return -1;
+        System.out.println(String.format(s + " site open at [R, C]:(%s, %s); 1d-index -> %s", i, j, adjacent));
+        return adjacent;
+    }
+
+    private boolean isOutOfRangeOrClosed(int i, int j) {
+        return isAdjacentOutOfRange(i, j) || !isAdjacentOpen(i, j);
+    }
+
+    private boolean isAdjacentOutOfRange(int i, int j) {
+        boolean outOfRange = isOutOfBounds(i, j);
+        if (outOfRange)
+            System.out.println(String.format("Adjacent site at [R, C]:(%s, %s) is OUT of range.", i, j));
+        return outOfRange;
+    }
+
+    private boolean isAdjacentOpen(int i, int j) {
+        boolean isOpen = isOpen(i, j);
+        if (!isOpen) System.out.println(String.format("Adjacent site at [R, C]:(%s, %s) is NOT open.", i, j));
+        return isOpen;
+    }
+
     // get 1D index at 2D coordinates
     private int mapTo1D(int i, int j) {
         return (j + i * rank) - rank;
     }
 
     private void throwIfOutOfBounds(int i, int j) {
-        if (isOutOfBounds(i) || isOutOfBounds(j)) throw new IndexOutOfBoundsException();
+        if (isOutOfBounds(i, j)) throw new IndexOutOfBoundsException();
     }
 
-    private boolean isOutOfBounds(int x) {
+    private boolean isOutOfBounds(int i, int j) {
+        return isOutOfBoundsPer(i) || isOutOfBoundsPer(j);
+    }
+
+    private boolean isOutOfBoundsPer(int x) {
         return x < 1 || x > rank;
     }
 
@@ -75,73 +134,12 @@ public class Percolation {
         return result;
     }
 
-    private OpenSiteTask open(final AdjacentTask task) {
-        return (i, j) -> {
-            int adjacent = task.getAdjacentIndex(i, j);
-            if (adjacent == -1) return;
-            int target = mapTo1D(i, j);
-            System.out.println(String.format("Executing union at [A, T]: (%s, %s)", adjacent, target));
-            uf.union(adjacent, target);
-        };
-    }
-
-    private AdjacentTask left() {
-        return (i, j) -> {
-            int adjacent = mapTo1D(i, j - 1);
-            if (hasErrors(i, j, adjacent)) return -1;
-            System.out.println(String.format("Left site open at [R, C]:(%s, %s); 1d-index -> %s", i, j, adjacent));
-            return adjacent;
-        };
-    }
-
-    private AdjacentTask right() {
-        return (i, j) -> {
-            int adjacent = mapTo1D(i, j + 1);
-            if (hasErrors(i, j, adjacent)) return -1;
-            System.out.println(String.format("Right site open at [R, C]:(%s, %s); 1d-index -> %s", i, j, adjacent));
-            return adjacent;
-        };
-    }
-
-    private AdjacentTask up() {
-        return (i, j) -> {
-            int adjacent = mapTo1D(i - 1, j);
-            if (hasErrors(i, j, adjacent)) return -1;
-            System.out.println(String.format("Up site open at [R, C]:(%s, %s); 1d-index -> %s", i, j, adjacent));
-            return adjacent;
-        };
-    }
-
-    private AdjacentTask down() {
-        return (i, j) -> {
-            int adjacent = mapTo1D(i + 1, j);
-            if (hasErrors(i, j, adjacent)) return -1;
-            System.out.println(String.format("Down site open at [R, C]:(%s, %s); 1d-index -> %s", i, j, adjacent));
-            return mapTo1D(i + 1, j);
-        };
-    }
-
-    private boolean hasErrors(int i, int j, int adjacent) {
-        return isAdjacentOpen(i, j) || isAdjacentOutOfRange(adjacent);
-    }
-
-    private boolean isAdjacentOutOfRange(int adjacent) {
-        boolean outOfRange = adjacent < 0 || adjacent > endIndex - 1;
-        if (outOfRange)
-            System.out.println(String.format("Adjacent site is %s, exceeds limits [0, %s].", adjacent, endIndex - 1));
-        return outOfRange;
-    }
-
-    private boolean isAdjacentOpen(int i, int j) {
-        boolean isOpen = isOpen(i, j);
-        if (!isOpen) System.out.println(String.format("Adjacent site at [R, C]:(%s, %s) is NOT open."));
-        return isOpen;
-    }
-
+    @FunctionalInterface
     private interface AdjacentTask {
         int getAdjacentIndex(int i, int j);
     }
 
+    @FunctionalInterface
     private interface OpenSiteTask {
         void at(int i, int j);
     }

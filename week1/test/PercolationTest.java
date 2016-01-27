@@ -1,14 +1,11 @@
 import ekis.common.StringGrid;
 import ekis.common.TestSupport;
+import org.junit.Assert;
 import org.junit.Test;
 
-public class PercolationTest {
+import java.util.function.Predicate;
 
-    @Test
-    public void testPercolation() {
-        new Percolation(5);
-        System.out.println("");
-    }
+public class PercolationTest {
 
     @Test
     public void testInitialState() {
@@ -82,13 +79,106 @@ public class PercolationTest {
         testInitial(15, expected);
     }
 
+    @Test
+    public void testOpenRankThree() {
+        int rank = 3;
+        Percolation p = new Percolation(rank);
+
+        String[] expected = new String[]{
+                "(1, 1) -> Y | (1, 2) -> Y | (1, 3) -> Y", //
+                "(2, 1) ->   | (2, 2) ->   | (2, 3) ->  ", //
+                "(3, 1) -> Y | (3, 2) -> Y | (3, 3) -> Y" //
+        };
+        assertDoesNotPercolate(rank, p, expected);
+
+        p.open(2, 2);
+        expected = new String[]{
+                "(1, 1) -> Y | (1, 2) -> Y | (1, 3) -> Y", //
+                "(2, 1) ->   | (2, 2) -> Y | (2, 3) ->  ", //
+                "(3, 1) -> Y | (3, 2) -> Y | (3, 3) -> Y" //
+        };
+        assertPercolates(rank, p, expected);
+    }
+
+    @Test
+    public void testOpenRankFour() {
+        int rank = 4;
+        Percolation p = new Percolation(rank);
+
+        String[] expected = new String[]{
+                "(1, 1) -> Y | (1, 2) -> Y | (1, 3) -> Y | (1, 4) -> Y", //
+                "(2, 1) ->   | (2, 2) ->   | (2, 3) ->   | (2, 4) ->  ", //
+                "(3, 1) ->   | (3, 2) ->   | (3, 3) ->   | (3, 4) ->  ", //
+                "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
+        };
+        assertDoesNotPercolate(rank, p, expected);
+
+        p.open(3, 4);
+        expected = new String[]{
+                "(1, 1) -> Y | (1, 2) -> Y | (1, 3) -> Y | (1, 4) -> Y", //
+                "(2, 1) ->   | (2, 2) ->   | (2, 3) ->   | (2, 4) ->  ", //
+                "(3, 1) ->   | (3, 2) ->   | (3, 3) ->   | (3, 4) -> Y", //
+                "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
+        };
+        assertDoesNotPercolate(rank, p, expected);
+
+        p.open(2, 1);
+        expected = new String[]{
+                "(1, 1) -> Y | (1, 2) -> Y | (1, 3) -> Y | (1, 4) -> Y", //
+                "(2, 1) -> Y | (2, 2) ->   | (2, 3) ->   | (2, 4) ->  ", //
+                "(3, 1) ->   | (3, 2) ->   | (3, 3) ->   | (3, 4) -> Y", //
+                "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
+        };
+        assertDoesNotPercolate(rank, p, expected);
+
+        p.open(2, 2);
+        expected = new String[]{
+                "(1, 1) -> Y | (1, 2) -> Y | (1, 3) -> Y | (1, 4) -> Y", //
+                "(2, 1) -> Y | (2, 2) -> Y | (2, 3) ->   | (2, 4) ->  ", //
+                "(3, 1) ->   | (3, 2) ->   | (3, 3) ->   | (3, 4) -> Y", //
+                "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
+        };
+        assertDoesNotPercolate(rank, p, expected);
+
+        p.open(2, 3);
+        expected = new String[]{
+                "(1, 1) -> Y | (1, 2) -> Y | (1, 3) -> Y | (1, 4) -> Y", //
+                "(2, 1) -> Y | (2, 2) -> Y | (2, 3) -> Y | (2, 4) ->  ", //
+                "(3, 1) ->   | (3, 2) ->   | (3, 3) ->   | (3, 4) -> Y", //
+                "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
+        };
+        assertDoesNotPercolate(rank, p, expected);
+
+        p.open(3, 1);
+        expected = new String[]{
+                "(1, 1) -> Y | (1, 2) -> Y | (1, 3) -> Y | (1, 4) -> Y", //
+                "(2, 1) -> Y | (2, 2) -> Y | (2, 3) -> Y | (2, 4) ->  ", //
+                "(3, 1) -> Y | (3, 2) ->   | (3, 3) ->   | (3, 4) -> Y", //
+                "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
+        };
+        assertPercolates(rank, p, expected);
+    }
+
     private static void testInitial(int rank, String[] expected) {
-        String actual = testOpen(rank);
+        String actual = show(new Percolation(rank), rank);
         TestSupport.compare(actual, expected);
     }
 
-    private static String testOpen(int rank) {
-        Percolation p = new Percolation(rank);
+    private static void assertPercolates(int rank, Percolation p, String[] expected) {
+        testPercolates(rank, p, expected, Percolation::percolates);
+    }
+
+    private static void assertDoesNotPercolate(int rank, Percolation p, String[] expected) {
+        testPercolates(rank, p, expected, x -> !x.percolates());
+    }
+
+    private static void testPercolates(int rank, Percolation p, String[] expected, Predicate<Percolation> predicate) {
+        String actual = show(p, rank);
+        TestSupport.compare(actual, expected);
+        Assert.assertTrue(predicate.test(p));
+    }
+
+    private static String show(Percolation p, int rank) {
         return gridOf(p, rank).show();
     }
 
