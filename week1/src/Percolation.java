@@ -15,13 +15,12 @@ public class Percolation {
         rank = N;
         endIndex = (N * N) + 1;
         opened = new boolean[N][N];
-        uf = initUF();
+        uf = new WeightedQuickUnionUF(endIndex + 1);
     }
 
     // open site (row i, column j) if it is not open already
     // connect it with its adjacent open sites
     public void open(int i, int j) {
-        System.out.println(String.format("Opening site at [R, C]:(%s, %s)", i, j));
         throwIfOutOfBounds(i, j);
         opened[i - 1][j - 1] = true;
         open(left()).at(i, j);
@@ -45,60 +44,48 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        return uf.connected(0, endIndex - 1);
+        return uf.connected(0, endIndex);
     }
 
     private OpenSiteTask open(final AdjacentTask task) {
         return (i, j) -> {
             int adjacent = task.getAdjacentIndex(i, j);
-            if (adjacent == -1) {
-                System.out.println(String.format("Adjacent element at (%s, %s) has errors.", i, j));
-                return;
-            }
+            if (adjacent == -1) return;
             int target = mapTo1D(i, j);
-            System.out.println(String.format("Executing union at [A, T]: (%s, %s)", adjacent, target));
             uf.union(adjacent, target);
         };
     }
 
     private AdjacentTask left() {
-        return (i, j) -> adjacent("Left", i, j - 1);
+        return (row, col) -> adjacent(row, col - 1);
     }
 
     private AdjacentTask right() {
-        return (i, j) -> adjacent("Right", i, j + 1);
+        return (row, col) -> adjacent(row, col + 1);
     }
 
     private AdjacentTask up() {
-        return (i, j) -> adjacent("Up", i - 1, j);
+        return (row, col) -> {
+            if (row == 1) return 0;
+            return adjacent(row - 1, col);
+        };
     }
 
     private AdjacentTask down() {
-        return (i, j) -> adjacent("Down", i + 1, j);
+        return (row, col) -> {
+            if (row == rank) return endIndex;
+            return adjacent(row + 1, col);
+        };
     }
 
-    private int adjacent(String s, int i, int j) {
+    private int adjacent(int i, int j) {
         int adjacent = mapTo1D(i, j);
         if (isOutOfRangeOrClosed(i, j)) return -1;
-        System.out.println(String.format(s + " site open at [R, C]:(%s, %s); 1d-index -> %s", i, j, adjacent));
         return adjacent;
     }
 
     private boolean isOutOfRangeOrClosed(int i, int j) {
-        return isAdjacentOutOfRange(i, j) || !isAdjacentOpen(i, j);
-    }
-
-    private boolean isAdjacentOutOfRange(int i, int j) {
-        boolean outOfRange = isOutOfBounds(i, j);
-        if (outOfRange)
-            System.out.println(String.format("Adjacent site at [R, C]:(%s, %s) is OUT of range.", i, j));
-        return outOfRange;
-    }
-
-    private boolean isAdjacentOpen(int i, int j) {
-        boolean isOpen = isOpen(i, j);
-        if (!isOpen) System.out.println(String.format("Adjacent site at [R, C]:(%s, %s) is NOT open.", i, j));
-        return isOpen;
+        return isOutOfBounds(i, j) || !isOpen(i, j);
     }
 
     // get 1D index at 2D coordinates
@@ -116,23 +103,6 @@ public class Percolation {
 
     private boolean isOutOfBoundsPer(int x) {
         return x < 1 || x > rank;
-    }
-
-    private WeightedQuickUnionUF initUF() {
-        WeightedQuickUnionUF result = new WeightedQuickUnionUF(endIndex + 1);
-
-        for (int i = 1; i <= rank; i++) {
-            result.union(0, i); // open up top row -- connect virtual top element with top row elements
-            opened[0][i - 1] = true; // mark top row as opened
-        }
-
-        int k = 0;
-        for (int i = endIndex - rank; i < endIndex; i++) {
-            result.union(endIndex, i); // open up bottom row -- connect bottom row elements with virtual bottom element
-            opened[rank - 1][k++] = true; // mark bottom row as opened
-        }
-
-        return result;
     }
 
     @FunctionalInterface
