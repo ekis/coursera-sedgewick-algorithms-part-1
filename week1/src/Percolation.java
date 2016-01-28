@@ -8,6 +8,7 @@ public class Percolation {
 
     private final boolean[][] opened;
     private final WeightedQuickUnionUF uf;
+    private final WeightedQuickUnionUF backwashUf;
 
     // create N-by-N grid, with all sites blocked
     public Percolation(int N) throws IndexOutOfBoundsException {
@@ -16,6 +17,7 @@ public class Percolation {
         endIndex = (N * N) + 1;
         opened = new boolean[N][N];
         uf = new WeightedQuickUnionUF(endIndex + 1);
+        backwashUf = new WeightedQuickUnionUF(endIndex);
     }
 
     // open site (row i, column j) if it is not open already
@@ -23,10 +25,10 @@ public class Percolation {
     public void open(int i, int j) {
         throwIfOutOfBounds(i, j);
         opened[i - 1][j - 1] = true;
-        open(left()).at(i, j);
-        open(right()).at(i, j);
-        open(up()).at(i, j);
-        open(down()).at(i, j);
+        connectTo(left()).at(i, j);
+        connectTo(right()).at(i, j);
+        connectTo(up()).at(i, j);
+        connectTo(down()).at(i, j);
     }
 
     // is site (row i, column j) open?
@@ -36,10 +38,10 @@ public class Percolation {
     }
 
     // is site (row i, column j) full?
-    public boolean isFull(int i, int j) {
-        throwIfOutOfBounds(i, j);
-        int site = mapTo1D(i, j);
-        return isOpen(i, j) && uf.connected(site, 0);
+    public boolean isFull(int row, int col) {
+        throwIfOutOfBounds(row, col);
+        int site = mapTo1D(row, col);
+        return isOpen(row, col) && backwashUf.connected(site, 0);
     }
 
     // does the system percolate?
@@ -47,12 +49,13 @@ public class Percolation {
         return uf.connected(0, endIndex);
     }
 
-    private OpenSiteTask open(final AdjacentTask task) {
-        return (i, j) -> {
-            int adjacent = task.getAdjacentIndex(i, j);
+    private OpenSiteTask connectTo(final AdjacentTask task) {
+        return (row, col) -> {
+            int adjacent = task.getAdjacentIndex(row, col);
             if (adjacent == -1) return;
-            int target = mapTo1D(i, j);
+            int target = mapTo1D(row, col);
             uf.union(adjacent, target);
+            if (target < endIndex && adjacent < endIndex) backwashUf.union(adjacent, target);
         };
     }
 
@@ -79,9 +82,8 @@ public class Percolation {
     }
 
     private int adjacent(int i, int j) {
-        int adjacent = mapTo1D(i, j);
         if (isOutOfRangeOrClosed(i, j)) return -1;
-        return adjacent;
+        return mapTo1D(i, j);
     }
 
     private boolean isOutOfRangeOrClosed(int i, int j) {
