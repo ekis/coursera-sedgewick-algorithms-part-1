@@ -39,7 +39,8 @@ public class Percolation {
     // is site (row i, column j) full?
     public boolean isFull(int i, int j) {
         throwIfOutOfBounds(i, j);
-        return false;
+        int site = mapTo1D(i, j);
+        return isOpen(i, j) && uf.connected(site, 0);
     }
 
     // does the system percolate?

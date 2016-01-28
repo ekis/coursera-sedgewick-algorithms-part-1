@@ -1,9 +1,10 @@
 import ekis.common.StringGrid;
 import ekis.common.TestSupport;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.function.Predicate;
+
+import static org.junit.Assert.assertTrue;
 
 public class PercolationTest {
 
@@ -112,6 +113,14 @@ public class PercolationTest {
                 "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
         };
         assertDoesNotPercolate(rank, p, expected);
+        assertTrue(p.isFull(1, 2));
+        assertTrue(!p.isFull(2, 1));
+        assertTrue(!p.isFull(2, 2));
+        assertTrue(!p.isFull(2, 3));
+        assertTrue(!p.isFull(3, 1));
+        assertTrue(!p.isFull(3, 4));
+        assertTrue(!p.isFull(4, 1));
+        assertTrue(!p.isFull(4, 3));
 
         p.open(3, 4);
         expected = new String[]{
@@ -121,6 +130,14 @@ public class PercolationTest {
                 "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
         };
         assertDoesNotPercolate(rank, p, expected);
+        assertTrue(p.isFull(1, 2));
+        assertTrue(!p.isFull(2, 1));
+        assertTrue(!p.isFull(2, 2));
+        assertTrue(!p.isFull(2, 3));
+        assertTrue(!p.isFull(3, 1));
+        assertTrue(!p.isFull(3, 4));
+        assertTrue(!p.isFull(4, 1));
+        assertTrue(!p.isFull(4, 3));
 
         p.open(2, 1);
         expected = new String[]{
@@ -130,6 +147,14 @@ public class PercolationTest {
                 "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
         };
         assertDoesNotPercolate(rank, p, expected);
+        assertTrue(p.isFull(1, 2));
+        assertTrue(p.isFull(2, 1));
+        assertTrue(!p.isFull(2, 2));
+        assertTrue(!p.isFull(2, 3));
+        assertTrue(!p.isFull(3, 1));
+        assertTrue(!p.isFull(3, 4));
+        assertTrue(!p.isFull(4, 1));
+        assertTrue(!p.isFull(4, 3));
 
         p.open(2, 2);
         expected = new String[]{
@@ -139,6 +164,14 @@ public class PercolationTest {
                 "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
         };
         assertDoesNotPercolate(rank, p, expected);
+        assertTrue(p.isFull(1, 2));
+        assertTrue(p.isFull(2, 1));
+        assertTrue(p.isFull(2, 2));
+        assertTrue(!p.isFull(2, 3));
+        assertTrue(!p.isFull(3, 1));
+        assertTrue(!p.isFull(3, 4));
+        assertTrue(!p.isFull(4, 1));
+        assertTrue(!p.isFull(4, 3));
 
         p.open(2, 3);
         expected = new String[]{
@@ -148,6 +181,14 @@ public class PercolationTest {
                 "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
         };
         assertDoesNotPercolate(rank, p, expected);
+        assertTrue(p.isFull(1, 2));
+        assertTrue(p.isFull(2, 1));
+        assertTrue(p.isFull(2, 2));
+        assertTrue(p.isFull(2, 3));
+        assertTrue(!p.isFull(3, 1));
+        assertTrue(!p.isFull(3, 4));
+        assertTrue(!p.isFull(4, 1));
+        assertTrue(!p.isFull(4, 3));
 
         p.open(3, 1);
         expected = new String[]{
@@ -157,6 +198,13 @@ public class PercolationTest {
                 "(4, 1) -> Y | (4, 2) -> Y | (4, 3) -> Y | (4, 4) -> Y" //
         };
         assertPercolates(rank, p, expected);
+        assertTrue(p.isFull(1, 2));
+        assertTrue(p.isFull(2, 1));
+        assertTrue(p.isFull(2, 2));
+        assertTrue(p.isFull(2, 3));
+        assertTrue(p.isFull(3, 1));
+        assertTrue(p.isFull(3, 4));
+        assertTrue(p.isFull(4, 3));
     }
 
     private static void testInitial(int rank, String[] expected) {
@@ -175,7 +223,7 @@ public class PercolationTest {
     private static void testPercolates(int rank, Percolation p, String[] expected, Predicate<Percolation> predicate) {
         String actual = show(p, rank);
         TestSupport.compare(actual, expected);
-        Assert.assertTrue(predicate.test(p));
+        assertTrue(predicate.test(p));
     }
 
     private static String show(Percolation p, int rank) {
