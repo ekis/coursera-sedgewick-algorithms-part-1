@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/coursera-sedgewick-algorithms-part-1.iml" filepath="$PROJECT_DIR$/coursera-sedgewick-algorithms-part-1.iml" />
       <module fileurl="file://$PROJECT_DIR$/testSupport/testSupport.iml" filepath="$PROJECT_DIR$/testSupport/testSupport.iml" />
       <module fileurl="file://$PROJECT_DIR$/week1/week1.iml" filepath="$PROJECT_DIR$/week1/week1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/week2/week2.iml" filepath="$PROJECT_DIR$/week2/week2.iml" />
     </modules>
   </component>
 </project>
