@@ -1,3 +1,6 @@
+import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdOut;
+
 /****************************************************************************
  *  Compilation:  javac InteractivePercolationVisualizer.java
  *  Execution:    java InteractivePercolationVisualizer N
@@ -15,7 +18,7 @@ public class InteractivePercolationVisualizer {
 
     public static void main(String[] args) {
         // N-by-N percolation system (read from command-line, default = 10)
-        int N = 5;
+        int N = 20;
         if (args.length == 1) N = Integer.parseInt(args[0]);
 
         // repeatedly open site specified my mouse click and draw resulting system

@@ -11,8 +11,8 @@ public class Percolation {
     private final WeightedQuickUnionUF backwashUf;
 
     // create N-by-N grid, with all sites blocked
-    public Percolation(int N) throws IndexOutOfBoundsException {
-        if (N <= 0) throw new IndexOutOfBoundsException();
+    public Percolation(int N) {
+        if (N <= 0) throw new IllegalArgumentException();
         rank = N;
         endIndex = (N * N) + 1;
         opened = new boolean[N][N];
