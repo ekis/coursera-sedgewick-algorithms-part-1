@@ -1,5 +1,10 @@
 import java.util.Iterator;
 
+// Throw a java.lang.NullPointerException if the client attempts to add a null item;
+// throw a java.util.NoSuchElementException if the client attempts to sample or dequeue an item from an empty randomized queue;
+// throw a java.lang.UnsupportedOperationException if the client calls the remove() method in the iterator;
+// throw a java.util.NoSuchElementException if the client calls the next() method in the iterator and there are no more items to return.
+// backed by resizable array
 public class RandomizedQueue<T> implements Iterable<T> {
 
     // construct an empty randomized queue
