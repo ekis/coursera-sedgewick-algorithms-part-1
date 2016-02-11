@@ -30,7 +30,7 @@ public class Deque<T> implements Iterable<T> {
     public void addFirst(T item) {
         if (item == null) throw new NullPointerException();
 
-        if (isEmpty()) { // ok
+        if (isEmpty()) {
             first = new Node(item);
             last = first;
         } else {
@@ -44,7 +44,18 @@ public class Deque<T> implements Iterable<T> {
 
     // add the item to the end
     public void addLast(T item) {
-        throw new UnsupportedOperationException();
+        if (item == null) throw new NullPointerException();
+
+        if (isEmpty()) {
+            last = new Node(item);
+            first = last;
+        } else {
+            Node oldLast = last;
+            last = new Node(item);
+            last.prev = oldLast;
+            oldLast.next = last;
+        }
+        size++;
     }
 
     // remove and return the item from the front
@@ -66,18 +77,35 @@ public class Deque<T> implements Iterable<T> {
 
     // remove and return the item from the end
     public T removeLast() {
-        throw new UnsupportedOperationException();
+        if (isEmpty()) throw new NoSuchElementException();
+
+        T result = last.item;
+        last = last.prev;
+
+        if (size > 1)
+            last.next = null;
+        else
+            first = null;
+
+        size--;
+
+        return result;
     }
 
     // return an iterator over items in order from front to end
     @Override
     public Iterator<T> iterator() {
-        throw new UnsupportedOperationException();
-    }
+        return new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return size != 0;
+            }
 
-    // unit testing
-    public static void main(String[] args) {
-
+            @Override
+            public T next() {
+                return removeFirst();
+            }
+        };
     }
 
     private class Node {
