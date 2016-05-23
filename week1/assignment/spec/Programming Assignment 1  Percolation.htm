@@ -172,9 +172,9 @@ percolates when the 204th site is opened.
 </tbody></table>
 
 </p><p>
-By repeating this computation experiment <em>T</em> times and averaging the results,
+By repeating this computation experiment <em>Item</em> times and averaging the results,
 we obtain a more accurate estimate of the percolation threshold.
-Let <em>x<sub>t</sub></em> be the fraction of open sites in computational experiment <em>t</em>.
+Let <em>x<sub>item</sub></em> be the fraction of open sites in computational experiment <em>item</em>.
 The sample mean μ provides an estimate of the percolation threshold;
 the sample standard deviation σ measures the sharpness of the threshold.
 
@@ -183,7 +183,7 @@ the sample standard deviation σ measures the sharpness of the threshold.
 <img src="Programming%20Assignment%201%20%20Percolation_files/percolation-stats.png" alt="Estimating the sample mean and variance">
 </blockquote>
 
-Assuming <em>T</em> is sufficiently large (say, at least 30), the following
+Assuming <em>Item</em> is sufficiently large (say, at least 30), the following
 provides a 95% confidence interval for the percolation threshold:
 
 <p>
@@ -197,7 +197,7 @@ with the following API.
 
 </p><blockquote>
 <pre><b>public class PercolationStats {</b>
-<b>   public PercolationStats(int N, int T)   </b>  <font color="gray">// perform T independent experiments on an N-by-N grid</font>
+<b>   public PercolationStats(int N, int Item)   </b>  <font color="gray">// perform Item independent experiments on an N-by-N grid</font>
 <b>   public double mean()                    </b>  <font color="gray">// sample mean of percolation threshold</font>
 <b>   public double stddev()                  </b>  <font color="gray">// sample standard deviation of percolation threshold</font>
 <b>   public double confidenceLo()            </b>  <font color="gray">// low  endpoint of 95% confidence interval</font>
@@ -209,11 +209,11 @@ with the following API.
 </blockquote>
 
 The constructor should throw a <tt>java.lang.IllegalArgumentException</tt> if either <em>N</em> ≤ 0 or
-<em>T</em> ≤ 0.
+<em>Item</em> ≤ 0.
 <p>
 Also, include a <tt>main()</tt> method
 that takes two <em>command-line arguments</em>
-<em>N</em> and <em>T</em>, performs <em>T</em> independent
+<em>N</em> and <em>Item</em>, performs <em>Item</em> independent
 computational experiments (discussed above) on an <em>N</em>-by-<em>N</em> grid,
 and prints out the mean, standard deviation, and the 
 <em>95% confidence interval</em> for the percolation threshold.
@@ -255,10 +255,10 @@ from <tt>algs4.jar</tt>.
 Use the <em>stopwatch data type</em> from our standard library to 
 measure the total running time of <tt>PercolationStats</tt>.
 How does doubling <em>N</em> affect the total running time?
-How does doubling <em>T</em> affect the total running time?
+How does doubling <em>Item</em> affect the total running time?
 Give a formula (using tilde notation) of the total running
 time on your computer (in seconds) as a single function of both
-<em>N</em> and <em>T</em>.
+<em>N</em> and <em>Item</em>.
 
 <p></p></li><li>
 Using the 64-bit memory-cost model from lecture,

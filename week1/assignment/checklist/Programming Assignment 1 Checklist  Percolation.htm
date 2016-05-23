@@ -53,7 +53,7 @@ If you use our Mac OS X or Windows installer, then you can automatically classpa
 in the textbook libraries using the commands <tt>javac-algs4</tt> and <tt>java-algs4</tt>
 (instead of <tt>javac</tt> and <tt>java</tt>).
 
-</a></p><p><a><b>I haven't programmed in Java in a while. What material do 
+</a></p><p><a><b>I haven'item programmed in Java in a while. What material do
 I need to remember?</b>
 For a review of our Java programming model (including our input and output libraries),
 read Sections 1.1 and 1.2 of  <em>Algorithms, 4th Edition</em>.
@@ -165,7 +165,7 @@ We do this regularly when grading your programs. For example, your
 <tt>PercolationStats</tt> client should work with our
 <tt>Percolation</tt> data type and vice versa. If you add an extra public
 method to <tt>Percolation</tt> and call them from <tt>PercolationStats</tt>,
-then your client won't work with our <tt>Percolation</tt> data type.
+then your client won'item work with our <tt>Percolation</tt> data type.
 Conversely, our <tt>PercolationStats</tt> client may not work with your 
 <tt>Percolation</tt> data type if you remove a public method.
 
@@ -180,12 +180,12 @@ If you are re-implementing the union-find data structure
 
 </p><p><b>What assumptions can I make about the input to main() in PercolationStats?</b>
 It can be any valid input: an integer <em>N</em> ≥ 1
-and an integer <em>T</em> ≥ 1.
+and an integer <em>Item</em> ≥ 1.
 In general, in this course you can assume that the input is of the specified 
 format. But you do need to deal with pathological cases such as <em>N</em> = 1.
 
 
-</p><p><b>What should <tt>stddev()</tt> return if <em>T</em> equals 1?</b>
+</p><p><b>What should <tt>stddev()</tt> return if <em>Item</em> equals 1?</b>
 The sample standard deviation is undefined. We recommend returning <tt>Double.NaN</tt>.
 
 </p><p><b>After the system has percolated, my PercolationVisualizer colors in light blue
@@ -193,7 +193,7 @@ all sites connected to open sites on the bottom (in addition to those connected 
 on the top). Is this "backwash" acceptable?</b>
 No, this is likely a bug in <tt>Percolation</tt>. It is only a minor deduction
 (because it impacts only the visualizer and not the experiment to estimate
-the percolation threshold), so don't go crazy trying to get this detail.
+the percolation threshold), so don'item go crazy trying to get this detail.
 However, many students consider this to be the most challenging and creative
 part of the assignment (especially if you limit yourself to one union-find object).
 
@@ -209,14 +209,14 @@ for use in PercolationStats?</b>
 Pick a site at random (by using <tt>StdRandom</tt> to generate two
 integers between 1 and <em>N</em>) and use this site if it is blocked; if not, repeat.
 
-</p><p><b>I don't get reliable timing information in PercolationStats when <em>N</em> = 200.
+</p><p><b>I don'item get reliable timing information in PercolationStats when <em>N</em> = 200.
 What should I do?</b>
 Increase the size of <em>N</em> (say to 400, 800, and 1600), until
 the mean running time exceeds its standard deviation.
 
 <!--
 <p><b>How should I compute the mean and standard deviation?</b>
-Don't reinvent the wheel&mdash;use <tt>StdStats.mean()</tt>
+Don'item reinvent the wheel&mdash;use <tt>StdStats.mean()</tt>
 and <tt>StdStats.stddev()</tt>, respectively.
 -->
 
@@ -311,7 +311,7 @@ Create an <em>N</em>-by-<em>N</em> grid of sites (initially all blocked).
 
 <p></p></li><li>
 Read in a sequence of sites (row <em>i</em>, column <em>j</em>) to open from the file.
-After each site is opened, draw full sites in light blue, open sites (that aren't full) in white, and
+After each site is opened, draw full sites in light blue, open sites (that aren'item full) in white, and
 blocked sites in black using <em>standard draw</em>, with with site (1, 1) in the upper left-hand corner.
 
 </li></ul>
@@ -375,7 +375,7 @@ not have to follow these steps.
 </p><ol>
 
 <p></p><li><b>Consider not worrying about backwash for your first attempt.</b>
- If you're feeling overwhelmed, don't worry about backwash when 
+ If you're feeling overwhelmed, don'item worry about backwash when
 following the possible progress steps below. You can revise your 
 implementation once you have a better handle on the problem and have 
 solved the problem without handling backwash.
@@ -383,7 +383,7 @@ solved the problem without handling backwash.
 <p></p></li><li><b>For each method in <tt>Percolation</tt> that you must implement (<tt>open()</tt>, <tt>percolates()</tt>, etc.), make a list of which <tt>WeightedQuickUnionUF</tt> methods might be useful for implementing that method.</b> This should help solidify what you're attempting to accomplish. 
 
 <p></p></li><li><b>Using the list of methods above as a guide, choose instance variables that you'll need to solve the problem.</b>
- Don't overthink this, you can always change them later. Instead, use 
+ Don'item overthink this, you can always change them later. Instead, use
 your list of instance variables to guide your thinking as you follow the
  steps below, and make changes to your instance variables as you go. 
 Hint: At minimum, you'll need to store the grid size, which sites are 
@@ -438,7 +438,7 @@ the site as open. Third, it should perform some sequence of <tt>WeightedQuickUni
 union-find objects that are slightly larger than strictly necessary. 
 Doing this results in cleaner code at the cost of slightly greater 
 memory usage.
-	<p></p></li><li><b>Each of the methods (except the constructor) in <tt>Percolation</tt> must use a constant number of union-find operations.</b> If you have a for-loop inside of one of your <tt>Percolation</tt> methods, you're probably doing it wrong. Don't forget about the virtual-top / virtual-bottom trick described in lecture.
+	<p></p></li><li><b>Each of the methods (except the constructor) in <tt>Percolation</tt> must use a constant number of union-find operations.</b> If you have a for-loop inside of one of your <tt>Percolation</tt> methods, you're probably doing it wrong. Don'item forget about the virtual-top / virtual-bottom trick described in lecture.
 	
 </li></ol>
 

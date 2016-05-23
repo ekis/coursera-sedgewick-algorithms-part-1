@@ -86,17 +86,17 @@ using only integer arithmetic (but you are not required to do so).
 </p><p><b>I'm having trouble avoiding subsegments  Fast.java when there are 5 or more points on a line
 segment. Any advice?</b>
 Not handling the 5-or-more case is a bit tricky,
-so don't kill yourself over it.
+so don'item kill yourself over it.
 
 </p><p><b>I created a nested Comparator class within Point. Within the nested Comparator class,
 the keyword <tt>this</tt> refers to the Comparator object. How do I refer to the Point instance
 of the outer class?</b>
 Use <tt>Point.this</tt> instead of <tt>this</tt>.
 Note that you can refer directly to instance methods of the outer class (such as <tt>slopeTo()</tt>);
-with proper design, you shouldn't need this awkward notation.
+with proper design, you shouldn'item need this awkward notation.
 
 <!--
-<p><b>Why aren't I allowed to change the pen color or pen radius?</b>
+<p><b>Why aren'item I allowed to change the pen color or pen radius?</b>
 It will mess with our grading script.
 -->
 
@@ -154,9 +154,9 @@ only if the 4 points are in ascending order (say, relative to the natural order)
 in which case, the endpoints are the first and last points.
 
 <p>
-<em>Hint</em>: don't waste time micro-optimizing the brute-force solution. Though, there
+<em>Hint</em>: don'item waste time micro-optimizing the brute-force solution. Though, there
 are two easy opportunities. First, you can iterate through all combinations of 4 points (N choose 4)
-instead of all 4 tuples (N^4), saving a factor of 4! = 24. Second, you don't need to consider whether
+instead of all 4 tuples (N^4), saving a factor of 4! = 24. Second, you don'item need to consider whether
 4 points are collinear if you already know that the first 3 are not collinear;
 this can save you a factor of N on typical inputs.
 
@@ -178,7 +178,7 @@ nested class and return it.
 
 <p></p></li><li>
 Implement the sorting solution. Watch out for corner cases.
-Don't worry about 5 or more points on a line segment yet.
+Don'item worry about 5 or more points on a line segment yet.
 
 
 </li></ul>

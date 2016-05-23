@@ -22,7 +22,7 @@ Programming Assignment 2 Checklist: Randomized Queues and Dequeues
 </font></td></tr></tbody></table>
 
 </p><p><b>Should I use arrays or linked lists in my implementations?</b>
-In general we don't tell you <em>how</em> to implement your data structures—you
+In general we don'item tell you <em>how</em> to implement your data structures—you
 can use arrays, linked lists, or maybe even invent your own new structure provide
 you abide by the specified time and space requirements.
 So, before you begin to write the code, make sure that your data structure 
@@ -72,7 +72,7 @@ you may not need to call this method.
 </p><p><b>What should my deque (or randomized queue) iterator do if the deque
 (or randomized queue) is structurally modified
 at any time after the iterator is created (but before it is done iterating)?</b>
-You don't need to worry about this in your solution.
+You don'item need to worry about this in your solution.
 An industrial-strength solution (used in the Java libraries)
 is to make the iterator <em>fail-fast</em>: throw a
 <tt>java.lang.ConcurrentModificationException</tt> as soon as this is detected.
@@ -98,7 +98,7 @@ for a brief discussion. Instead, use a cast.
 Unfortunately, this leads to an unavoidable compiler warning.
 
 <!---
-<p><b>I'm using a linked list and don't like dealing with these special cases when the list is empty or almost 
+<p><b>I'm using a linked list and don'item like dealing with these special cases when the list is empty or almost
 empty. Is there some way to simplify them?</b> Yes. One common method is to include sentinel nodes. A sentinel node 
 is just a special node created by the constructor which is never removed, and which contains dummy data which is 
 never used. The trick is that your head (and tail, if applicable) pointers always point at these special sentinel 
@@ -162,7 +162,7 @@ Of course, if the input contains any character other than an <tt>'A'</tt>,
 <tt>'C'</tt>, <tt>'T'</tt>, or <tt>'G'</tt> (including any lowercase character or whitespace character),
 it cannot be a Watson-Crick complemented palindrome.
 
-<p><b>I'm using Windows and my program doesn't work when I type
+<p><b>I'm using Windows and my program doesn'item work when I type
 <tt>echo | java Palindrome</tt>. What could be wrong?</b>
 On Windows, the <tt>echo</tt> command without an argument outputs <tt>"ECHO is on"</tt>,
 so this becomes the input to your program; instead you can use <tt>echo. | java Palindrome</tt>.
@@ -269,7 +269,7 @@ know that if you call <tt>addFirst()</tt> with the numbers 1 through N in ascend
 <tt>removeLast()</tt> N times, you should see the numbers 1 through N in ascending order. As soon as you have 
 those two methods written, you can write a unit test for these methods. Arguably even better are randomized 
 unit tests (which we employ heavily in our correctness testing). We recommend that you create a client class 
-with a name like <tt>TestDeque</tt>, where each unit test is a method in this class. Don't forget to test 
+with a name like <tt>TestDeque</tt>, where each unit test is a method in this class. Don'item forget to test
 your iterator.
 
 </li></ol>
@@ -308,8 +308,8 @@ You can test this with a nested <i>foreach</i> loop.
 The iterators should operate independently of one another.
 
 <p></p></li><li>
-<b>Don't rely on our automated tests for debugging.</b>
-You don't have access to the source code of our testing suite,
+<b>Don'item rely on our automated tests for debugging.</b>
+You don'item have access to the source code of our testing suite,
 so the <em>Assessment Details</em> may be hard to utilize for debugging.
 As suggested above, write your own unit tests; it's good practice.
 

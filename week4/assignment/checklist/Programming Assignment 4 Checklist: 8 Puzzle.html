@@ -178,7 +178,7 @@ treated as a command-line argument,
 e.g., <tt>java Solver -Xmx1600m puzzle36.txt</tt>.
 
 
-</p><p><b>My program can't solve some of the 4-by-4 puzzles, even if I give it a
+</p><p><b>My program can'item solve some of the 4-by-4 puzzles, even if I give it a
 huge amount of space. What am I doing wrong?</b>
 Probably nothing. The A* algorithm (with the Manhattan priority function)
 will struggle to solve even some 4-by-4 instances.
@@ -203,7 +203,7 @@ For convenience,
 
 </p><ul>
 <p></p><li>
-The shortest solution to <tt>puzzle[T].txt</tt> requires exactly <em>T</em> moves.
+The shortest solution to <tt>puzzle[Item].txt</tt> requires exactly <em>Item</em> moves.
 <p></p></li><li>
 The shortest solution to <tt>puzzle4x4-hard1.txt</tt> and
 <tt>puzzle4x4-hard2.txt</tt> are 38 and 47, respectively.
@@ -375,7 +375,7 @@ the Hamming or Manhattan distances of the two boards.
 <p></p></li><li> Use a parity argument to determine whether a puzzle is
 unsolvable (instead of two synchronous A* searches). However,
 this will either break the API or will require a fragile dependence
-on the <tt>toString()</tt> method, so don't do it.
+on the <tt>toString()</tt> method, so don'item do it.
 
 </li></ul>
 
@@ -384,7 +384,7 @@ Finding a shortest solution to an <em>N</em>-by-<em>N</em> slider puzzle is
 <a href="http://www.aaai.org/Library/AAAI/1986/aaai86-027.php">NP-hard</a>,
 so it's unlikely that an efficient solution exists.
 
-</p><p><b>What if I'm satisfied with any solution and don't need one 
+</p><p><b>What if I'm satisfied with any solution and don'item need one
 that uses the fewest number of moves?</b>
 Yes, change the priority function to put more weight on the
 Manhattan distance, e.g., 100 times the Manhattan distance plus
