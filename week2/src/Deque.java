@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 // throw a java.lang.UnsupportedOperationException if the client calls the remove() method in the iterator;
 // throw a java.util.NoSuchElementException if the client calls the next() method in the iterator and there are no more items to return.
 // backed by doubly-linked list
-public class Deque<T> implements Iterable<T> {
+public class Deque<Item> implements Iterable<Item> {
 
     private int size = 0;
 
@@ -27,7 +27,7 @@ public class Deque<T> implements Iterable<T> {
     }
 
     // add the item to the front
-    public void addFirst(T item) {
+    public void addFirst(Item item) {
         if (item == null) throw new NullPointerException();
 
         if (isEmpty()) {
@@ -43,7 +43,7 @@ public class Deque<T> implements Iterable<T> {
     }
 
     // add the item to the end
-    public void addLast(T item) {
+    public void addLast(Item item) {
         if (item == null) throw new NullPointerException();
 
         if (isEmpty()) {
@@ -59,10 +59,10 @@ public class Deque<T> implements Iterable<T> {
     }
 
     // remove and return the item from the front
-    public T removeFirst() {
+    public Item removeFirst() {
         if (isEmpty()) throw new NoSuchElementException();
 
-        T result = first.item;
+        Item result = first.item;
         first = first.next;
 
         if (size > 1)
@@ -76,10 +76,10 @@ public class Deque<T> implements Iterable<T> {
     }
 
     // remove and return the item from the end
-    public T removeLast() {
+    public Item removeLast() {
         if (isEmpty()) throw new NoSuchElementException();
 
-        T result = last.item;
+        Item result = last.item;
         last = last.prev;
 
         if (size > 1)
@@ -94,27 +94,32 @@ public class Deque<T> implements Iterable<T> {
 
     // return an iterator over items in order from front to end
     @Override
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
+    public Iterator<Item> iterator() {
+        return new Iterator<Item>() {
+            private Node current = first;
+
             @Override
             public boolean hasNext() {
-                return size != 0;
+                return current != null;
             }
 
             @Override
-            public T next() {
-                return removeFirst();
+            public Item next() {
+                if (current == null) throw new NoSuchElementException();
+                Item item = current.item;
+                current = current.next;
+                return item;
             }
         };
     }
 
     private class Node {
-        private final T item;
+        private final Item item;
         private Node prev;
         private Node next;
 
-        private Node(T t) {
-            item = t;
+        private Node(Item item) {
+            this.item = item;
         }
     }
 }
