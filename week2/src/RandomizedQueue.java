@@ -83,6 +83,17 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         };
     }
 
+    /**
+     * This was the linchpin of the solution - how to fetch a uniformly random values from array in constant-time,
+     * but without fragmenting the array with null values.
+     *
+     * The key insight here is to exploit the allowed randomness in array order and plug the whole with a value from
+     * the last element in the array.
+     *
+     * Beside *knowing* a random fetch from [0, N> won't retrieve a null value, this also cuts the shrink resize times
+     * considerably, as we don't have to traverse the whole previous array and check if the value in the array is null
+     * but we can simply copy the array values from [0, N> and discard the rest (they certainly contain only null values).
+     */
     private Item randomItem() {
         int last = N - 1;
         int randomIndex = randomIndex();
@@ -94,8 +105,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private int randomIndex() {
-        int last = N - 1;
-        return last != 0 ? StdRandom.uniform(last) : 0;
+        return N != 0 ? StdRandom.uniform(N) : 0;
     }
 
     private void resize(int newSize) {
