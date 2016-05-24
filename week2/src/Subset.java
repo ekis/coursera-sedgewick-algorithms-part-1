@@ -11,6 +11,6 @@ public class Subset {
             q.enqueue(StdIn.readString());
 
         for (int i = 0; i < x; i++)
-            StdOut.print(q.dequeue());
+            StdOut.print(q.dequeue() + "\n");
     }
 }
