@@ -1,16 +1,14 @@
 package impl;
 
-import org.junit.Test;
 import exercise.stacks.MyStack;
 import exercise.stacks.Stacks;
+import org.junit.Test;
 
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
+import static impl.Week2TestHelper.testCollectionState;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by pakna on 12/12/16.
+ * Created by ekis on 12/12/16.
  */
 public class StackTests {
 
@@ -22,12 +20,12 @@ public class StackTests {
         stack.push(3);
         stack.push(4);
         assertEquals(4, stack.size());
-        testStackState("4, 3, 2, 1", stack);
-        assertEquals(new Integer(4), stack.pop());
-        assertEquals(new Integer(3), stack.pop());
-        assertEquals(new Integer(2), stack.pop());
-        assertEquals(new Integer(1), stack.pop());
-        testStackState("", stack);
+        testCollectionState("4, 3, 2, 1", stack);
+        assertEquals(Integer.valueOf(4), stack.pop());
+        assertEquals(Integer.valueOf(3), stack.pop());
+        assertEquals(Integer.valueOf(2), stack.pop());
+        assertEquals(Integer.valueOf(1), stack.pop());
+        testCollectionState("", stack);
         stack.push(1);
         assertEquals(1, stack.size());
         stack.pop();
@@ -40,7 +38,7 @@ public class StackTests {
         stack.push(20);
         stack.push(30);
         assertEquals(3, stack.size());
-        testStackState("30, 20, 10", stack);
+        testCollectionState("30, 20, 10", stack);
         stack.pop();
         stack.pop();
         stack.pop();
@@ -50,13 +48,6 @@ public class StackTests {
         stack.pop();
         stack.push(1);
         stack.pop();
-        testStackState("", stack);
-    }
-
-    private <T> void testStackState(String expected, MyStack<T> stack) {
-        String actual = StreamSupport.stream(stack.spliterator(), false)
-                .map(Object::toString)
-                .collect(Collectors.joining(", "));
-        assertEquals(expected, actual);
+        testCollectionState("", stack);
     }
 }

@@ -12,8 +12,8 @@ class SimpleStack<T> implements MyStack<T> {
     private int count = 0;
 
     private static class Node<Item> {
-        private Item item;
-        private Node<Item> next;
+        private final Item item;
+        private final Node<Item> next;
 
         private Node(Item nestedItem, Node<Item> nextNode) {
             item = nestedItem;
@@ -60,7 +60,7 @@ class SimpleStack<T> implements MyStack<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<T> iterator() { // LIFO iteration
         return new Iterator<T>() {
             private Node<T> current = first;
             private int N = count;
