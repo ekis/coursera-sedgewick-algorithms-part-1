@@ -14,7 +14,15 @@ public class QueueTests {
 
     @Test
     public void testSimpleQueue() {
-        MyQueue<Integer> queue = Queues.simpleQueue();
+        test(Queues.simpleQueue());
+    }
+
+    @Test
+    public void testTwoStackQueue() {
+        test(Queues.twoStackQueue());
+    }
+
+    private static void test(MyQueue<Integer> queue) {
         queue.enqueue(1);
         queue.enqueue(2);
         queue.enqueue(3);
