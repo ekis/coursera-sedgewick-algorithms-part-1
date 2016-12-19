@@ -53,6 +53,12 @@ class SimpleStack<T> implements MyStack<T> {
     }
 
     @Override
+    public T peek() {
+        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
+        return first.item;
+    }
+
+    @Override
     public boolean isEmpty() {
         return count == 0;
     }

@@ -11,4 +11,5 @@ public interface MyStack<T> extends MyCollection<T> {
 
     T pop();
 
+    T peek();
 }
