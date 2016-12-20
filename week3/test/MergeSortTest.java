@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 /**
- * Created by pakna on 06/09/16.
+ * Created by ekis on 06/09/16.
  */
 public class MergeSortTest {
 

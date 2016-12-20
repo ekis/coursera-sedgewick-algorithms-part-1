@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
+ * A stack implementation which tracks the maximum element currently on stack.
+ *
  * Created by ekis on 17/12/16.
  */
 public class StackWithMaximum<T> implements MyStack<T> {
@@ -19,8 +21,7 @@ public class StackWithMaximum<T> implements MyStack<T> {
     @Override
     public void push(T item) {
         if (!isEmpty()) {
-            T peekedItem = maximums.peek();
-            if (isGreaterThanMax(item, peekedItem))
+            if (isGreaterThanMax(item, maximums.peek()))
                 maximums.push(item);
         } else {
             maximums.push(item);
@@ -31,8 +32,7 @@ public class StackWithMaximum<T> implements MyStack<T> {
     @Override
     public T pop() {
         if (isEmpty()) throw new NoSuchElementException("Stack underflow");
-        T peekedItem = stack.peek();
-        if (isEqualToMax(maximums.peek(), peekedItem))
+        if (isEqualToMax(maximums.peek(), stack.peek()))
             maximums.pop();
         return stack.pop();
     }

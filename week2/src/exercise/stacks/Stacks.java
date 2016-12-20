@@ -3,7 +3,7 @@ package exercise.stacks;
 import java.util.Comparator;
 
 /**
- * Created by pakna on 14/12/16.
+ * Created by ekis on 14/12/16.
  */
 public class Stacks {
 

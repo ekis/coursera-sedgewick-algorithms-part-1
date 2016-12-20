@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 /**
  * Queue backed by doubly-linked, circular linked list.
- * All supported operations are O(1).
  *
  * Created by ekis on 14/12/16.
  */

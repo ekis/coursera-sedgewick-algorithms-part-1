@@ -3,7 +3,7 @@ package bookimpl;
 import static bookimpl.SortHelper.less;
 
 /**
- * Created by pakna on 25/08/16.
+ * Created by ekis on 25/08/16.
  */
 public class MergeSortInPlace {
 

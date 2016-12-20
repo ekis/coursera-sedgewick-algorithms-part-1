@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 
 /**
  * Stack backed by a singly-linked list.
- * All supported operations are O(1).
  *
  * Created by ekis on 12/12/16.
  */
