@@ -33,25 +33,12 @@ public class CyclicLinkedList<T> {
             if (fast == null) return null; // again check if fast reached end - if it does, no cycle
             fast = fast.next; // advance both one step
             slow = slow.next;
-            if (fast == null) return null; // again check if fast reached end - if it does, no cycle
             if (fast.index == slow.index) { // if fast and slow are equal, that can only mean fast has reached slow from behind, thus proving cycle
-                System.out.println("Found collision at item index " + slow.index);
                 slow = first;
-                System.out.println("    Setting slow pointer as first at index " + slow.index);
-                int i = 0;
-                System.out.println("    Entering cycle detection loop");
                 while (true) { // find the starting point of the cycle
-                    System.out.println("        Loop step " + i++);
-                    if (fast.index == slow.index) { // found  loop cycle start
-                        System.out.println("        Found loop cycle start at " + slow.index);
-                        return slow.item;
-                    }
-                    System.out.print(String.format("        Advancing slow pointer from index %s to index...", slow.index));
+                    if (fast.index == slow.index) return slow.item;
                     slow = slow.next;
-                    System.out.println(slow.index);
-                    System.out.print(String.format("        Advancing fast pointer from index %s to index...", fast.index));
                     fast = fast.next;
-                    System.out.println(fast.index);
                 }
             }
         }
