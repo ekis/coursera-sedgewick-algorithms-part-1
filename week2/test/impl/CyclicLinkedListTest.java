@@ -3,6 +3,8 @@ package impl;
 import exercise.CyclicLinkedList;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -14,7 +16,7 @@ public class CyclicLinkedListTest {
     public void testListNoCycle() {
         CyclicLinkedList.AddNext<Integer> listBuilder = standardListBuilder();
         CyclicLinkedList<Integer> list = listBuilder.defineCycleOrBuild().build();
-        assertEquals(null, list.firstNodeInCycle());
+        assertEquals(Optional.empty(), list.firstNodeInCycle());
     }
 
     @Test
@@ -26,7 +28,7 @@ public class CyclicLinkedListTest {
                 .connectLastTo(4)
                 .build();
 
-        assertEquals(Integer.valueOf(10), list.firstNodeInCycle());
+        assertEquals(Optional.of(10), list.firstNodeInCycle());
     }
 
     @Test
@@ -38,7 +40,7 @@ public class CyclicLinkedListTest {
                 .connectLastTo(2)
                 .build();
 
-        assertEquals(Integer.valueOf(30), list.firstNodeInCycle());
+        assertEquals(Optional.of(30), list.firstNodeInCycle());
     }
 
     @Test
@@ -50,7 +52,7 @@ public class CyclicLinkedListTest {
                 .connectLastTo(0)
                 .build();
 
-        assertEquals(Integer.valueOf(50), list.firstNodeInCycle());
+        assertEquals(Optional.of(50), list.firstNodeInCycle());
     }
 
     private static CyclicLinkedList.AddNext<Integer> standardListBuilder() {

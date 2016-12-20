@@ -1,6 +1,8 @@
 package exercise;
 
 
+import java.util.Optional;
+
 /**
  * Created by ekis on 19/12/16.
  */
@@ -22,21 +24,21 @@ public class CyclicLinkedList<T> {
      *
      * @return repeated value on the stack. If there is none, returns null.
      */
-    public T firstNodeInCycle() {
-        if (count < 2) return null;
+    public Optional<T> firstNodeInCycle() {
+        if (count < 2) return Optional.empty();
         Builder.Node<T> slow = first;
         Builder.Node<T> fast = first;
 
         while (true) {
-            if (fast == null) return null; // if fast reaches end, no cycle
+            if (fast == null) return Optional.empty(); // if fast reaches end, no cycle
             fast = fast.next; // advance fast one more step
-            if (fast == null) return null; // again check if fast reached end - if it does, no cycle
+            if (fast == null) return Optional.empty(); // again check if fast reached end - if it does, no cycle
             fast = fast.next; // advance both one step
             slow = slow.next;
             if (fast.index == slow.index) { // if fast and slow are equal, that can only mean fast has reached slow from behind, thus proving cycle
                 slow = first;
                 while (true) { // find the starting point of the cycle
-                    if (fast.index == slow.index) return slow.item;
+                    if (fast.index == slow.index) return Optional.of(slow.item);
                     slow = slow.next;
                     fast = fast.next;
                 }
