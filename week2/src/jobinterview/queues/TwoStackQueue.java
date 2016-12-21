@@ -1,7 +1,7 @@
-package exercise.queues;
+package jobinterview.queues;
 
-import exercise.stacks.MyStack;
-import exercise.stacks.Stacks;
+import jobinterview.stacks.MyStack;
+import jobinterview.stacks.Stacks;
 
 import java.util.*;
 import java.util.stream.Collectors;

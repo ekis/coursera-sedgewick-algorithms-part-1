@@ -1,13 +1,13 @@
-package impl;
+package jobinterview;
 
-import exercise.stacks.MyStack;
-import exercise.stacks.StackWithMaximum;
-import exercise.stacks.Stacks;
+import jobinterview.stacks.MyStack;
+import jobinterview.stacks.StackWithMaximum;
+import jobinterview.stacks.Stacks;
 import org.junit.Test;
 
 import java.util.function.Consumer;
 
-import static impl.Week2TestHelper.testCollectionState;
+import static jobinterview.Week2TestHelper.testCollectionState;
 import static org.junit.Assert.assertEquals;
 
 /**

@@ -1,4 +1,4 @@
-package exercise;
+package jobinterview;
 
 /**
  * Created by ekis on 14/12/16.

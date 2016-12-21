@@ -1,6 +1,5 @@
-package impl;
+package jobinterview;
 
-import exercise.CyclicLinkedList;
 import org.junit.Test;
 
 import java.util.Optional;

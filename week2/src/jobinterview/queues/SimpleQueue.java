@@ -1,4 +1,4 @@
-package exercise.queues;
+package jobinterview.queues;
 
 import java.util.Iterator;
 

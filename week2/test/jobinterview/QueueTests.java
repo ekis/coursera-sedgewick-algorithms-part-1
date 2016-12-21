@@ -1,11 +1,11 @@
-package impl;
+package jobinterview;
 
-import exercise.queues.MyQueue;
-import exercise.queues.Queues;
+import jobinterview.queues.MyQueue;
+import jobinterview.queues.Queues;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static impl.Week2TestHelper.*;
+import static jobinterview.Week2TestHelper.*;
 
 /**
  * Created by ekis on 14/12/16.

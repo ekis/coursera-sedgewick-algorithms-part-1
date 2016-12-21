@@ -1,6 +1,6 @@
-package exercise.stacks;
+package jobinterview.stacks;
 
-import exercise.MyCollection;
+import jobinterview.MyCollection;
 
 /**
  * Created by ekis on 14/12/16.

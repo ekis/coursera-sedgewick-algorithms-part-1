@@ -1,4 +1,4 @@
-package exercise.queues;
+package jobinterview.queues;
 
 /**
  * Created by ekis on 14/12/16.

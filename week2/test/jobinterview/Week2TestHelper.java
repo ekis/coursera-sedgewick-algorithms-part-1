@@ -1,6 +1,4 @@
-package impl;
-
-import exercise.MyCollection;
+package jobinterview;
 
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;

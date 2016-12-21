@@ -1,6 +1,6 @@
-package exercise.queues;
+package jobinterview.queues;
 
-import exercise.MyCollection;
+import jobinterview.MyCollection;
 
 /**
  * Created by ekis on 14/12/16.
