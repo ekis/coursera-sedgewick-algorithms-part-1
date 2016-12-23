@@ -1,4 +1,4 @@
-package jobinterview;
+package jobinterview.linkedlist;
 
 
 import java.util.Optional;
@@ -35,6 +35,7 @@ public class CyclicLinkedList<T> {
             if (fast == null) return Optional.empty(); // again check if fast reached end - if it does, no cycle
             fast = fast.next; // advance both one step
             slow = slow.next;
+            if (fast == null) return Optional.empty();
             if (fast.index == slow.index) { // if fast and slow are equal, that can only mean fast has reached slow from behind, thus proving cycle
                 slow = first;
                 while (true) { // find the starting point of the cycle
