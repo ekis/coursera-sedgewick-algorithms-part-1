@@ -18,10 +18,10 @@ public class RandomLinkedListTest {
         RandomLinkedList<Integer> linkedList = new RandomLinkedList<>();
         assertTrue(linkedList.isEmpty());
 
-        for (int i = 0; i < 115; i++) linkedList.add(i);
+        for (int i = 0; i < 130; i++) linkedList.add(i);
 
         assertFalse(linkedList.isEmpty());
-        assertEquals(115, linkedList.size());
+        assertEquals(130, linkedList.size());
 
         String original = stringTraceOf(linkedList);
         //System.out.println("Original list -> \n" + original);

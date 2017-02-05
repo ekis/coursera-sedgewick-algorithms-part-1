@@ -19,5 +19,6 @@
         <jarDirectory url="file://$MODULE_DIR$/../../../../dev_deps/junit" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="algs4" level="project" />
   </component>
 </module>

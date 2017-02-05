@@ -1,0 +1,37 @@
+package jobinterview.sort;
+
+import org.junit.Test;
+
+import java.util.Arrays;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertArrayEquals;
+
+/**
+ * Created by ekis on 05/02/17.
+ */
+public class SortTests {
+
+    private static final String[] EXAMPLE = new String[]{"S", "O", "R", "T", "E", "X", "A", "M", "P", "L", "E"};
+    private static final String[] EXPECTED = new String[]{"A", "E", "E", "L", "M", "O", "P", "R", "S", "T", "X"};
+
+    @Test
+    public void testSelectionSort() {
+        String[] actual = copyExample();
+        MySelection.sort(actual);
+        assertTrue(MySelection.isSorted(actual));
+        assertArrayEquals(EXPECTED, actual);
+    }
+
+    @Test
+    public void testInsertionSort() {
+        String[] actual = copyExample();
+        MyInsertion.sort(actual);
+        assertTrue(MyInsertion.isSorted(actual));
+        assertArrayEquals(EXPECTED, actual);
+    }
+
+    private static String[] copyExample() {
+        return Arrays.copyOf(EXAMPLE, EXAMPLE.length);
+    }
+}
