@@ -31,6 +31,22 @@ public class SortTests {
         assertArrayEquals(EXPECTED, actual);
     }
 
+    @Test
+    public void testShellSort() {
+        String[] actual = copyExample();
+        MyShell.sort(actual);
+        assertTrue(MyShell.isSorted(actual));
+        assertArrayEquals(EXPECTED, actual);
+    }
+
+    @Test
+    public void testShellViaArraySort() {
+        String[] actual = copyExample();
+        MyShellViaArray.sort(actual);
+        assertTrue(MyShellViaArray.isSorted(actual));
+        assertArrayEquals(EXPECTED, actual);
+    }
+
     private static String[] copyExample() {
         return Arrays.copyOf(EXAMPLE, EXAMPLE.length);
     }
