@@ -1,5 +1,6 @@
 package jobinterview.sort;
 
+import jobinterview.sort.mergesort.MyTopDownMergeSort;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -10,7 +11,7 @@ import static org.junit.Assert.assertArrayEquals;
 /**
  * Created by ekis on 05/02/17.
  */
-public class SortTests {
+public class SortTest {
 
     private static final String[] EXAMPLE = new String[]{"S", "O", "R", "T", "E", "X", "A", "M", "P", "L", "E"};
     private static final String[] EXPECTED = new String[]{"A", "E", "E", "L", "M", "O", "P", "R", "S", "T", "X"};

@@ -1,33 +1,13 @@
-package jobinterview.sort;
+package jobinterview.sort.mergesort;
 
 import jobinterview.MySort;
 
-import static jobinterview.Utility.calculateMid;
-
 /**
- * Created by ekis on 12/02/17.
+ * Created by ekis on 13/02/17.
  */
-public final class MyTopDownMergeSort extends MySort {
+abstract class MyMergeSort extends MySort {
 
-    private static Comparable[] aux; // auxilliary array for merges
-
-    public static void sort(Comparable[] a) {
-        aux = new Comparable[a.length];
-        sort(a, 0, a.length -1);
-    }
-
-    private static void sort(Comparable[] a, int lo, int hi) {
-        if (lo >= hi) return;
-
-        int mid = calculateMid(lo, hi);
-
-        sort(a, lo, mid); // sort left
-        sort(a, mid + 1, hi); // sort right
-
-        merge(a, lo, mid, hi);
-    }
-
-    private static void merge(Comparable[] a , int lo, int mid, int hi) {
+    static void merge(Comparable[] aux, Comparable[] a, int lo, int mid, int hi) {
         int i = lo;      // current entry in the left sub-array
         int j = mid + 1; // current entry in the right sub-array
         int k;           // current entry in the sorted array
@@ -46,4 +26,5 @@ public final class MyTopDownMergeSort extends MySort {
                 a[k] = aux[j++];
         }
     }
+
 }
