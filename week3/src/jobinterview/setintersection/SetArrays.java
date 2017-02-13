@@ -7,22 +7,28 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * Exercise: Given two arrays a[] and b[], each containing N distinct 2D points in the plane, design a sub-quadratic algorithm
+ * Exercise A: Given two arrays a[] and b[], each containing N distinct 2D points in the plane, design a sub-quadratic algorithm
  * to count the number of points that are contained both in array a[] and array b[].
  *
- * Solution: We retrieve the count in guaranteed worst-case sub-quadratic time. We use list and not hash-based data structure to store values.
+ * Solution A: We retrieve the count in guaranteed worst-case sub-quadratic time. We use list and not hash-based data structure to store values.
  * Worst-case complexity is sub-quadratic: O(N^3/2) + O(n*logN).
  * 1) The Shellsort is O(N^3/2) for currently used h-function
  * 2) The time it takes to find an intersection for a given element is O(N*logN)
  * Note that in cases of extreme set asymmetry (e.g. a.size() >> b.size()), running time may approach sub-linear,
  * as binary search cost begins to dominate the count operation.
  *
+ * Exercise B: Given two integer arrays of size N, design a sub-quadratic algorithm to determine where one is a permutation of the other,
+ * i.e. do they contain exactly the same entries but in, possibly, different order.
+ *
+ * Solution B: We sort one of the arrays and then use binary search to find any element from the second array that is not in the first one.
+ * Should we find it, we know the arrays are not permutations of each other.
+ *
  * Known issues: To improve test runtimes on large datasets (10^6 elements), we don't perform a check whether a point already exists in the list.
  * Such a check on a list is at best O(n) and it dominates the test runtime. Only a more advanced data structure would support such faster ops.
  *
  * Created by ekis on 08/02/17.
  */
-public final class SetIntersection {
+public final class SetArrays {
 
     private final List<Point> a = new ArrayList<>();
     private final List<Point> b = new ArrayList<>();
@@ -43,9 +49,20 @@ public final class SetIntersection {
         return countIntersections(as, bs);
     }
 
+    public boolean isAPermutationOfB() {
+        Point[] as = a.toArray(new Point[a.size()]);
+        Point[] bs = b.toArray(new Point[b.size()]);
+        return as.length == bs.length && isAPermutationOfB(as, bs);
+    }
+
     private static long countIntersections(Point[] smaller, Point[] larger) {
         MyShell.sort(larger);
         return Stream.of(smaller).filter(x -> MyBinarySearch.find(x, larger)).count();
+    }
+
+    private static boolean isAPermutationOfB(Point[] as, Point[] bs) {
+        MyShell.sort(bs);
+        return Stream.of(as).parallel().allMatch(x -> MyBinarySearch.find(x, bs));
     }
 
     private static class Point implements Comparable<Point> {

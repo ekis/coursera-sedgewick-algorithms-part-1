@@ -11,7 +11,7 @@ public final class IntersectionTest {
 
     @Test
     public void testSimpleSetIntersection() {
-        SetIntersection s = new SetIntersection();
+        SetArrays s = new SetArrays();
         s.addToA(0, 0);
         s.addToB(0, 0);
         assertEquals(1, s.intersectCount());
@@ -19,7 +19,7 @@ public final class IntersectionTest {
 
     @Test
     public void testSetIntersectionSymmetric() {
-        SetIntersection s = new SetIntersection();
+        SetArrays s = new SetArrays();
         s.addToA(0, 0); // this
         s.addToA(1, 2);
         s.addToA(0, 3);
@@ -41,7 +41,7 @@ public final class IntersectionTest {
 
     @Test
     public void testSetIntersectionLeftAsymmetric() {
-        SetIntersection s = new SetIntersection();
+        SetArrays s = new SetArrays();
         s.addToA(0, 0); // this
         s.addToA(1, 2);
         s.addToA(0, 4);
@@ -58,7 +58,7 @@ public final class IntersectionTest {
 
     @Test
     public void testSetIntersectionRightAsymmetric() {
-        SetIntersection s = new SetIntersection();
+        SetArrays s = new SetArrays();
         s.addToB(0, 0); // this
         s.addToB(1, 2);
         s.addToB(0, 4);
@@ -75,8 +75,8 @@ public final class IntersectionTest {
 
     @Test
     public void testSetIntersectionLargeLeftAsymmetric() {
-        SetIntersection s = new SetIntersection();
-        addLarge(SetIntersection::addToA, s, 1000); // 10^6 elements
+        SetArrays s = new SetArrays();
+        addLarge(SetArrays::addToA, s, 1000); // 10^6 elements
         s.addToA(0, 1);
         s.addToB(0, 0);
         s.addToB(0, 1);
@@ -89,8 +89,8 @@ public final class IntersectionTest {
 
     @Test
     public void testSetIntersectionLargeRightAsymmetric() {
-        SetIntersection s = new SetIntersection();
-        addLarge(SetIntersection::addToB, s, 1000); // 10^6 elements
+        SetArrays s = new SetArrays();
+        addLarge(SetArrays::addToB, s, 1000); // 10^6 elements
         s.addToB(0, 1);
         s.addToA(0, 0);
         s.addToA(0, 1);
@@ -103,9 +103,9 @@ public final class IntersectionTest {
 
     @Test
     public void testSetIntersectionLargeLeftAsymmetric2() {
-        SetIntersection s = new SetIntersection();
-        addLarge(SetIntersection::addToA, s, 1000);  // 10^6 elements
-        addLarge(SetIntersection::addToB, s, 10);  // 10^2 elements
+        SetArrays s = new SetArrays();
+        addLarge(SetArrays::addToA, s, 1000);  // 10^6 elements
+        addLarge(SetArrays::addToB, s, 10);  // 10^2 elements
         s.addToB(600, 600);
         s.addToB(700, 700);
         s.addToB(200, 200);
@@ -115,7 +115,7 @@ public final class IntersectionTest {
     }
 
 
-    private static void addLarge(AddPoint f, SetIntersection s, int limit) {
+    private static void addLarge(AddPoint f, SetArrays s, int limit) {
         for (int x = 1; x <= limit; x++)
             for (int y = 1; y <= limit; y++)
                 f.accept(s, x, y);
@@ -123,6 +123,6 @@ public final class IntersectionTest {
 
     @FunctionalInterface
     private interface AddPoint {
-        void accept(SetIntersection s, int x, int y);
+        void accept(SetArrays s, int x, int y);
     }
 }
