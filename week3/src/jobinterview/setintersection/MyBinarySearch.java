@@ -1,5 +1,7 @@
 package jobinterview.setintersection;
 
+import static jobinterview.Utility.calculateMid;
+
 /**
  * Created by ekis on 09/02/17.
  */
@@ -13,7 +15,7 @@ public final class MyBinarySearch {
 
     private static <T extends Comparable<T>> boolean find(T element, Comparable<T>[] array, int lo, int hi) {
         if (lo == hi) return array[lo].compareTo(element) == 0;
-        int mid = ((hi - lo) /2) + lo;
+        int mid = calculateMid(lo, hi);
         Comparable<T> midElement = array[mid];
         if (midElement.compareTo(element) == 0)
             return true;

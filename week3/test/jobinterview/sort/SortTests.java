@@ -47,6 +47,14 @@ public class SortTests {
         assertArrayEquals(EXPECTED, actual);
     }
 
+    @Test
+    public void testTopDownMergeSort() {
+        String[] actual = copyExample();
+        MyTopDownMergeSort.sort(actual);
+        assertTrue(MyTopDownMergeSort.isSorted(actual));
+        assertArrayEquals(EXPECTED, actual);
+    }
+
     private static String[] copyExample() {
         return Arrays.copyOf(EXAMPLE, EXAMPLE.length);
     }

@@ -2,9 +2,6 @@ package bookimpl;
 
 import static bookimpl.SortHelper.less;
 
-/**
- * Created by ekis on 25/08/16.
- */
 public class MergeSortInPlace {
 
     public static void sort(Comparable[] a) {
