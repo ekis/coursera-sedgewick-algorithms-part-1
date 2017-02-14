@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 public abstract class MySort {
 
     // is v < w ?
+    @SuppressWarnings("unchecked")
     protected static final boolean less(Comparable v, Comparable w) {
         return v.compareTo(w) < 0;
     }
