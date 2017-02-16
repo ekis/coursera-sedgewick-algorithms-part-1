@@ -14,7 +14,7 @@ public final class StringGrid {
     private int _row = -1;
     private int _column = 0;
     private int _columnCount = 0;
-    private String _separator = "  "; //$NON-NLS-1$
+    private String _separator = "  ";
     private Alignment _defaultAlignment = Alignment.DECIMAL;
 
     public StringGrid alignments(Alignment... alignments) {

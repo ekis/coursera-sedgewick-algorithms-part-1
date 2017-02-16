@@ -18,11 +18,11 @@ public final class MySelection extends MySort {
 
         for (int i = 0; i < N; i++) {
             int min = i;
-            for (int j = i + 1; j < N; j++) { // find smallest and exchange it with current
+            for (int j = i + 1; j < N; j++) { // find smallest
                 if (less(a[j], a[min]))
                     min = j;
-                exch(a, i, min);
             }
+            exch(a, i, min); // exchange smallest with current
         }
     }
 }

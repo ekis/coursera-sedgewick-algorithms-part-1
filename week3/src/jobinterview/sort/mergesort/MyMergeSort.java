@@ -9,7 +9,7 @@ abstract class MyMergeSort extends MySort {
 
     protected static final int CUTOFF = 7;
 
-    static void merge(Comparable[] aux, Comparable[] a, int lo, int mid, int hi) {
+    protected final static void merge(Comparable[] aux, Comparable[] a, int lo, int mid, int hi) {
         int i = lo;      // current entry in the left sub-array
         int j = mid + 1; // current entry in the right sub-array
         int k;           // current entry in the sorted array
@@ -28,5 +28,4 @@ abstract class MyMergeSort extends MySort {
                 a[k] = aux[j++];
         }
     }
-
 }
