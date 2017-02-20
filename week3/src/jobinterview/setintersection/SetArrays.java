@@ -26,7 +26,6 @@ import java.util.stream.Stream;
  * Known issues: To improve test runtimes on large datasets (10^6 elements), we don't perform a check whether a point already exists in the list.
  * Such a check on a list is at best O(n) and it dominates the test runtime. Only a more advanced data structure would support such faster ops.
  *
- * Created by ekis on 08/02/17.
  */
 public final class SetArrays {
 

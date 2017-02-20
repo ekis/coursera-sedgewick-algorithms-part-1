@@ -1,8 +1,5 @@
 package jobinterview;
 
-/**
- * Created by ekis on 12/02/17.
- */
 public final class Utility {
 
     private Utility(){}

@@ -10,10 +10,6 @@ import java.net.URISyntaxException;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-
-/**
- * Created by ekis on 09/02/17.
- */
 public final class MyBinarySearchTest {
 
     @Test

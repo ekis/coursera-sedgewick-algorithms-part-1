@@ -2,9 +2,6 @@ package jobinterview.setintersection;
 
 import static jobinterview.Utility.calculateMid;
 
-/**
- * Created by ekis on 09/02/17.
- */
 public final class MyBinarySearch {
 
     private MyBinarySearch() {}

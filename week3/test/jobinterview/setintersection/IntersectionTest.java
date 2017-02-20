@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by ekis on 08/02/17.
- */
 public final class IntersectionTest {
 
     @Test

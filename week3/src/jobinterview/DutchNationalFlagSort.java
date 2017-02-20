@@ -1,10 +1,14 @@
 package jobinterview;
 
 /**
+ * Sorts the array so that sorted array is monotonically increasing and totally ordered with
+ * RED preceding, preceding WHITE, preceding BLUE.
+ *
+ * E.g. for input {1, 1, 2, 1, 0, 1, 0, 0}, sorted output is {0, 0, 0, 1, 1, 1, 1, 2}
+ *
  * 0 == RED
  * 1 == WHITE
  * 2 == BLUE
- * Created by ekis on 12/02/17.
  */
 public final class DutchNationalFlagSort {
 

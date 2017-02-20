@@ -2,15 +2,33 @@ package jobinterview.sort;
 
 import jobinterview.MySort;
 
+import java.util.Comparator;
+import java.util.function.BiPredicate;
+
 /**
- * Created by ekis on 06/02/17.
+ * Generalised version of Insertion sort - it uses the same principle, except it works in multiple passes, each pass
+ * exchanging elements of distance h. Each consecutive pass through the array reduces the h, and partially sorts the array
+ * so that the final pass is insertion sort (h = 1). The final pass is quick, as insertion sort works well on partially sorted arrays.
+ *
+ * Calculating h-distance such that sort complexity is sub-quadratic is an ongoing research problem. The distance in this
+ * implementation is calculated with Knuth's h-sequence equation, which yields worst-case shell sort performance of O(N^3/2)
+ * and is easy to compute. There are better (but more complex) sequences discovered, however, all are sub-quadratic.
+ *
  */
 public final class MyShell extends MySort {
 
     private MyShell() {
     }
 
-    public static void sort(Comparable[] a) {
+    public static <T extends Comparable<T>> void sort(T[] a) {
+        sort(a, lessWithComparable());
+    }
+
+    public static <T> void sort(T[] a, Comparator<? super T> c) {
+        sort(a, lessWithComparator(c));
+    }
+
+    private static <T> void sort(T[] a, BiPredicate<T, T> lessF) {
         int N = a.length;
         int h = 1;
 
@@ -19,7 +37,7 @@ public final class MyShell extends MySort {
 
         while (h >= 1) {
             for (int i = h; i < N; i++) {
-                for (int j = i; j >= h && less(a[j], a[j - h]); j -= h)
+                for (int j = i; j >= h && lessF.test(a[j], a[j - h]); j -= h)
                     exch(a, j, j - h);
             }
             h = h / 3;

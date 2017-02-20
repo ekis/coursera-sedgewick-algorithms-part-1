@@ -2,14 +2,13 @@ package jobinterview.sort.mergesort;
 
 import jobinterview.MySort;
 
-/**
- * Created by ekis on 13/02/17.
- */
+import java.util.function.BiPredicate;
+
 abstract class MyMergeSort extends MySort {
 
     protected static final int CUTOFF = 7;
 
-    protected final static void merge(Comparable[] aux, Comparable[] a, int lo, int mid, int hi) {
+    protected static final <T> void merge(BiPredicate<T, T> lessF, T[] aux, T[] a, int lo, int mid, int hi) {
         int i = lo;      // current entry in the left sub-array
         int j = mid + 1; // current entry in the right sub-array
         int k;           // current entry in the sorted array
@@ -18,14 +17,10 @@ abstract class MyMergeSort extends MySort {
             aux[k] = a[k];
 
         for (k = lo; k <= hi; k++) { // merge back to a[lo..hi]
-            if (i > mid)                   // left half exhausted (take from right)
-                a[k] = aux[j++];
-            else if (j > hi)               // right half exhausted (take from left)
-                a[k] = aux[i++];
-            else if (less(aux[i], aux[j])) // current key on left < current key on right (take from left)
-                a[k] = aux[i++];
-            else                           // current key on left > current key on right (take from right)
-                a[k] = aux[j++];
+            if (i > mid)     a[k] = aux[j++]; // left half exhausted (take from right)
+            else if (j > hi) a[k] = aux[i++]; // right half exhausted (take from left)
+            else if (lessF.test(aux[j], aux[i])) a[k] = aux[j++]; // current key on right < current key on left (take from right) -- this is what makes the sort stable!!
+            else a[k] = aux[i++]; // current key on right > current key on right (take from left)
         }
     }
 }

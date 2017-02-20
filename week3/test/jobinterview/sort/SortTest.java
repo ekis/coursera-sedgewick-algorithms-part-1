@@ -15,10 +15,7 @@ import java.util.function.Supplier;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertArrayEquals;
 
-/**
- * Created by ekis on 05/02/17.
- */
-public class SortTest {
+public final class SortTest {
 
     private static final String[] EXAMPLE_1 = new String[]{"S", "O", "R", "T", "E", "X", "A", "M", "P", "L", "E"};
     private static final String[] EXPECTED_1 = new String[]{"A", "E", "E", "L", "M", "O", "P", "R", "S", "T", "X"};

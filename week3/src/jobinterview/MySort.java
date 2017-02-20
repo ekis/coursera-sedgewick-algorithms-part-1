@@ -2,32 +2,35 @@ package jobinterview;
 
 import edu.princeton.cs.algs4.StdOut;
 
+import java.util.Comparator;
+import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
-/**
- * Created by ekis on 05/02/17.
- */
 public abstract class MySort {
 
     // is v < w ?
-    @SuppressWarnings("unchecked")
-    protected static final boolean less(Comparable v, Comparable w) {
-        return v.compareTo(w) < 0;
+    protected static <T extends Comparable<? super T>> BiPredicate<T, T> lessWithComparable() {
+        return (v, w) -> v.compareTo(w) < 0;
     }
 
-    protected static final void exch(Comparable[] a, int i, int j) {
-        Comparable temp = a[i];
+    protected static <T> BiPredicate<T, T> lessWithComparator(Comparator<? super T> c) {
+        return (t1, t2) -> c.compare(t1, t2) < 0;
+    }
+
+    protected static final <T> void exch(T[] a, int i, int j) {
+        T temp = a[i];
         a[i] = a[j];
         a[j] = temp;
     }
 
-    protected static final void show(Comparable[] a) {
+    protected static final <T extends Comparable<? super T>> void show(T[] a) {
         Stream.of(a).forEach(x -> StdOut.print(x + " "));
     }
 
-    public static final boolean isSorted(Comparable[] a) {
+    public static final <T extends Comparable<? super T>> boolean isSorted(T[] a) {
+        BiPredicate<T, T> f = lessWithComparable(); // needed because of type erasure; the compiler can't verify the T in this method is the same as the T in the function declaration
         for (int i = 1; i < a.length; i++)
-            if (less(a[i], a[i - 1])) return false;
+            if (f.test(a[i], a[i - 1])) return false;
         return true;
     }
 }

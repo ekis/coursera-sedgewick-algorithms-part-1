@@ -8,9 +8,6 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by ekis on 12/02/17.
- */
 public final class PermutationTest {
 
     @Test
