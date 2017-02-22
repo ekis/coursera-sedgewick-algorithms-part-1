@@ -4,6 +4,7 @@ import ekis.common.StringGrid;
 import ekis.common.TestSupport;
 import jobinterview.sort.mergesort.MyBottomUpMergeSort;
 import jobinterview.sort.mergesort.MyTopDownMergeSort;
+import jobinterview.sort.quicksort.MyQuickSort;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -56,6 +57,11 @@ public final class SortTest {
         testAndSort(MyBottomUpMergeSort::sort, MyBottomUpMergeSort::isSorted);
     }
 
+    @Test
+    public void testQuickSort() {
+        testAndSort(MyQuickSort::sort, MyQuickSort::isSorted);
+    }
+
     private static void testAndSort(Consumer<String[]> sortTask, Function<String[], Boolean> isSortedTask) {
         String[] expectedGrid = new String[]{
                 "                     Input                       |                     Expected                     |                      Actual                      | Is sorted?", //
@@ -73,7 +79,6 @@ public final class SortTest {
 
         actual = copyExample2();
         sortTask.accept(actual);
-
         populateRow(grid, EXAMPLE_2, EXPECTED_2, actual, isSortedTask.apply(actual));
 
         actual = copyExample3();
