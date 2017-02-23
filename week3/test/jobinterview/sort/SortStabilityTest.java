@@ -6,6 +6,7 @@ import ekis.common.StringGrid;
 import ekis.common.TestSupport;
 import jobinterview.sort.mergesort.MyBottomUpMergeSort;
 import jobinterview.sort.mergesort.MyTopDownMergeSort;
+import jobinterview.sort.quicksort.MyQuickSort;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -62,6 +63,16 @@ public final class SortStabilityTest {
     @Test
     public void testBottomUpMergeSortStability() {
         sortAndCheck(Arrays::sort, MyBottomUpMergeSort::sort, stableSortExpectation());
+    }
+
+    @Test
+    public void testQuickSortStability() {
+        //sortAndCheck(Arrays::sort, MyQuickSort::sort, stableSortExpectation());
+        // a placeholder for future quick sort stability test, should I think of any
+        // this version of quick sort is unstable (as it does an in-place sort) and is very hard to test
+        // as it relies on initial random shuffle of the input array to make a probabilistic worst-case complexity guarantee of O(NlogN),
+        // thus making expected values' test prediction useless (it is possible - though not probable - that the output
+        // array will end up sorted in stable sort order, entirely by accident, which makes conclusions relying on
     }
 
     private static void sortAndCheck(BiConsumer<TestPair[], Comparator<TestPair>> referenceSortTask, BiConsumer<TestPair[], Comparator<TestPair>> mySortTask, String[] expectedGrid) {

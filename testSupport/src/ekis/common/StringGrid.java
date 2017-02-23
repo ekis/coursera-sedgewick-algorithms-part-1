@@ -9,7 +9,7 @@ import static ekis.common.NullSafe.coalesce;
 
 public final class StringGrid {
 
-    private final Map<Pair<Integer, Integer>, String> _grid = new LinkedHashMap<>();
+    private final Map<OldPair<Integer, Integer>, String> _grid = new LinkedHashMap<>();
     private final Map<Integer, Alignment> _alignments = new HashMap<>();
     private int _row = -1;
     private int _column = 0;
@@ -40,7 +40,7 @@ public final class StringGrid {
             row();
         }
         for (Object value : values) {
-            _grid.put(Pair.of(_row, _column), String.valueOf(value));
+            _grid.put(OldPair.of(_row, _column), String.valueOf(value));
             ++_column;
             _columnCount = Math.max(_columnCount, _column);
         }
@@ -60,7 +60,7 @@ public final class StringGrid {
     }
 
     public String show() {
-        Map<Pair<Integer, Integer>, String> grid = new LinkedHashMap<>(_grid);
+        Map<OldPair<Integer, Integer>, String> grid = new LinkedHashMap<>(_grid);
         int rowCount = _row + 1;
         for (int column = 0; column < _columnCount; ++column) {
             Alignment alignment = coalesce(_alignments.get(column), _defaultAlignment);
@@ -70,7 +70,7 @@ public final class StringGrid {
     }
 
     public String showTransposed() {
-        Map<Pair<Integer, Integer>, String> grid = new LinkedHashMap<>(_grid);
+        Map<OldPair<Integer, Integer>, String> grid = new LinkedHashMap<>(_grid);
         int rowCount = _row + 1;
         for (int row = 0; row < rowCount; ++row) {
             Alignment alignment = coalesce(_alignments.get(row), _defaultAlignment);
@@ -79,26 +79,26 @@ public final class StringGrid {
         return columnMajorGrid(new StringBuilder(), grid, rowCount);
     }
 
-    private String rowMajorGrid(StringBuilder sb, Map<Pair<Integer, Integer>, String> grid, int rowCount) {
+    private String rowMajorGrid(StringBuilder sb, Map<OldPair<Integer, Integer>, String> grid, int rowCount) {
         for (int row = 0; row < rowCount; ++row) {
             for (int column = 0; column < _columnCount; ++column) {
                 if (0 < column) {
                     sb.append(_separator);
                 }
-                sb.append(grid.get(Pair.of(row, column)));
+                sb.append(grid.get(OldPair.of(row, column)));
             }
             sb.append("\n"); //$NON-NLS-1$
         }
         return sb.toString();
     }
 
-    private String columnMajorGrid(StringBuilder sb, Map<Pair<Integer, Integer>, String> grid, int rowCount) {
+    private String columnMajorGrid(StringBuilder sb, Map<OldPair<Integer, Integer>, String> grid, int rowCount) {
         for (int column = 0; column < _columnCount; ++column) {
             for (int row = 0; row < rowCount; ++row) {
                 if (0 < row) {
                     sb.append(_separator);
                 }
-                sb.append(grid.get(Pair.of(row, column)));
+                sb.append(grid.get(OldPair.of(row, column)));
             }
             sb.append("\n"); //$NON-NLS-1$
         }
@@ -152,12 +152,12 @@ public final class StringGrid {
             return result.toString();
         }
 
-        void align(Map<Pair<Integer, Integer>, String> grid, int column, int rowCount) {
+        void align(Map<OldPair<Integer, Integer>, String> grid, int column, int rowCount) {
             int width = 0;
             int decimalLeft = 0;
             int decimalRight = 0;
             for (int row = 0; row < rowCount; ++row) {
-                String value = coalesce(grid.get(Pair.of(row, column)), ""); //$NON-NLS-1$
+                String value = coalesce(grid.get(OldPair.of(row, column)), ""); //$NON-NLS-1$
                 width = Math.max(width, value.length());
                 int decimal = value.indexOf('.');
                 if (-1 != decimal) {
@@ -170,7 +170,7 @@ public final class StringGrid {
             decimalRight += excess - excess / 2;
 
             for (int row = 0; row < rowCount; ++row) {
-                Pair<Integer, Integer> rc = Pair.of(row, column);
+                OldPair<Integer, Integer> rc = OldPair.of(row, column);
                 String value = coalesce(grid.get(rc), ""); //$NON-NLS-1$
                 String alignedValue = align(value, width, decimalLeft, decimalRight);
                 grid.put(rc, alignedValue);

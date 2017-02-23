@@ -1,5 +1,6 @@
 package jobinterview.setintersection;
 
+import ekis.common.Pair;
 import org.junit.Test;
 
 import java.util.*;
@@ -50,36 +51,17 @@ public final class PermutationTest {
 
     @Test
     public void testPermutationRandom() {
-        List<Pair> list = IntStream.range(0, 1000) // generate (x, y) pairs
+        List<Pair<Integer, Integer>> list = IntStream.range(0, 1000) // generate (x, y) pairs
                 .collect(ArrayList::new,
-                        (s, x) -> IntStream.range(0, 1000)
-                                .forEach(y -> s.add(new Pair(x, y))),
+                        (acc, x) -> IntStream.range(0, 1000)
+                                .forEach(y -> acc.add(Pair.of(x, y))),
                         null);
         SetArrays s = new SetArrays();
 
-        list.forEach(pair -> s.addToA(pair.x, pair.y));
+        list.forEach(pair -> s.addToA(pair.x(), pair.y()));
         Collections.shuffle(list);
-        list.forEach(pair -> s.addToB(pair.x, pair.y));
+        list.forEach(pair -> s.addToB(pair.x(), pair.y()));
 
         assertTrue(s.isAPermutationOfB());
-    }
-
-    private static class Pair {
-        private final int x;
-        private final int y;
-
-        private Pair(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Pair pair = (Pair) o;
-            return x == pair.x &&
-                    y == pair.y;
-        }
     }
 }

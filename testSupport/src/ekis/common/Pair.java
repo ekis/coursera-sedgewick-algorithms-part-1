@@ -1,45 +1,44 @@
 package ekis.common;
 
-import java.util.Locale;
+import java.util.Objects;
 
-public final class Pair<A, B> {
+public final class Pair<T, V> {
+    private final T x;
+    private final V y;
 
-    private final A _a;
-    private final B _b;
-
-    private Pair(A a, B b) {
-        _a = a;
-        _b = b;
+    private Pair(T x, V y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public static <A, B> Pair<A, B> of(A a, B b) {
-        return new Pair<>(a, b);
+    public static <T, V> Pair of(T x, V y) {
+        return new Pair<>(x, y);
     }
 
-    public A a() {
-        return _a;
+    public T x() {
+        return x;
     }
 
-    public B b() {
-        return _b;
+    public V y() {
+        return y;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pair<?, ?> pair = (Pair<?, ?>) o;
+        return Objects.equals(x, pair.x) &&
+                Objects.equals(y, pair.y);
     }
 
     @Override
     public int hashCode() {
-        return NullSafe.hashCode(_a) * 31 + NullSafe.hashCode(_b);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-        final Pair<?, ?> other = (Pair<?, ?>) obj;
-        return NullSafe.equals(_a, other._a) && NullSafe.equals(_b, other._b);
+        return Objects.hash(x, y);
     }
 
     @Override
     public String toString() {
-        return String.format(Locale.US, "(%s, %s)", _a, _b); //$NON-NLS-1$
+        return String.format("(x, y) -> (%s, %s)", x, y);
     }
 }
