@@ -1,16 +1,13 @@
 package jobinterview.sort;
 
-import jobinterview.MySort;
-
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 
+import static jobinterview.SortUtility.*;
 /**
  * Traverse the array, exchanging i-th element with (i - 1)-th until i <= (i - 1).
- *
- * Created by ekis on 05/02/17.
  */
-public final class MyInsertion extends MySort {
+public final class MyInsertion {
 
     private MyInsertion() {
     }

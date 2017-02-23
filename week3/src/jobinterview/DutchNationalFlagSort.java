@@ -10,9 +10,9 @@ package jobinterview;
  * 1 == WHITE
  * 2 == BLUE
  */
-public final class DutchNationalFlagSort {
+final class DutchNationalFlagSort {
 
-    public static int[] sortedArray(int[] array) {
+    static int[] sortedArray(int[] array) {
         int red = 0, white = 0;
         int blue = array.length - 1;
 

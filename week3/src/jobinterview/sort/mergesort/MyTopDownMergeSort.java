@@ -5,8 +5,9 @@ import jobinterview.sort.MyInsertion;
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 
-import static jobinterview.Utility.calculateMid;
-
+import static jobinterview.SortUtility.*;
+import static jobinterview.sort.mergesort.MyMergeSort.CUTOFF;
+import static jobinterview.sort.mergesort.MyMergeSort.merge;
 /**
  * To sort an array, divide it into two halves, sort the two halves (recursively) and then merge the results.
  *
@@ -18,7 +19,7 @@ import static jobinterview.Utility.calculateMid;
  * - prevent extraneous copying of elements in merge (we need not make a copy to aux array)
  *
  */
-public final class MyTopDownMergeSort extends MyMergeSort {
+public final class MyTopDownMergeSort {
 
     public static <T extends Comparable<T>> void sort(T[] a) {
         @SuppressWarnings("unchecked")

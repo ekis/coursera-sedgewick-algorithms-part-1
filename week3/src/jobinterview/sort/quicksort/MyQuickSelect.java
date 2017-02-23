@@ -4,10 +4,13 @@ import edu.princeton.cs.algs4.Knuth;
 
 import java.util.function.BiPredicate;
 
+import static jobinterview.SortUtility.lessWithComparable;
+import static jobinterview.sort.quicksort.MyQuick.partition;
+
 /**
  * Finds the kth smallest number in a list or array (i.e the order statistic).
  */
-public final class MyQuickSelect extends MyQuick {
+public final class MyQuickSelect {
 
     public static <T extends Comparable<? super T>> T select(T[] a, int k) {
         if (k > a.length - 1) throw new IllegalStateException("K-th element exceeds array size.");

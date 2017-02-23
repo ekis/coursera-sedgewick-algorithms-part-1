@@ -1,15 +1,15 @@
 package jobinterview.sort;
 
-import jobinterview.MySort;
-
 import java.util.Comparator;
 import java.util.function.BiPredicate;
+
+import static jobinterview.SortUtility.*;
 
 /**
  * Shell sort implementation that calculates h-distance series first and stores the elements in an array,
  * and then walking down the array one element at a pass, as we complete the sort with h = 1.
  */
-public final class MyShellViaArray extends MySort {
+public final class MyShellViaArray {
 
     private MyShellViaArray() {}
 

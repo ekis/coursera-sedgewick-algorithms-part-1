@@ -1,6 +1,6 @@
 package jobinterview.setintersection;
 
-import static jobinterview.Utility.calculateMid;
+import static jobinterview.SortUtility.calculateMid;
 
 public final class MyBinarySearch {
 

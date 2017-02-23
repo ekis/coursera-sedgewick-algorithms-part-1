@@ -2,6 +2,7 @@ package jobinterview.sort;
 
 import ekis.common.StringGrid;
 import ekis.common.TestSupport;
+import jobinterview.SortUtility;
 import jobinterview.sort.mergesort.MyBottomUpMergeSort;
 import jobinterview.sort.mergesort.MyTopDownMergeSort;
 import jobinterview.sort.quicksort.MyQuickSelect;
@@ -10,7 +11,6 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
@@ -27,37 +27,37 @@ public final class SortTest {
 
     @Test
     public void testSelectionSort() {
-        testAndSort(MySelection::sort, MySelection::isSorted);
+        testAndSort(MySelection::sort);
     }
 
     @Test
     public void testInsertionSort() {
-        testAndSort(MyInsertion::sort, MyInsertion::isSorted);
+        testAndSort(MyInsertion::sort);
     }
 
     @Test
     public void testShellSort() {
-        testAndSort(MyShell::sort, MyShell::isSorted);
+        testAndSort(MyShell::sort);
     }
 
     @Test
     public void testShellViaArraySort() {
-        testAndSort(MyShellViaArray::sort, MyShell::isSorted);
+        testAndSort(MyShellViaArray::sort);
     }
 
     @Test
     public void testTopDownMergeSort() {
-        testAndSort(MyTopDownMergeSort::sort, MyTopDownMergeSort::isSorted);
+        testAndSort(MyTopDownMergeSort::sort);
     }
 
     @Test
     public void testBottomUpMergeSort() {
-        testAndSort(MyBottomUpMergeSort::sort, MyBottomUpMergeSort::isSorted);
+        testAndSort(MyBottomUpMergeSort::sort);
     }
 
     @Test
     public void testQuickSort() {
-        testAndSort(MyQuickSort::sort, MyQuickSort::isSorted);
+        testAndSort(MyQuickSort::sort);
     }
 
     @Test
@@ -79,7 +79,7 @@ public final class SortTest {
         TestSupport.check(grid, expectedGrid);
     }
 
-    private static void testAndSort(Consumer<String[]> sortTask, Function<String[], Boolean> isSortedTask) {
+    private static void testAndSort(Consumer<String[]> sortTask) {
         String[] expectedGrid = new String[]{
                 "                     Input                       |                     Expected                     |                      Actual                      | Is sorted?", //
                 "                                                 |                                                  |                                                  |           ", //
@@ -90,9 +90,9 @@ public final class SortTest {
 
         StringGrid grid = grid("Input", "Expected", "Actual", "Is sorted?");
 
-        populateGridRow(grid, EXAMPLE_1, EXPECTED_1, SortTest::copyExample1, sortTask, isSortedTask);
-        populateGridRow(grid, EXAMPLE_2, EXPECTED_2, SortTest::copyExample2, sortTask, isSortedTask);
-        populateGridRow(grid, EXAMPLE_3, EXPECTED_3, SortTest::copyExample3, sortTask, isSortedTask);
+        populateGridRow(grid, EXAMPLE_1, EXPECTED_1, SortTest::copyExample1, sortTask);
+        populateGridRow(grid, EXAMPLE_2, EXPECTED_2, SortTest::copyExample2, sortTask);
+        populateGridRow(grid, EXAMPLE_3, EXPECTED_3, SortTest::copyExample3, sortTask);
 
         TestSupport.check(grid, expectedGrid);
     }
@@ -113,10 +113,10 @@ public final class SortTest {
         return Arrays.copyOf(array, array.length);
     }
 
-    private static void populateGridRow(StringGrid grid, String[] example, String[] expected, Supplier<String[]> actualSupplier, Consumer<String[]> sortTask, Function<String[], Boolean> isSortedTask) {
+    private static void populateGridRow(StringGrid grid, String[] example, String[] expected, Supplier<String[]> actualSupplier, Consumer<String[]> sortTask) {
         String[] actual = actualSupplier.get();
         sortTask.accept(actual);
-        grid.row(Arrays.toString(example), Arrays.toString(expected), Arrays.toString(actual), isSortedTask.apply(actual));
+        grid.row(Arrays.toString(example), Arrays.toString(expected), Arrays.toString(actual), SortUtility.isSorted(actual));
     }
 
     private static void populateGridRow(StringGrid grid, Supplier<String[]> exampleSupplier, String[] input) {

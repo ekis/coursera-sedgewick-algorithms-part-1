@@ -2,19 +2,23 @@ package jobinterview.sort;
 
 import edu.princeton.cs.algs4.Insertion;
 import edu.princeton.cs.algs4.Selection;
+import ekis.common.Pair;
 import ekis.common.StringGrid;
 import ekis.common.TestSupport;
 import jobinterview.sort.mergesort.MyBottomUpMergeSort;
 import jobinterview.sort.mergesort.MyTopDownMergeSort;
-import jobinterview.sort.quicksort.MyQuickSort;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.stream.IntStream;
 
 public final class SortStabilityTest {
+    private static final Comparator<Pair<Integer, String>> BY_ID = Comparator.comparingInt(Pair::x);
+    private static final Comparator<Pair<Integer, String>> BY_NAME = Comparator.comparing(Pair::y);
 
     @Test
     public void testSelectionSortStability() {
@@ -75,20 +79,24 @@ public final class SortStabilityTest {
         // array will end up sorted in stable sort order, entirely by accident, which makes conclusions relying on
     }
 
-    private static void sortAndCheck(BiConsumer<TestPair[], Comparator<TestPair>> referenceSortTask, BiConsumer<TestPair[], Comparator<TestPair>> mySortTask, String[] expectedGrid) {
+    private static void sortAndCheck(BiConsumer<Pair<Integer, String>[], Comparator<Pair<Integer, String>>> referenceSortTask, BiConsumer<Pair<Integer, String>[], Comparator<Pair<Integer, String>>> mySortTask, String[] expectedGrid) {
         StringGrid grid = initialiseGrid();
 
-        TestPair[] unsorted = unsorted();
-        TestPair[] expected = unsorted();
-        TestPair[] actual = unsorted();
+        Pair<Integer, String>[] unsorted = unsorted();
+        Pair<Integer, String>[] expected = unsorted();
+        Pair<Integer, String>[] actual = unsorted();
 
-        referenceSortTask.accept(expected, TestPair.BY_NAME);
-        referenceSortTask.accept(expected, TestPair.BY_ID);
-        mySortTask.accept(actual, TestPair.BY_NAME);
-        mySortTask.accept(actual, TestPair.BY_ID);
+        referenceSortTask.accept(expected, BY_NAME);
+        referenceSortTask.accept(expected, BY_ID);
+        mySortTask.accept(actual, BY_NAME);
+        mySortTask.accept(actual, BY_ID);
 
-        IntStream.range(0, 8).forEach(i -> grid.row(unsorted[i], expected[i], actual[i]));
+        IntStream.range(0, 8).forEach(i -> grid.row(format(unsorted[i]), format(expected[i]), format(actual[i])));
         TestSupport.check(grid, expectedGrid);
+    }
+
+    private static String format(Pair<Integer, String> pair) {
+        return String.format("(ID, Name) -> (%s, %s)", pair.x(), pair.y());
     }
 
     private static String[] stableSortExpectation() {
@@ -115,34 +123,17 @@ public final class SortStabilityTest {
         return grid;
     }
 
-    private static TestPair[] unsorted() {
-        TestPair[] testPairs = new TestPair[8];
-        testPairs[0] = new TestPair(3, "Kanaga");
-        testPairs[1] = new TestPair(3, "Chen");
-        testPairs[2] = new TestPair(4, "Gazsi");
-        testPairs[3] = new TestPair(3, "Fox");
-        testPairs[4] = new TestPair(2, "Rohde");
-        testPairs[5] = new TestPair(3, "Andrews");
-        testPairs[6] = new TestPair(4, "Battle");
-        testPairs[7] = new TestPair(1, "Furia");
-        return testPairs;
-    }
-
-    private static class TestPair {
-        private static final Comparator<TestPair> BY_ID = Comparator.comparingInt(p -> p.id);
-        private static final Comparator<TestPair> BY_NAME = Comparator.comparing(p -> p.lastName);
-
-        private final int id;
-        private final String lastName;
-
-        private TestPair(int a, String b) {
-            id = a;
-            lastName = b;
-        }
-
-        @Override
-        public String toString() {
-            return String.format("(ID, Name) -> (%s, %s)", id, lastName);
-        }
+    @SuppressWarnings("unchecked")
+    private static Pair<Integer, String>[] unsorted() {
+        List<Pair<Integer, String>> pairs = new ArrayList<>();
+        pairs.add(Pair.of(3, "Kanaga"));
+        pairs.add(Pair.of(3, "Chen"));
+        pairs.add(Pair.of(4, "Gazsi"));
+        pairs.add(Pair.of(3, "Fox"));
+        pairs.add(Pair.of(2, "Rohde"));
+        pairs.add(Pair.of(3, "Andrews"));
+        pairs.add(Pair.of(4, "Battle"));
+        pairs.add(Pair.of(1, "Furia"));
+        return pairs.toArray(new Pair[pairs.size()]);
     }
 }

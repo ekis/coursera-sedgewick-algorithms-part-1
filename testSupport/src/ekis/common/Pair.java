@@ -11,7 +11,7 @@ public final class Pair<T, V> {
         this.y = y;
     }
 
-    public static <T, V> Pair of(T x, V y) {
+    public static <T, V> Pair<T, V> of(T x, V y) {
         return new Pair<>(x, y);
     }
 

@@ -1,9 +1,9 @@
 package jobinterview.sort;
 
-import jobinterview.MySort;
-
 import java.util.Comparator;
 import java.util.function.BiPredicate;
+
+import static jobinterview.SortUtility.*;
 
 /**
  * Generalised version of Insertion sort - it uses the same principle, except it works in multiple passes, each pass
@@ -15,7 +15,7 @@ import java.util.function.BiPredicate;
  * and is easy to compute. There are better (but more complex) sequences discovered, however, all are sub-quadratic.
  *
  */
-public final class MyShell extends MySort {
+public final class MyShell {
 
     private MyShell() {
     }

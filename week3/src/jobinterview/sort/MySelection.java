@@ -1,9 +1,9 @@
 package jobinterview.sort;
 
-import jobinterview.MySort;
-
 import java.util.Comparator;
 import java.util.function.BiPredicate;
+
+import static jobinterview.SortUtility.*;
 
 /**
  * First, find the smallest item in the array and exchange it with first item.
@@ -12,7 +12,7 @@ import java.util.function.BiPredicate;
  *
  * Created by ekis on 05/02/17.
  */
-public final class MySelection extends MySort {
+public final class MySelection {
 
     private MySelection() {}
 

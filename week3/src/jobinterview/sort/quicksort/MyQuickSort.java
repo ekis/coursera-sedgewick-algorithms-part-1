@@ -5,13 +5,17 @@ import edu.princeton.cs.algs4.Knuth;
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 
+import static jobinterview.SortUtility.lessWithComparable;
+import static jobinterview.SortUtility.lessWithComparator;
+import static jobinterview.sort.quicksort.MyQuick.partition;
+
 /**
  * Sorts the array by shuffling it initially, pick a suitable pivot element and then partition the array so that
  * - all elements LEFT (== with smaller index) of pivot are not greater than pivot
  * - all elements RIGHT (== with greater index) of pivot are not lesser than pivot
  * Then sort both partitions recursively.
  */
-public final class MyQuickSort extends MyQuick {
+public final class MyQuickSort {
 
     public static <T extends Comparable<? super T>> void sort(T[] a) {
         Knuth.shuffle(a);

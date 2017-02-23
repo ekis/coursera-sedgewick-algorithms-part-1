@@ -27,20 +27,20 @@ import java.util.stream.Stream;
  * Such a check on a list is at best O(n) and it dominates the test runtime. Only a more advanced data structure would support such faster ops.
  *
  */
-public final class SetArrays {
+final class SetArrays {
 
     private final List<Point> a = new ArrayList<>();
     private final List<Point> b = new ArrayList<>();
 
-    public void addToA(int x, int y) {
+    void addToA(int x, int y) {
         a.add(new Point(x, y));
     }
 
-    public void addToB(int x, int y) {
+    void addToB(int x, int y) {
         b.add(new Point(x, y));
     }
 
-    public long intersectCount() {
+    long intersectCount() {
         Point[] as = a.toArray(new Point[a.size()]);
         Point[] bs = b.toArray(new Point[b.size()]);
         if (as.length > bs.length)
@@ -48,7 +48,7 @@ public final class SetArrays {
         return countIntersections(as, bs);
     }
 
-    public boolean isAPermutationOfB() {
+    boolean isAPermutationOfB() {
         Point[] as = a.toArray(new Point[a.size()]);
         Point[] bs = b.toArray(new Point[b.size()]);
         return as.length == bs.length && isAPermutationOfB(as, bs);

@@ -1,10 +1,10 @@
 package jobinterview.sort.quicksort;
 
-import jobinterview.MySort;
-
 import java.util.function.BiPredicate;
 
-abstract class MyQuick extends MySort {
+import static jobinterview.SortUtility.exch;
+
+final class MyQuick {
 
     /**
      * Phase 1. Repeat until i and j pointers cross:
@@ -15,7 +15,7 @@ abstract class MyQuick extends MySort {
      * Phase 2. When j < i:
      * - exchange a[pivot] with a[j]
      */
-    protected static final <T> int partition(BiPredicate<T, T> lessF, T[] a, int lo, int hi) {
+    static <T> int partition(BiPredicate<T, T> lessF, T[] a, int lo, int hi) {
         T pivot = a[lo];
         int i = lo + 1;
         int j = hi;

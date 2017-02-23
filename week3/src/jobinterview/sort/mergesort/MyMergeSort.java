@@ -1,14 +1,12 @@
 package jobinterview.sort.mergesort;
 
-import jobinterview.MySort;
-
 import java.util.function.BiPredicate;
 
-abstract class MyMergeSort extends MySort {
+final class MyMergeSort {
 
-    protected static final int CUTOFF = 7;
+    static final int CUTOFF = 7;
 
-    protected static final <T> void merge(BiPredicate<T, T> lessF, T[] aux, T[] a, int lo, int mid, int hi) {
+    static <T> void merge(BiPredicate<T, T> lessF, T[] aux, T[] a, int lo, int mid, int hi) {
         int i = lo;      // current entry in the left sub-array
         int j = mid + 1; // current entry in the right sub-array
         int k;           // current entry in the sorted array

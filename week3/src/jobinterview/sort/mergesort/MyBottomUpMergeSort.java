@@ -3,6 +3,9 @@ package jobinterview.sort.mergesort;
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 
+import static jobinterview.SortUtility.*;
+import static jobinterview.sort.mergesort.MyMergeSort.*;
+
 /**
  * Works by organising the merges so that we do all the merges of tiny subarrays in one pass,
  * then do a second pass to merge those subarrays in pairs and so forth, continuing until we do a merge that
@@ -10,7 +13,7 @@ import java.util.function.BiPredicate;
  *
  * Does not use recursion, which may be an advantage in languages that do not do tail-recursive optimisation (Java).
  */
-public final class MyBottomUpMergeSort extends MyMergeSort {
+public final class MyBottomUpMergeSort {
 
 
     public static <T extends Comparable<T>> void sort(T[] a) {
