@@ -340,7 +340,7 @@ public class PercolationTest {
                 String s = testOpenAt(i, j, p);
                 row[j - 1] = s;
             }
-            grid.row(row);
+            grid.row((Object[]) row);
         }
         return grid;
     }

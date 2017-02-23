@@ -119,7 +119,7 @@ public class DequeTest {
         assertEquals("6 4 3 2 1 5 7 0 ", sb.toString());
     }
 
-    private static Deque<Integer> add(int size, BiConsumer<Deque, Integer> f) {
+    private static Deque<Integer> add(int size, BiConsumer<Deque<Integer>, Integer> f) {
         Deque<Integer> deque = new Deque<>();
         for (int i = size; i > 0; i--) {
             f.accept(deque, i);

@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 // backed by resizable array
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
+    @SuppressWarnings("unchecked") // no way to prevent this cast as the arrays are reified
     private Item[] array = (Item[]) new Object[1];
     private int N = 0; // number of elements in array
 
@@ -73,6 +74,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             }
 
             private Item[] shuffledArray() { // see if we can rely on sample() instead of shuffling the array here
+                @SuppressWarnings("unchecked") // no way to prevent this cast as the arrays are reified
                 Item[] result = (Item[]) new Object[itemCount];
                 for (int i = 0; i < itemCount; i++) {
                     result[i] = array[i];
@@ -109,6 +111,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private void resize(int newSize) {
+        @SuppressWarnings("unchecked") // no way to prevent this cast as the arrays are reified
         Item[] newArray = (Item[]) new Object[newSize];
         for (int i = 0; i < N; i++)
             newArray[i] = array[i];

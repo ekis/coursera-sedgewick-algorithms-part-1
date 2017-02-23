@@ -128,7 +128,7 @@ public final class SortTest {
     private static StringGrid grid(String... columnNames) {
         StringGrid grid = new StringGrid();
         grid.row();
-        grid.column(columnNames);
+        grid.column((Object []) columnNames);
         grid.alignments(StringGrid.Alignment.CENTER, StringGrid.Alignment.CENTER, StringGrid.Alignment.CENTER, StringGrid.Alignment.CENTER);
         grid.row();
         return grid;
