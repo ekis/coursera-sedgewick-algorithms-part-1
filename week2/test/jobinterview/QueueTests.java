@@ -7,9 +7,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static jobinterview.Week2TestHelper.*;
 
-/**
- * Created by ekis on 14/12/16.
- */
 public class QueueTests {
 
     @Test

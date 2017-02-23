@@ -9,8 +9,6 @@ import static jobinterview.SortUtility.*;
  * First, find the smallest item in the array and exchange it with first item.
  * Then, find the next smallest item in the array and exchange it with second item.
  * Continue until array is sorted.
- *
- * Created by ekis on 05/02/17.
  */
 public final class MySelection {
 

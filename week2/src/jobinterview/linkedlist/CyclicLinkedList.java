@@ -3,9 +3,6 @@ package jobinterview.linkedlist;
 
 import java.util.Optional;
 
-/**
- * Created by ekis on 19/12/16.
- */
 public class CyclicLinkedList<T> {
 
     private Builder.Node<T> first;

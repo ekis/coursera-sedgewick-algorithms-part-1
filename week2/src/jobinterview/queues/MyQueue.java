@@ -2,9 +2,6 @@ package jobinterview.queues;
 
 import jobinterview.MyCollection;
 
-/**
- * Created by ekis on 14/12/16.
- */
 public interface MyQueue<T> extends MyCollection<T> {
 
     /**

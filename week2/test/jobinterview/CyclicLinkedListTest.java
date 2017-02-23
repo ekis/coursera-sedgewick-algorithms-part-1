@@ -7,9 +7,6 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by ekis on 20/12/16.
- */
 public class CyclicLinkedListTest {
 
     @Test

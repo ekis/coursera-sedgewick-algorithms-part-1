@@ -9,9 +9,6 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertArrayEquals;
 
-/**
- * Created by ekis on 12/02/17.
- */
 public class DutchNationalFlagSortTest {
 
     private static final int[] SMALL = new int[]{0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2};

@@ -10,9 +10,6 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-/**
- * Created by ekis on 10/02/17.
- */
 public final class TestResourceLoader {
 
     public static Integer[] loadIntegersFrom(String resourceName) throws URISyntaxException, IOException {

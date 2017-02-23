@@ -1,8 +1,5 @@
 package jobinterview.queues;
 
-/**
- * Created by ekis on 14/12/16.
- */
 public class Queues {
 
     public static <T> MyQueue<T> simpleQueue() {

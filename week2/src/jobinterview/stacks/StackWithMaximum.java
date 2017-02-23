@@ -6,8 +6,6 @@ import java.util.NoSuchElementException;
 
 /**
  * A stack implementation which tracks the maximum element currently on stack.
- *
- * Created by ekis on 17/12/16.
  */
 public class StackWithMaximum<T> implements MyStack<T> {
     private final MyStack<T> stack = Stacks.simpleStack();

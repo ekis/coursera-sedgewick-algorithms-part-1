@@ -7,9 +7,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-/**
- * Created by ekis on 15/12/16.
- */
 class TwoStackQueue<T> implements MyQueue<T> {
     private MyStack<T> inbox = Stacks.simpleStack();
     private MyStack<T> outbox = Stacks.simpleStack();

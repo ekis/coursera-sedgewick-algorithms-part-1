@@ -10,9 +10,6 @@ import java.util.function.Consumer;
 import static jobinterview.Week2TestHelper.testCollectionState;
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by ekis on 12/12/16.
- */
 public class StackTests {
 
     @Test

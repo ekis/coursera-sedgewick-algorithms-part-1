@@ -5,8 +5,6 @@ import java.util.NoSuchElementException;
 
 /**
  * Stack backed by a singly-linked list.
- *
- * Created by ekis on 12/12/16.
  */
 class SimpleStack<T> implements MyStack<T> {
 

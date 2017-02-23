@@ -5,9 +5,6 @@ import java.util.stream.StreamSupport;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by ekis on 14/12/16.
- */
 class Week2TestHelper {
 
     static <T> void testCollectionState(String expected, MyCollection<T> collection) {

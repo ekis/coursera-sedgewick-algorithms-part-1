@@ -5,9 +5,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Created by ekis on 20/12/16.
- */
 public class RandomLinkedList<T> implements Iterable<String> {
     private static Map<Integer, Node<?>> cache = new HashMap<>();
     private Node<T> first;

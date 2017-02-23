@@ -4,8 +4,6 @@ import java.util.Iterator;
 
 /**
  * Queue backed by doubly-linked, circular linked list.
- *
- * Created by ekis on 14/12/16.
  */
 class SimpleQueue<T> implements MyQueue<T> {
 

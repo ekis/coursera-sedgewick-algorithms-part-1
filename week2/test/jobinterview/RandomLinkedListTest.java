@@ -8,9 +8,6 @@ import java.util.stream.StreamSupport;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by ekis on 31/01/17.
- */
 public class RandomLinkedListTest {
 
     @Test
@@ -24,11 +21,9 @@ public class RandomLinkedListTest {
         assertEquals(130, linkedList.size());
 
         String original = stringTraceOf(linkedList);
-        //System.out.println("Original list -> \n" + original);
 
         RandomLinkedList<Integer> clonedList = linkedList.cloneLinkedList();
         String cloned = stringTraceOf(clonedList);
-        //System.out.println("Cloned list -> \n" + cloned);
         assertEquals(original, cloned);
     }
 

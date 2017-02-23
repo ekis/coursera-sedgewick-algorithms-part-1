@@ -2,9 +2,6 @@ package jobinterview.stacks;
 
 import java.util.Comparator;
 
-/**
- * Created by ekis on 14/12/16.
- */
 public class Stacks {
 
     public static <T> MyStack<T> simpleStack() {
