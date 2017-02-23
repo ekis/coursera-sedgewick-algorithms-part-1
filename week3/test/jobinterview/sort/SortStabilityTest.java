@@ -1,20 +1,17 @@
 package jobinterview.sort;
 
-import edu.princeton.cs.algs4.Insertion;
-import edu.princeton.cs.algs4.Selection;
 import ekis.common.Pair;
 import ekis.common.StringGrid;
 import ekis.common.TestSupport;
-import jobinterview.sort.mergesort.MyBottomUpMergeSort;
-import jobinterview.sort.mergesort.MyTopDownMergeSort;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.stream.IntStream;
+
+import static jobinterview.sort.SortAlgorithm.*;
 
 public final class SortStabilityTest {
     private static final Comparator<Pair<Integer, String>> BY_ID = Comparator.comparingInt(Pair::x);
@@ -23,29 +20,29 @@ public final class SortStabilityTest {
     @Test
     public void testSelectionSortStability() {
         String[] expected = new String[] {
-                "Unsorted                   | Expected                   | Actual                    ", //
+                "Unsorted input             | System sort output         | Actual output             ", //
                 "                           |                            |                           ", //
                 "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ", //
                 "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ", //
-                "(ID, Name) -> (4, Gazsi)   | (ID, Name) -> (3, Chen)    | (ID, Name) -> (3, Chen)   ", //
-                "(ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Fox)    ", //
-                "(ID, Name) -> (2, Rohde)   | (ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Andrews)", //
+                "(ID, Name) -> (4, Gazsi)   | (ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Chen)   ", //
+                "(ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Chen)    | (ID, Name) -> (3, Fox)    ", //
+                "(ID, Name) -> (2, Rohde)   | (ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Andrews)", //
                 "(ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Kanaga)  | (ID, Name) -> (3, Kanaga) ", //
-                "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Gazsi)  ", //
-                "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle) " //
+                "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Gazsi)  ", //
+                "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Battle) " //
         };
-        sortAndCheck(Selection::sort, MySelection::sort, expected);
+        sortAndCheck(SELECTION, expected);
     }
 
     @Test
     public void testInsertionSortStability() {
-        sortAndCheck(Insertion::sort, MyInsertion::sort, stableSortExpectation());
+        sortAndCheck(INSERTION, stableSortExpectation());
     }
 
     @Test
     public void testShellSortStability() {
         String[] expected = new String[] {
-                "Unsorted                   | Expected                   | Actual                    ", //
+                "Unsorted input             | System sort output         | Actual output             ", //
                 "                           |                            |                           ", //
                 "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ", //
                 "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ", //
@@ -56,17 +53,22 @@ public final class SortStabilityTest {
                 "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle) ", //
                 "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Gazsi)  " //
         };
-        sortAndCheck(Arrays::sort, MyShell::sort, expected); // no reference shell sort with comparators provided, using system sort as comparison
+        sortAndCheck(SHELL, expected);
+    }
+
+    @Test
+    public void testShellSortViaArrayStability() {
+        sortAndCheck(SHELL_VIA_ARRAY, stableSortExpectation());
     }
 
     @Test
     public void testTopDownMergeSortStability() {
-        sortAndCheck(Arrays::sort, MyTopDownMergeSort::sort, stableSortExpectation());
+        sortAndCheck(MERGE_TOP_DOWN, stableSortExpectation());
     }
 
     @Test
     public void testBottomUpMergeSortStability() {
-        sortAndCheck(Arrays::sort, MyBottomUpMergeSort::sort, stableSortExpectation());
+        sortAndCheck(MERGE_BOTTOM_UP, stableSortExpectation());
     }
 
     @Test
@@ -79,17 +81,17 @@ public final class SortStabilityTest {
         // array will end up sorted in stable sort order, entirely by accident, which makes conclusions relying on
     }
 
-    private static void sortAndCheck(BiConsumer<Pair<Integer, String>[], Comparator<Pair<Integer, String>>> referenceSortTask, BiConsumer<Pair<Integer, String>[], Comparator<Pair<Integer, String>>> mySortTask, String[] expectedGrid) {
+    private static void sortAndCheck(SortAlgorithm algorithm, String[] expectedGrid) {
         StringGrid grid = initialiseGrid();
 
         Pair<Integer, String>[] unsorted = unsorted();
         Pair<Integer, String>[] expected = unsorted();
         Pair<Integer, String>[] actual = unsorted();
 
-        referenceSortTask.accept(expected, BY_NAME);
-        referenceSortTask.accept(expected, BY_ID);
-        mySortTask.accept(actual, BY_NAME);
-        mySortTask.accept(actual, BY_ID);
+        Arrays.sort(expected, BY_NAME);
+        Arrays.sort(expected, BY_ID);
+        algorithm.sort(actual, BY_NAME);
+        algorithm.sort(actual, BY_ID);
 
         IntStream.range(0, 8).forEach(i -> grid.row(format(unsorted[i]), format(expected[i]), format(actual[i])));
         TestSupport.check(grid, expectedGrid);
@@ -101,7 +103,7 @@ public final class SortStabilityTest {
 
     private static String[] stableSortExpectation() {
         return new String[]{
-                "Unsorted                   | Expected                   | Actual                    ", //
+                "Unsorted input             | System sort output         | Actual output             ", //
                 "                           |                            |                           ", //
                 "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ", //
                 "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ", //
@@ -117,7 +119,7 @@ public final class SortStabilityTest {
     private static StringGrid initialiseGrid() {
         StringGrid grid = new StringGrid();
         grid.row();
-        grid.column("Unsorted", "Expected", "Actual");
+        grid.column("Unsorted input", "System sort output", "Actual output");
         grid.alignments(StringGrid.Alignment.LEFT, StringGrid.Alignment.LEFT, StringGrid.Alignment.LEFT);
         grid.row();
         return grid;

@@ -20,7 +20,7 @@ public final class MyShell {
     private MyShell() {
     }
 
-    public static <T extends Comparable<T>> void sort(T[] a) {
+    public static <T extends Comparable<? super T>> void sort(T[] a) {
         sort(a, lessWithComparable());
     }
 

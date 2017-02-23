@@ -21,7 +21,7 @@ final class MyQuick {
         int j = hi;
 
         while (true) { // phase 1
-            while (i <= hi && lessF.test(a[i], pivot)) // is a[i] > pivot?
+            while (i <= hi && (lessF.test(a[i], pivot) || a[i].equals(pivot))) // is a[i] > pivot?
                 i++;
 
             while (j >= i && !lessF.test(a[j], pivot))  // is a[j] <= pivot?

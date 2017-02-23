@@ -21,7 +21,7 @@ import static jobinterview.sort.mergesort.MyMergeSort.merge;
  */
 public final class MyTopDownMergeSort {
 
-    public static <T extends Comparable<T>> void sort(T[] a) {
+    public static <T extends Comparable<? super T>> void sort(T[] a) {
         @SuppressWarnings("unchecked")
         T[] aux = (T[]) new Comparable[a.length]; // auxilliary array for merges
 

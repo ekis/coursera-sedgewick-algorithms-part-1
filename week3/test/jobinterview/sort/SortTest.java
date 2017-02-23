@@ -3,16 +3,14 @@ package jobinterview.sort;
 import ekis.common.StringGrid;
 import ekis.common.TestSupport;
 import jobinterview.SortUtility;
-import jobinterview.sort.mergesort.MyBottomUpMergeSort;
-import jobinterview.sort.mergesort.MyTopDownMergeSort;
 import jobinterview.sort.quicksort.MyQuickSelect;
-import jobinterview.sort.quicksort.MyQuickSort;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
+
+import static jobinterview.sort.SortAlgorithm.*;
 
 public final class SortTest {
 
@@ -27,37 +25,37 @@ public final class SortTest {
 
     @Test
     public void testSelectionSort() {
-        testAndSort(MySelection::sort);
+        testAndSort(SELECTION);
     }
 
     @Test
     public void testInsertionSort() {
-        testAndSort(MyInsertion::sort);
+        testAndSort(INSERTION);
     }
 
     @Test
     public void testShellSort() {
-        testAndSort(MyShell::sort);
+        testAndSort(SHELL);
     }
 
     @Test
     public void testShellViaArraySort() {
-        testAndSort(MyShellViaArray::sort);
+        testAndSort(SHELL_VIA_ARRAY);
     }
 
     @Test
     public void testTopDownMergeSort() {
-        testAndSort(MyTopDownMergeSort::sort);
+        testAndSort(MERGE_TOP_DOWN);
     }
 
     @Test
     public void testBottomUpMergeSort() {
-        testAndSort(MyBottomUpMergeSort::sort);
+        testAndSort(MERGE_BOTTOM_UP);
     }
 
     @Test
     public void testQuickSort() {
-        testAndSort(MyQuickSort::sort);
+        testAndSort(QUICK);
     }
 
     @Test
@@ -79,7 +77,7 @@ public final class SortTest {
         TestSupport.check(grid, expectedGrid);
     }
 
-    private static void testAndSort(Consumer<String[]> sortTask) {
+    private static void testAndSort(SortAlgorithm algorithm) {
         String[] expectedGrid = new String[]{
                 "                     Input                       |                     Expected                     |                      Actual                      | Is sorted?", //
                 "                                                 |                                                  |                                                  |           ", //
@@ -90,9 +88,9 @@ public final class SortTest {
 
         StringGrid grid = grid("Input", "Expected", "Actual", "Is sorted?");
 
-        populateGridRow(grid, EXAMPLE_1, EXPECTED_1, SortTest::copyExample1, sortTask);
-        populateGridRow(grid, EXAMPLE_2, EXPECTED_2, SortTest::copyExample2, sortTask);
-        populateGridRow(grid, EXAMPLE_3, EXPECTED_3, SortTest::copyExample3, sortTask);
+        populateGridRow(grid, EXAMPLE_1, EXPECTED_1, SortTest::copyExample1, algorithm);
+        populateGridRow(grid, EXAMPLE_2, EXPECTED_2, SortTest::copyExample2, algorithm);
+        populateGridRow(grid, EXAMPLE_3, EXPECTED_3, SortTest::copyExample3, algorithm);
 
         TestSupport.check(grid, expectedGrid);
     }
@@ -113,9 +111,9 @@ public final class SortTest {
         return Arrays.copyOf(array, array.length);
     }
 
-    private static void populateGridRow(StringGrid grid, String[] example, String[] expected, Supplier<String[]> actualSupplier, Consumer<String[]> sortTask) {
+    private static void populateGridRow(StringGrid grid, String[] example, String[] expected, Supplier<String[]> actualSupplier, SortAlgorithm algorithm) {
         String[] actual = actualSupplier.get();
-        sortTask.accept(actual);
+        algorithm.sort(actual);
         grid.row(Arrays.toString(example), Arrays.toString(expected), Arrays.toString(actual), SortUtility.isSorted(actual));
     }
 
