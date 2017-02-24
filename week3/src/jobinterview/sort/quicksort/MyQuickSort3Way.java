@@ -43,9 +43,9 @@ public final class MyQuickSort3Way {
         T pivot = a[lt];
 
         while (i <= gt) {
-            if (i <= hi && lessF.test(a[i], pivot)) exch(a, i++, lt++);
-            else if (gt > lt && lessF.test(pivot, a[i])) exch(a, i, gt--);
-            else if (i <= hi && a[i].equals(pivot)) i++;
+            if (lessF.test(a[i], pivot)) exch(a, i++, lt++);
+            else if (lessF.test(pivot, a[i])) exch(a, i, gt--);
+            else i++;
         }
         sort(lessF, a, lo, lt - 1);
         sort(lessF, a, gt + 1, hi);
