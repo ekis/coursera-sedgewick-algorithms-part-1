@@ -23,7 +23,7 @@ public final class MyShellViaArray {
 
     private static <T> void sort(T[] a, BiPredicate<T, T> lessF) {
         int N = a.length;
-        int strides[] = new int[N / 3 - 1];
+        int strides[] = new int[computeStridesLengthFor(N)];
         int L = strides.length;
 
         int idx = 1, h = 1;
@@ -40,5 +40,15 @@ public final class MyShellViaArray {
                     exch(a, k, k - h);
             }
         }
+    }
+
+    private static int computeStridesLengthFor(int N) {
+        int h = 1;
+        int result = 1;
+        while (h < N / 3) {
+            h = 3 * h + 1;
+            result++;
+        }
+        return result;
     }
 }

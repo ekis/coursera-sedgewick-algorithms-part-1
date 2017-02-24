@@ -9,15 +9,16 @@ import static jobinterview.sort.SortAlgorithm.*;
 public final class SortCompareTest {
 
     private static final int T = 100; // number of random arrays
-    private static final int N = 100000;  // random array length
+    private static final int N = 10000;  // random array length
 
     @Test
     public void compareAlgorithms() {
-        compare(INSERTION, SHELL);
-        compare(INSERTION, MERGE_BOTTOM_UP);
-        compare(INSERTION, MERGE_TOP_DOWN);
+        compare(SHELL, INSERTION);
+        compare(MERGE_BOTTOM_UP, INSERTION);
+        compare(MERGE_TOP_DOWN, INSERTION);
+        compare(QUICK, INSERTION);
+        compare(SHELL, SHELL_VIA_ARRAY);
         compare(MERGE_BOTTOM_UP, MERGE_TOP_DOWN);
-        compare(INSERTION, QUICK);
         compare(MERGE_BOTTOM_UP, QUICK);
         compare(MERGE_TOP_DOWN, QUICK);
         compare(QUICK_3_WAY, QUICK);

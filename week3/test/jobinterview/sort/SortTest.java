@@ -1,5 +1,6 @@
 package jobinterview.sort;
 
+import edu.princeton.cs.algs4.StdRandom;
 import ekis.common.StringGrid;
 import ekis.common.TestSupport;
 import jobinterview.SortUtility;
@@ -8,6 +9,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.function.Supplier;
+import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 
 import static jobinterview.sort.SortAlgorithm.*;
@@ -25,42 +27,42 @@ public final class SortTest {
 
     @Test
     public void testSelectionSort() {
-        testAndSort(SELECTION);
+        sortAndTest(SELECTION, 15000);
     }
 
     @Test
     public void testInsertionSort() {
-        testAndSort(INSERTION);
+        sortAndTest(INSERTION, 15000);
     }
 
     @Test
     public void testShellSort() {
-        testAndSort(SHELL);
+        sortAndTest(SHELL, 500000);
     }
 
     @Test
     public void testShellViaArraySort() {
-        testAndSort(SHELL_VIA_ARRAY);
+        sortAndTest(SHELL_VIA_ARRAY, 500000);
     }
 
     @Test
     public void testTopDownMergeSort() {
-        testAndSort(MERGE_TOP_DOWN);
+        sortAndTest(MERGE_TOP_DOWN, 1000000);
     }
 
     @Test
     public void testBottomUpMergeSort() {
-        testAndSort(MERGE_BOTTOM_UP);
+        sortAndTest(MERGE_BOTTOM_UP, 1000000);
     }
 
     @Test
     public void testQuickSort() {
-        testAndSort(QUICK);
+        sortAndTest(QUICK, 1000000);
     }
 
     @Test
     public void testQuick3WaySort() {
-        testAndSort(QUICK_3_WAY);
+        sortAndTest(QUICK_3_WAY, 1000000);
     }
 
     @Test
@@ -82,7 +84,7 @@ public final class SortTest {
         TestSupport.check(grid, expectedGrid);
     }
 
-    private static void testAndSort(SortAlgorithm algorithm) {
+    private static void sortAndTest(SortAlgorithm algorithm, int randomTestSize) {
         String[] expectedGrid = new String[]{
                 "                     Input                       |                     Expected                     |                      Actual                      | Is sorted?", //
                 "                                                 |                                                  |                                                  |           ", //
@@ -97,6 +99,14 @@ public final class SortTest {
         populateGridRow(grid, EXAMPLE_2, EXPECTED_2, SortTest::copyExample2, algorithm);
         populateGridRow(grid, EXAMPLE_3, EXPECTED_3, SortTest::copyExample3, algorithm);
         TestSupport.check(grid, expectedGrid);
+
+        testRandomSort(algorithm, randomTestSize);
+    }
+
+    private static void testRandomSort(SortAlgorithm algorithm, int N) {
+        Double[] doubles = DoubleStream.iterate(0, x -> StdRandom.uniform()).limit(N).boxed().toArray(Double[]::new);
+        algorithm.sort(doubles);
+        SortUtility.isSorted(doubles);
     }
 
     private static String[] copyExample1() {
