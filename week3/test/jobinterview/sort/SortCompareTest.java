@@ -20,6 +20,7 @@ public final class SortCompareTest {
         compare(INSERTION, QUICK);
         compare(MERGE_BOTTOM_UP, QUICK);
         compare(MERGE_TOP_DOWN, QUICK);
+        compare(QUICK_3_WAY, QUICK);
     }
 
     private static void compare(SortAlgorithm alg1, SortAlgorithm alg2) {

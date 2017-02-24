@@ -3,6 +3,7 @@ package jobinterview.sort;
 import jobinterview.sort.mergesort.MyBottomUpMergeSort;
 import jobinterview.sort.mergesort.MyTopDownMergeSort;
 import jobinterview.sort.quicksort.MyQuickSort;
+import jobinterview.sort.quicksort.MyQuickSort3Way;
 
 import java.util.Comparator;
 import java.util.function.BiConsumer;
@@ -16,7 +17,8 @@ public enum SortAlgorithm {
     SHELL_VIA_ARRAY(MyShellViaArray::sort, MyShellViaArray::sort, "Shell (array-backed)"),
     MERGE_BOTTOM_UP(MyBottomUpMergeSort::sort, MyBottomUpMergeSort::sort, "Merge (Bottom Up)"),
     MERGE_TOP_DOWN(MyTopDownMergeSort::sort, MyTopDownMergeSort::sort, "Merge (Top Down)"),
-    QUICK(MyQuickSort::sort, MyQuickSort::sort, "Quick");
+    QUICK(MyQuickSort::sort, MyQuickSort::sort, "Quick"),
+    QUICK_3_WAY(MyQuickSort3Way::sort, MyQuickSort3Way::sort, "Quick 3-way");
 
     private final Consumer sortF;
     private final BiConsumer sortComparatorF;

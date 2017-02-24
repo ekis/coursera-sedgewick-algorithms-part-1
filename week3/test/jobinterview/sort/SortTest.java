@@ -59,6 +59,11 @@ public final class SortTest {
     }
 
     @Test
+    public void testQuick3WaySort() {
+        testAndSort(QUICK_3_WAY);
+    }
+
+    @Test
     public void testQuickSelect() {
         String[] expectedGrid = new String[]{
                 "                  Input Array                    |                                                           Actual Output [format: (index k -> array element)]                                                          ", //
@@ -91,7 +96,6 @@ public final class SortTest {
         populateGridRow(grid, EXAMPLE_1, EXPECTED_1, SortTest::copyExample1, algorithm);
         populateGridRow(grid, EXAMPLE_2, EXPECTED_2, SortTest::copyExample2, algorithm);
         populateGridRow(grid, EXAMPLE_3, EXPECTED_3, SortTest::copyExample3, algorithm);
-
         TestSupport.check(grid, expectedGrid);
     }
 
