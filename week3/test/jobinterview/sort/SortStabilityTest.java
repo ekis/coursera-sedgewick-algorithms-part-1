@@ -58,7 +58,19 @@ public final class SortStabilityTest {
 
     @Test
     public void testShellSortViaArrayStability() {
-        sortAndCheck(SHELL_VIA_ARRAY, stableSortExpectation());
+        String[] expected = new String[] {
+                "Unsorted input             | System sort output         | Actual output             ", //
+                "                           |                            |                           ", //
+                "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ", //
+                "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ", //
+                "(ID, Name) -> (4, Gazsi)   | (ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Chen)   ", //
+                "(ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Chen)    | (ID, Name) -> (3, Andrews)", //
+                "(ID, Name) -> (2, Rohde)   | (ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Kanaga) ", //
+                "(ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Kanaga)  | (ID, Name) -> (3, Fox)    ", //
+                "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle) ", //
+                "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Gazsi)  " //
+        };
+        sortAndCheck(SHELL_VIA_ARRAY, expected);
     }
 
     @Test
