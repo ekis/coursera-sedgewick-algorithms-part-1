@@ -8,13 +8,20 @@ import java.util.stream.Stream;
 
 public final class SortUtility {
 
-    // is v < w ?
     public static <T extends Comparable<? super T>> BiPredicate<T, T> lessWithComparable() {
         return (v, w) -> v.compareTo(w) < 0;
     }
 
+    public static <T extends Comparable<? super T>> BiPredicate<T, T> eq() {
+        return (v, w) -> v.compareTo(w) == 0;
+    }
+
     public static <T> BiPredicate<T, T> lessWithComparator(Comparator<? super T> c) {
         return (t1, t2) -> c.compare(t1, t2) < 0;
+    }
+
+    public static <T> BiPredicate<T, T> eq(Comparator<? super T> c) {
+        return (t1, t2) -> c.compare(t1, t2) == 0;
     }
 
     public static <T> void exch(T[] a, int i, int j) {

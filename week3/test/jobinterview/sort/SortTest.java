@@ -5,6 +5,7 @@ import ekis.common.StringGrid;
 import ekis.common.TestSupport;
 import jobinterview.SortUtility;
 import jobinterview.sort.quicksort.MyQuickSelect;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -66,6 +67,11 @@ public final class SortTest {
     }
 
     @Test
+    public void testQuickSort3WayEntropyOptimal() {
+        sortAndTest(QUICK_3_WAY_ENTROPY_OPTIMAL, 1000000);
+    }
+
+    @Test
     public void testQuickSelect() {
         String[] expectedGrid = new String[]{
                 "                  Input Array                    |                                                           Actual Output [format: (index k -> array element)]                                                          ", //
@@ -95,6 +101,8 @@ public final class SortTest {
 
         StringGrid grid = grid("Input", "Expected", "Actual", "Is sorted?");
 
+        //populateGridRow(grid, EXAMPLE_1, EXPECTED_1, () -> "PABXWPPVPDPCYZ".split(""), algorithm); // Sedgewick demo slides use this series
+
         populateGridRow(grid, EXAMPLE_1, EXPECTED_1, SortTest::copyExample1, algorithm);
         populateGridRow(grid, EXAMPLE_2, EXPECTED_2, SortTest::copyExample2, algorithm);
         populateGridRow(grid, EXAMPLE_3, EXPECTED_3, SortTest::copyExample3, algorithm);
@@ -106,7 +114,7 @@ public final class SortTest {
     private static void testRandomSort(SortAlgorithm algorithm, int N) {
         Double[] doubles = DoubleStream.iterate(0, x -> StdRandom.uniform()).limit(N).boxed().toArray(Double[]::new);
         algorithm.sort(doubles);
-        SortUtility.isSorted(doubles);
+        Assert.assertTrue(SortUtility.isSorted(doubles));
     }
 
     private static String[] copyExample1() {
