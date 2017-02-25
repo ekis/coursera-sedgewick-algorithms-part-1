@@ -33,12 +33,12 @@ public final class MyQuickSortEntropyOptimal {
 
     public static <T extends Comparable<? super T>> void sort(T[] a) {
         Knuth.shuffle(a);
-        sort(lessWithComparable(), eq(), a, 0, a.length - 1);
+        sort(lessF(), eqF(), a, 0, a.length - 1);
     }
 
     public static <T> void sort(T[] a, Comparator<? super T> c) {
         Knuth.shuffle(a);
-        sort(lessWithComparator(c), eq(c), a, 0, a.length - 1);
+        sort(lessF(c), eqF(c), a, 0, a.length - 1);
     }
 
     private static <T> void sort(BiPredicate<T, T> lessF, BiPredicate<T, T> eqF, T[] a, int lo, int hi) {

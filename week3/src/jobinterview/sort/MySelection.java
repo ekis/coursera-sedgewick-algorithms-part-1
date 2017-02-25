@@ -3,7 +3,8 @@ package jobinterview.sort;
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 
-import static jobinterview.SortUtility.*;
+import static jobinterview.SortUtility.exch;
+import static jobinterview.SortUtility.lessF;
 
 /**
  * First, find the smallest item in the array and exchange it with first item.
@@ -15,11 +16,11 @@ public final class MySelection {
     private MySelection() {}
 
     public static <T extends Comparable<? super T>> void sort(T[] a) {
-        sort(a, lessWithComparable());
+        sort(a, lessF());
     }
 
     public static <T> void sort(T[] a, Comparator<? super T> c) {
-        sort(a, lessWithComparator(c));
+        sort(a, lessF(c));
     }
 
     private static <T> void sort(T[] a, BiPredicate<T, T> lessF) {

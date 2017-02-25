@@ -6,8 +6,7 @@ import java.util.Comparator;
 import java.util.function.BiPredicate;
 
 import static jobinterview.SortUtility.exch;
-import static jobinterview.SortUtility.lessWithComparable;
-import static jobinterview.SortUtility.lessWithComparator;
+import static jobinterview.SortUtility.lessF;
 
 /**
  * A variant of Quicksort which aims to improve performance in presence of a significant number of duplicate keys
@@ -27,12 +26,12 @@ public final class MyQuickSort3Way {
 
     public static <T extends Comparable<? super T>> void sort(T[] a) {
         Knuth.shuffle(a);
-        sort(lessWithComparable(), a, 0, a.length - 1);
+        sort(lessF(), a, 0, a.length - 1);
     }
 
     public static <T> void sort(T[] a, Comparator<? super T> c) {
         Knuth.shuffle(a);
-        sort(lessWithComparator(c), a, 0, a.length - 1);
+        sort(lessF(c), a, 0, a.length - 1);
     }
 
     private static <T> void sort(BiPredicate<T, T> lessF, T[] a, int lo, int hi) {

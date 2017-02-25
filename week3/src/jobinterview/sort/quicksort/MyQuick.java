@@ -15,13 +15,13 @@ final class MyQuick {
      * Phase 2. When j < i:
      * - exchange a[pivot] with a[j]
      */
-    static <T> int partition(BiPredicate<T, T> lessF, T[] a, int lo, int hi) {
+    static <T> int partition(BiPredicate<T, T> lessF, BiPredicate<T, T> eqF, T[] a, int lo, int hi) {
         T pivot = a[lo];
         int i = lo + 1;
         int j = hi;
 
         while (true) { // phase 1
-            while (i <= hi && (lessF.test(a[i], pivot) || a[i].equals(pivot))) // is a[i] > pivot?
+            while (i <= hi && (lessF.test(a[i], pivot) || eqF.test(a[i], pivot))) // is a[i] >= pivot?
                 i++;
 
             while (j >= i && !lessF.test(a[j], pivot))  // is a[j] <= pivot?

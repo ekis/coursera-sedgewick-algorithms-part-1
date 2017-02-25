@@ -3,7 +3,8 @@ package jobinterview.sort;
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 
-import static jobinterview.SortUtility.*;
+import static jobinterview.SortUtility.exch;
+import static jobinterview.SortUtility.lessF;
 
 /**
  * Generalised version of Insertion sort - it uses the same principle, except it works in multiple passes, each pass
@@ -21,11 +22,11 @@ public final class MyShell {
     }
 
     public static <T extends Comparable<? super T>> void sort(T[] a) {
-        sort(a, lessWithComparable());
+        sort(a, lessF());
     }
 
     public static <T> void sort(T[] a, Comparator<? super T> c) {
-        sort(a, lessWithComparator(c));
+        sort(a, lessF(c));
     }
 
     private static <T> void sort(T[] a, BiPredicate<T, T> lessF) {

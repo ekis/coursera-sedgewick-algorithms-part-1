@@ -1,5 +1,7 @@
 package jobinterview.sort.mergesort;
 
+import jobinterview.SortUtility;
+
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 
@@ -19,13 +21,13 @@ public final class MyBottomUpMergeSort {
     public static <T extends Comparable<? super T>> void sort(T[] a) {
         @SuppressWarnings("unchecked")
         T[] aux = (T[]) new Comparable[a.length]; // auxilliary array for merges
-        sort(aux, a, lessWithComparable());
+        sort(aux, a, lessF());
     }
 
     public static <T> void sort(T[] a, Comparator<? super T> c) {
         @SuppressWarnings("unchecked")
         T[] aux = (T[]) new Object[a.length];
-        sort(aux, a, lessWithComparator(c));
+        sort(aux, a, SortUtility.lessF(c));
     }
 
     private static <T> void sort(T[] aux, T[] a, BiPredicate<T, T> lessF) {

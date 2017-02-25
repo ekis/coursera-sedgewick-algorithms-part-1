@@ -1,5 +1,6 @@
 package jobinterview.sort.mergesort;
 
+import jobinterview.SortUtility;
 import jobinterview.sort.MyInsertion;
 
 import java.util.Comparator;
@@ -29,7 +30,7 @@ public final class MyTopDownMergeSort {
             MyInsertion.sort(a);
             return;
         }
-        sort(lessWithComparable(), aux, a, 0, a.length - 1);
+        sort(lessF(), aux, a, 0, a.length - 1);
     }
 
     public static <T> void sort(T[] a, Comparator<? super T> c) {
@@ -40,7 +41,7 @@ public final class MyTopDownMergeSort {
             MyInsertion.sort(a, c);
             return;
         }
-        sort(lessWithComparator(c), aux, a, 0, a.length - 1);
+        sort(SortUtility.lessF(c), aux, a, 0, a.length - 1);
     }
 
     private static <T> void sort(BiPredicate<T, T> lessF, T[] aux, T[] a, int lo, int hi) {

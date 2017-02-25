@@ -26,49 +26,53 @@ public final class SortTest {
     private static final String[] EXAMPLE_3 = new String[]{"Q", "U", "I", "C", "K", "S", "O", "R", "T", "E", "X", "A", "M", "P", "L", "E"};
     private static final String[] EXPECTED_3 = new String[]{"A", "C", "E", "E", "I", "K", "L", "M", "O", "P", "Q", "R", "S", "T", "U", "X"};
 
+    private static final int QUADRATIC_ELEMENT_COUNT = 15000;
+    private static final int SUBQUADRATIC_ELEMENT_COUNT = 500000; // 5 * 10^5
+    private static final int LINEARITHMIC_ELEMENT_COUNT = 2000000; // 10^6
+
     @Test
     public void testSelectionSort() {
-        sortAndTest(SELECTION, 15000);
+        sortAndTest(SELECTION, QUADRATIC_ELEMENT_COUNT);
     }
 
     @Test
     public void testInsertionSort() {
-        sortAndTest(INSERTION, 15000);
+        sortAndTest(INSERTION, QUADRATIC_ELEMENT_COUNT);
     }
 
     @Test
     public void testShellSort() {
-        sortAndTest(SHELL, 500000);
+        sortAndTest(SHELL, SUBQUADRATIC_ELEMENT_COUNT);
     }
 
     @Test
     public void testShellViaArraySort() {
-        sortAndTest(SHELL_VIA_ARRAY, 500000);
+        sortAndTest(SHELL_VIA_ARRAY, SUBQUADRATIC_ELEMENT_COUNT);
     }
 
     @Test
     public void testTopDownMergeSort() {
-        sortAndTest(MERGE_TOP_DOWN, 1000000);
+        sortAndTest(MERGE_TOP_DOWN, LINEARITHMIC_ELEMENT_COUNT);
     }
 
     @Test
     public void testBottomUpMergeSort() {
-        sortAndTest(MERGE_BOTTOM_UP, 1000000);
+        sortAndTest(MERGE_BOTTOM_UP, LINEARITHMIC_ELEMENT_COUNT);
     }
 
     @Test
     public void testQuickSort() {
-        sortAndTest(QUICK, 1000000);
+        sortAndTest(QUICK, LINEARITHMIC_ELEMENT_COUNT);
     }
 
     @Test
     public void testQuick3WaySort() {
-        sortAndTest(QUICK_3_WAY, 1000000);
+        sortAndTest(QUICK_3_WAY, LINEARITHMIC_ELEMENT_COUNT);
     }
 
     @Test
     public void testQuickSort3WayEntropyOptimal() {
-        sortAndTest(QUICK_3_WAY_ENTROPY_OPTIMAL, 1000000);
+        sortAndTest(QUICK_3_WAY_ENTROPY_OPTIMAL, LINEARITHMIC_ELEMENT_COUNT);
     }
 
     @Test
