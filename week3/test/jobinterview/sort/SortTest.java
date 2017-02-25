@@ -28,7 +28,7 @@ public final class SortTest {
 
     private static final int QUADRATIC_ELEMENT_COUNT = 15000;
     private static final int SUBQUADRATIC_ELEMENT_COUNT = 500000; // 5 * 10^5
-    private static final int LINEARITHMIC_ELEMENT_COUNT = 2000000; // 10^6
+    private static final int LINEARITHMIC_ELEMENT_COUNT = 1000000; // 10^6
 
     @Test
     public void testSelectionSort() {

@@ -1,10 +1,7 @@
 package jobinterview;
 
-import edu.princeton.cs.algs4.StdOut;
-
 import java.util.Comparator;
 import java.util.function.BiPredicate;
-import java.util.stream.Stream;
 
 public final class SortUtility {
 
@@ -25,13 +22,10 @@ public final class SortUtility {
     }
 
     public static <T> void exch(T[] a, int i, int j) {
+        if (i == j) return;
         T temp = a[i];
         a[i] = a[j];
         a[j] = temp;
-    }
-
-    public static <T extends Comparable<? super T>> void show(T[] a) {
-        Stream.of(a).forEach(x -> StdOut.print(x + " "));
     }
 
     public static <T extends Comparable<? super T>> boolean isSorted(T[] a) {
