@@ -21,14 +21,15 @@ public final class SortCompareTest {
         compare(MERGE_BOTTOM_UP, MERGE_TOP_DOWN);
         compare(MERGE_BOTTOM_UP, QUICK);
         compare(MERGE_TOP_DOWN, QUICK);
-        compare(QUICK_3_WAY, QUICK);
+        compare(QUICK, QUICK_3_WAY);
+
     }
 
     private static void compare(SortAlgorithm alg1, SortAlgorithm alg2) {
         double t1 = timeRandomInput(alg1, N, T);
         double t2 = timeRandomInput(alg2, N, T);
 
-        StdOut.printf("For %d random Doubles\n      %s is", N, alg1.text());
-        StdOut.printf(" %.1f times faster than %s\n", t2/t1, alg2.text());
+        StdOut.printf("For %d random Doubles\n      %s works at", N, alg1.text());
+        StdOut.printf(" %.1f %% of %s\n", t2/t1 * 100, alg2.text());
     }
 }

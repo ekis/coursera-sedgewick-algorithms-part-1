@@ -5,6 +5,8 @@ import java.util.function.BiPredicate;
 
 public final class SortUtility {
 
+    public static final int INSERTION_SORT_CUTOFF = 7;
+
     public static <T extends Comparable<? super T>> BiPredicate<T, T> lessF() {
         return (v, w) -> v.compareTo(w) < 0;
     }

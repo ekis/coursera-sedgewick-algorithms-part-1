@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.function.BiPredicate;
 
 import static jobinterview.SortUtility.*;
-import static jobinterview.sort.mergesort.MyMergeSort.CUTOFF;
 import static jobinterview.sort.mergesort.MyMergeSort.merge;
 /**
  * To sort an array, divide it into two halves, sort the two halves (recursively) and then merge the results.
@@ -26,7 +25,7 @@ public final class MyTopDownMergeSort {
         @SuppressWarnings("unchecked")
         T[] aux = (T[]) new Comparable[a.length]; // auxilliary array for merges
 
-        if (a.length <= CUTOFF) {
+        if (a.length <= INSERTION_SORT_CUTOFF) {
             MyInsertion.sort(a);
             return;
         }
@@ -37,7 +36,7 @@ public final class MyTopDownMergeSort {
         @SuppressWarnings("unchecked")
         T[] aux = (T[]) new Object[a.length]; // auxilliary array for merges
 
-        if (a.length <= CUTOFF) {
+        if (a.length <= INSERTION_SORT_CUTOFF) {
             MyInsertion.sort(a, c);
             return;
         }

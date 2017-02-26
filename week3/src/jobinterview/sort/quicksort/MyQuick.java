@@ -2,9 +2,10 @@ package jobinterview.sort.quicksort;
 
 import java.util.function.BiPredicate;
 
-import static jobinterview.SortUtility.exch;
+import static jobinterview.SortUtility.*;
 
-final class MyQuick {
+
+public final class MyQuick {
 
     /**
      * Phase 1. Repeat until i and j pointers cross:
@@ -32,5 +33,10 @@ final class MyQuick {
         }
         exch(a, lo, j); // phase 2
         return j;
+    }
+
+    public static <T> T medianOf3(T[] a) {
+        int mid = calculateMid(0, a.length - 1);
+        return a[0];
     }
 }

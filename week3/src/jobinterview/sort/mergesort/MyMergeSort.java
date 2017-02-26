@@ -4,8 +4,6 @@ import java.util.function.BiPredicate;
 
 final class MyMergeSort {
 
-    static final int CUTOFF = 7;
-
     static <T> void merge(BiPredicate<T, T> lessF, T[] aux, T[] a, int lo, int mid, int hi) {
         int i = lo;      // current entry in the left sub-array
         int j = mid + 1; // current entry in the right sub-array
