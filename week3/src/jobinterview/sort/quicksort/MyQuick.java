@@ -34,9 +34,4 @@ public final class MyQuick {
         exch(a, lo, j); // phase 2
         return j;
     }
-
-    public static <T> T medianOf3(T[] a) {
-        int mid = calculateMid(0, a.length - 1);
-        return a[0];
-    }
 }

@@ -14,9 +14,10 @@ import static jobinterview.sort.quicksort.MyQuick.partition;
 public final class MyQuickSelect {
 
     public static <T extends Comparable<? super T>> T select(T[] a, int k) {
-        if (k > a.length - 1) throw new IllegalStateException("K-th element exceeds array size.");
+        if (k < 1) throw new IllegalStateException("Invalid k - must be in [1, inputLength].");
+        if (k > a.length) throw new IllegalStateException("K-th element exceeds array length.");
         Knuth.shuffle(a);
-        return find(lessF(), eqF(), a, 0, a.length - 1, k);
+        return find(lessF(), eqF(), a, 0, a.length - 1, k - 1);
     }
 
     private static <T> T find(BiPredicate<T, T> lessF, BiPredicate<T, T> eqF, T[] a, int lo, int hi, int k) {

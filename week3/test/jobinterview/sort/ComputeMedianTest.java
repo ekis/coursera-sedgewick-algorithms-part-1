@@ -16,12 +16,12 @@ public class ComputeMedianTest {
     @Test
     public void testQuickSelect() {
         String[] expectedGrid = new String[]{
-                "                  Input Array                    |                                                           Actual Output [format: (index k -> array element)]                                                          ", //
-                "                                                 |                                                                                                                                                                       ", //
-                "       [S, O, R, T, E, X, A, M, P, L, E]         |                            [(0 -> A), (1 -> E), (2 -> E), (3 -> L), (4 -> M), (5 -> O), (6 -> P), (7 -> R), (8 -> S), (9 -> T), (10 -> X)]                            ", //
-                "[M, E, R, G, E, S, O, R, T, E, X, A, M, P, L, E] | [(0 -> A), (1 -> E), (2 -> E), (3 -> E), (4 -> E), (5 -> G), (6 -> L), (7 -> M), (8 -> M), (9 -> O), (10 -> P), (11 -> R), (12 -> R), (13 -> S), (14 -> T), (15 -> X)]", //
-                "[Q, U, I, C, K, S, O, R, T, E, X, A, M, P, L, E] | [(0 -> A), (1 -> C), (2 -> E), (3 -> E), (4 -> I), (5 -> K), (6 -> L), (7 -> M), (8 -> O), (9 -> P), (10 -> Q), (11 -> R), (12 -> S), (13 -> T), (14 -> U), (15 -> X)]", //
-                "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |            [(0 -> A), (1 -> B), (2 -> C), (3 -> D), (4 -> P), (5 -> P), (6 -> P), (7 -> P), (8 -> P), (9 -> V), (10 -> W), (11 -> X), (12 -> Y), (13 -> Z)]           " //
+                "                  Input Array                    |                                                           Actual Output [format: (index k -> array element)]                                                           ", //
+                "                                                 |                                                                                                                                                                        ", //
+                "       [S, O, R, T, E, X, A, M, P, L, E]         |                            [(1 -> A), (2 -> E), (3 -> E), (4 -> L), (5 -> M), (6 -> O), (7 -> P), (8 -> R), (9 -> S), (10 -> T), (11 -> X)]                            ", //
+                "[M, E, R, G, E, S, O, R, T, E, X, A, M, P, L, E] | [(1 -> A), (2 -> E), (3 -> E), (4 -> E), (5 -> E), (6 -> G), (7 -> L), (8 -> M), (9 -> M), (10 -> O), (11 -> P), (12 -> R), (13 -> R), (14 -> S), (15 -> T), (16 -> X)]", //
+                "[Q, U, I, C, K, S, O, R, T, E, X, A, M, P, L, E] | [(1 -> A), (2 -> C), (3 -> E), (4 -> E), (5 -> I), (6 -> K), (7 -> L), (8 -> M), (9 -> O), (10 -> P), (11 -> Q), (12 -> R), (13 -> S), (14 -> T), (15 -> U), (16 -> X)]", //
+                "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |            [(1 -> A), (2 -> B), (3 -> C), (4 -> D), (5 -> P), (6 -> P), (7 -> P), (8 -> P), (9 -> P), (10 -> V), (11 -> W), (12 -> X), (13 -> Y), (14 -> Z)]           " //
         };
 
         StringGrid grid = grid("Input Array", "Actual Output [format: (index k -> array element)]");
@@ -34,9 +34,19 @@ public class ComputeMedianTest {
         TestSupport.check(grid, expectedGrid);
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void testQuickSelectFailLowerBound() {
+        MyQuickSelect.select(EXAMPLE_1, 0);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testQuickSelectFailUpperBound() {
+        MyQuickSelect.select(EXAMPLE_1, 12);
+    }
+
     private static void populateGridRow(StringGrid grid, Supplier<String[]> exampleSupplier, String[] input) {
         String[] example = exampleSupplier.get();
-        String[] actual = IntStream.range(0, example.length).mapToObj(k -> String.format("(%s -> %s)", k, MyQuickSelect.select(example, k))).toArray(String[]::new);
+        String[] actual = IntStream.rangeClosed(1, example.length).mapToObj(k -> String.format("(%s -> %s)", k, MyQuickSelect.select(example, k))).toArray(String[]::new);
         grid.row(Arrays.toString(input), Arrays.toString(actual));
     }
 }
