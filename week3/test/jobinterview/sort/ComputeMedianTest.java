@@ -2,6 +2,7 @@ package jobinterview.sort;
 
 import ekis.common.StringGrid;
 import ekis.common.TestSupport;
+import jobinterview.sort.quicksort.MyQuick;
 import jobinterview.sort.quicksort.MyQuickSelect;
 import org.junit.Test;
 
@@ -11,7 +12,27 @@ import java.util.stream.IntStream;
 
 import static jobinterview.sort.SortTestSupport.*;
 
-public class ComputeMedianTest {
+public final class ComputeMedianTest {
+
+    @Test
+    public void testMedianOf3() {
+        String[] expected = new String[] {
+                "                  Input Array                    | Median of 3 | Tukey's Ninther", //
+                "                                                 |             |                ", //
+                "       [S, O, R, T, E, X, A, M, P, L, E]         |      S      |        E       ", //
+                "[M, E, R, G, E, S, O, R, T, E, X, A, M, P, L, E] |      M      |        M       ", //
+                "[Q, U, I, C, K, S, O, R, T, E, X, A, M, P, L, E] |      Q      |        Q       ", //
+                "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |      P      |        P       " //
+        };
+
+        StringGrid grid = grid("Input Array", "Median of 3", "Tukey's Ninther");
+        populateGridRow(grid, EXAMPLE_1);
+        populateGridRow(grid, EXAMPLE_2);
+        populateGridRow(grid, EXAMPLE_3);
+        populateGridRow(grid, SEDGEWICK_DEMO_EXAMPLE);
+
+        TestSupport.check(grid, expected);
+    }
 
     @Test
     public void testQuickSelect() {
@@ -48,5 +69,9 @@ public class ComputeMedianTest {
         String[] example = exampleSupplier.get();
         String[] actual = IntStream.rangeClosed(1, example.length).mapToObj(k -> String.format("(%s -> %s)", k, MyQuickSelect.select(example, k))).toArray(String[]::new);
         grid.row(Arrays.toString(input), Arrays.toString(actual));
+    }
+
+    private static void populateGridRow(StringGrid grid, String[] input) {
+        grid.row(Arrays.toString(input), MyQuick.medianOf3(input), MyQuick.ninther(input));
     }
 }
