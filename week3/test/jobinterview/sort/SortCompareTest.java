@@ -8,8 +8,8 @@ import static jobinterview.sort.SortAlgorithm.*;
 
 public final class SortCompareTest {
 
-    private static final int T = 100; // number of random arrays
-    private static final int N = 10000;  // random array length
+    private static final int T = 1; // number of random arrays
+    private static final int N = 1000000;  // random array length
 
     @Test
     public void compareAlgorithms() {
@@ -21,8 +21,9 @@ public final class SortCompareTest {
         compare(MERGE_BOTTOM_UP, MERGE_TOP_DOWN);
         compare(MERGE_BOTTOM_UP, QUICK);
         compare(MERGE_TOP_DOWN, QUICK);
-        compare(QUICK, QUICK_3_WAY);
-
+        compare(QUICK_3_WAY, QUICK);
+        compare(QUICK_3_WAY_ENTROPY_OPTIMAL, QUICK);
+        compare(QUICK_3_WAY_ENTROPY_OPTIMAL, QUICK_3_WAY);
     }
 
     private static void compare(SortAlgorithm alg1, SortAlgorithm alg2) {

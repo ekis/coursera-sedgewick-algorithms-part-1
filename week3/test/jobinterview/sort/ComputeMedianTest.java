@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
+import static jobinterview.SortUtility.lessF;
 import static jobinterview.sort.SortTestSupport.*;
 
 public final class ComputeMedianTest {
@@ -72,6 +73,6 @@ public final class ComputeMedianTest {
     }
 
     private static void populateGridRow(StringGrid grid, String[] input) {
-        grid.row(Arrays.toString(input), MyQuick.medianOf3(input), MyQuick.ninther(input));
+        grid.row(Arrays.toString(input), input[MyQuick.medianOf3(input, lessF())], input[MyQuick.ninther(input, lessF())]);
     }
 }

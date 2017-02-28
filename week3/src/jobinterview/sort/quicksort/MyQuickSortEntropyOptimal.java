@@ -2,10 +2,13 @@ package jobinterview.sort.quicksort;
 
 import edu.princeton.cs.algs4.Knuth;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 
 import static jobinterview.SortUtility.*;
+import static jobinterview.sort.quicksort.MyQuick.medianOf3;
+import static jobinterview.sort.quicksort.MyQuick.ninther;
 
 /**
  * Implementation of Bentley-McIlroy's entropy-optimal (i.e. the average number of compares in this 3-way quicksort is
@@ -45,6 +48,8 @@ public final class MyQuickSortEntropyOptimal {
         if (lo >= hi) return;
         int p = lo, q = hi + 1;
         int i = lo, j = hi + 1;
+        int pivotIdx = choosePivot(lessF, a, lo, hi);
+        exch(a, lo, pivotIdx);
         T pivot = a[lo];
 
         // phase 1
@@ -66,5 +71,21 @@ public final class MyQuickSortEntropyOptimal {
         // sort subarrays
         sort(lessF, eqF, a, lo, j);
         sort(lessF, eqF, a, i, hi);
+    }
+
+    private static <T> int choosePivot(BiPredicate<T, T> lessF, T[] a, int lo, int hi) {
+        int N = hi - lo;
+        if (N > 7) {
+            // creating this subarray is not as expensive as it seems. asList() delegates to a new ArrayList whose
+            // implementation is internal to Arrays class and doesn't copy the array, just stores the reference.
+            // subList() yields a SubList which still references the original list (which references the array).
+            // so it just creates a couple of wrapper objects, all backing the original array, and since there
+            // is no array modification (just reading), this works
+            @SuppressWarnings("unchecked") // no other reasonable way to create a T[] array
+            T[] subArray = (T[]) Arrays.asList(a).subList(lo, hi).toArray();
+            if (N > 40) return lo + ninther(subArray, lessF); // big arrays, pseudomedian of 9
+            return lo + medianOf3(subArray, lessF); // mid-size, median of 3
+        }
+        return calculateMid(lo, hi); // small arrays, middle element
     }
 }
