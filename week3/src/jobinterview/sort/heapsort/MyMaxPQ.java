@@ -73,8 +73,7 @@ public final class MyMaxPQ<T extends Comparable<? super T>> {
      */
     private void swim(int k) {
         int parent = k / 2;
-        if (parent < 1) return; // is root
-        if (less(parent, k)) { // is parent < k
+        if (parent >= 1 && less(parent, k)) { // is parent < k
             exch(parent, k);
             swim(parent);
         }
