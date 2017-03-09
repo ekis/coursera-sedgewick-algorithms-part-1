@@ -1,5 +1,6 @@
 package jobinterview.sort;
 
+import jobinterview.sort.heapsort.MyHeapsort;
 import jobinterview.sort.mergesort.MyBottomUpMergeSort;
 import jobinterview.sort.mergesort.MyTopDownMergeSort;
 import jobinterview.sort.quicksort.MyQuickSort;
@@ -20,7 +21,8 @@ public enum SortAlgorithm {
     MERGE_TOP_DOWN(MyTopDownMergeSort::sort, MyTopDownMergeSort::sort, "Merge (Top Down)"),
     QUICK(MyQuickSort::sort, MyQuickSort::sort, "Quick"),
     QUICK_3_WAY(MyQuickSort3Way::sort, MyQuickSort3Way::sort, "Quick 3-way"),
-    QUICK_3_WAY_ENTROPY_OPTIMAL(MyQuickSortEntropyOptimal::sort, MyQuickSortEntropyOptimal::sort, "Quick 3-way entropy optimal");
+    QUICK_3_WAY_ENTROPY_OPTIMAL(MyQuickSortEntropyOptimal::sort, MyQuickSortEntropyOptimal::sort, "Quick 3-way entropy optimal"),
+    HEAP(MyHeapsort::sort, null, "Heap");
 
     private final Consumer sortF;
     private final BiConsumer sortComparatorF;
