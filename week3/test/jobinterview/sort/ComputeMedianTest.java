@@ -20,10 +20,10 @@ public final class ComputeMedianTest {
         String[] expected = new String[] {
                 "                  Input Array                    | Median of 3 | Tukey's Ninther", //
                 "                                                 |             |                ", //
-                "       [S, O, R, T, E, X, A, M, P, L, E]         |      S      |        E       ", //
+                "       [S, O, R, T, E, X, A, M, P, L, E]         |      S      |        R       ", //
                 "[M, E, R, G, E, S, O, R, T, E, X, A, M, P, L, E] |      M      |        M       ", //
                 "[Q, U, I, C, K, S, O, R, T, E, X, A, M, P, L, E] |      Q      |        Q       ", //
-                "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |      P      |        P       " //
+                "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |      P      |        A       " //
         };
 
         StringGrid grid = grid("Input Array", "Median of 3", "Tukey's Ninther");

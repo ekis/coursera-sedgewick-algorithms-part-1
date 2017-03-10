@@ -83,7 +83,7 @@ public final class SortAlgorithmTest {
         populateGridRow(grid, EXAMPLE_3, EXPECTED_3, SortTestSupport::copyExample3, algorithm);
         populateGridRow(grid, SEDGEWICK_DEMO_EXAMPLE, SEDGEWICK_DEMO_EXPECTED, SortTestSupport::copySedgewickExample, algorithm);
         grid.row("Uniformly random data input", "Sorted uniformly random data input", "Sorted uniformly random data input", testRandomSort(algorithm, data.randoms()));
-        grid.row("Heavily duplicated data input", "Sorted data input", "Sorted data input", testRandomSort(algorithm, data.randoms()));
+        grid.row("Heavily duplicated data input", "Sorted data input", "Sorted data input", testRandomSort(algorithm, data.duplicates()));
 
         TestSupport.check(grid, expectedGrid);
     }
