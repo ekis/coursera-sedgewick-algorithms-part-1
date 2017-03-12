@@ -1,15 +1,17 @@
 package jobinterview.sort;
 
 import edu.princeton.cs.algs4.StdOut;
+import ekis.SortRandomData;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static jobinterview.sort.compare.SortCompare.timeRandomInput;
 import static jobinterview.sort.SortAlgorithm.*;
 
+@Ignore // the timings here are wild and unexpected, I need to take a closer look at this
 public final class SortCompareTest {
 
-    private static final int T = 10; // number of random arrays
-    private static final int N = 10000;  // random array length
+    private static final int T = 10; // number of test runs
 
     @Test
     public void compareAlgorithms() {
@@ -24,13 +26,19 @@ public final class SortCompareTest {
         compare(QUICK_3_WAY, QUICK);
         compare(QUICK_3_WAY_ENTROPY_OPTIMAL, QUICK);
         compare(QUICK_3_WAY_ENTROPY_OPTIMAL, QUICK_3_WAY);
+        compare(HEAP, INSERTION);
+        compare(HEAP, SHELL);
+        compare(HEAP, MERGE_TOP_DOWN);
+        compare(HEAP, QUICK);
+        compare(HEAP, QUICK_3_WAY_ENTROPY_OPTIMAL);
     }
 
     private static void compare(SortAlgorithm alg1, SortAlgorithm alg2) {
-        double t1 = timeRandomInput(alg1, N, T);
-        double t2 = timeRandomInput(alg2, N, T);
+        Integer[] data = SortRandomData.SUBQUADRATIC_SORT.randoms();
+        double t1 = timeRandomInput(alg1, data, T);
+        double t2 = timeRandomInput(alg2, data, T);
 
-        StdOut.printf("For %d random Doubles\n      %s works at", N, alg1.text());
+        StdOut.printf("For %d random Doubles\n      %s works at", data.length, alg1.text());
         StdOut.printf(" %.1f %% of %s\n", t2/t1 * 100, alg2.text());
     }
 }

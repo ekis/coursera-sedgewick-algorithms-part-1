@@ -1,16 +1,16 @@
 package jobinterview.sort;
 
+import ekis.SortRandomData;
 import ekis.common.StringGrid;
 import ekis.common.TestSupport;
 import jobinterview.SortUtility;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.function.Supplier;
 
+import static ekis.SortRandomData.*;
 import static jobinterview.sort.SortAlgorithm.*;
-import static jobinterview.sort.SortRandomData.*;
 import static jobinterview.sort.SortTestSupport.*;
 
 public final class SortAlgorithmTest {

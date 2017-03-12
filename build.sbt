@@ -45,6 +45,6 @@ lazy val week6 : Project = (project in file("week6"))
 logBuffered in Test := false
 
 def commonTestOptions: Seq[TestOption] = Seq(
-  Tests.Filter(t => t.endsWith("Test"))
-  //,Tests.Argument(TestFrameworks.JUnit, "-v", "-q") // "-q" -> try to suppress stdout for successful tests; "-v" -> log start/end test on log level "INFO"
+  Tests.Filter(t => t.endsWith("Test")),
+  Tests.Argument(TestFrameworks.JUnit, "-v", "-q") // "-q" -> try to suppress stdout for successful tests; "-v" -> log start/end test on log level "INFO"
 )

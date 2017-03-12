@@ -1,4 +1,4 @@
-package jobinterview.sort;
+package ekis;
 
 import java.util.Random;
 import java.util.function.Function;
@@ -18,11 +18,11 @@ public enum SortRandomData {
         this.duplicates = duplicates;
     }
 
-    Integer[] randoms() {
+    public Integer[] randoms() {
         return randoms;
     }
 
-    Integer[] duplicates() {
+    public Integer[] duplicates() {
         return duplicates;
     }
 
@@ -33,10 +33,9 @@ public enum SortRandomData {
 
     private static Integer[] duplicates(int N) {
         int intervalCount = SortConst.intervalCount(N);
-        Integer[] result= IntStream.range(0, intervalCount)
+        return IntStream.range(0, intervalCount)
                 .mapToObj(x -> IntStream.iterate(x, y -> y).limit(intervalCount).boxed())
                 .flatMap(Function.identity()).toArray(Integer[]::new);
-        return result;
     }
 
     private static class SortConst {
