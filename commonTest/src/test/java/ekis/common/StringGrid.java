@@ -61,21 +61,21 @@ public final class StringGrid {
         Map<Pair<Integer, Integer>, String> grid = new LinkedHashMap<>(_grid);
         int rowCount = _row + 1;
         for (int column = 0; column < _columnCount; ++column) {
-            Alignment alignment = NullSafe.coalesce(_alignments.get(column), _defaultAlignment);
+            Alignment alignment = coalesce(_alignments.get(column), _defaultAlignment);
             alignment.align(grid, column, rowCount);
         }
         return rowMajorGrid(new StringBuilder(), grid, rowCount);
     }
-
-    public String showTransposed() {
-        Map<Pair<Integer, Integer>, String> grid = new LinkedHashMap<>(_grid);
-        int rowCount = _row + 1;
-        for (int row = 0; row < rowCount; ++row) {
-            Alignment alignment = NullSafe.coalesce(_alignments.get(row), _defaultAlignment);
-            alignment.align(grid, row, rowCount);
-        }
-        return columnMajorGrid(new StringBuilder(), grid, rowCount);
-    }
+//
+//    public String showTransposed() {
+//        Map<Pair<Integer, Integer>, String> grid = new LinkedHashMap<>(_grid);
+//        int rowCount = _row + 1;
+//        for (int row = 0; row < rowCount; ++row) {
+//            Alignment alignment = coalesce(_alignments.get(row), _defaultAlignment);
+//            alignment.align(grid, row, rowCount);
+//        }
+//        return columnMajorGrid(new StringBuilder(), grid, rowCount);
+//    }
 
     private String rowMajorGrid(StringBuilder sb, Map<Pair<Integer, Integer>, String> grid, int rowCount) {
         for (int row = 0; row < rowCount; ++row) {
@@ -90,17 +90,25 @@ public final class StringGrid {
         return sb.toString();
     }
 
-    private String columnMajorGrid(StringBuilder sb, Map<Pair<Integer, Integer>, String> grid, int rowCount) {
-        for (int column = 0; column < _columnCount; ++column) {
-            for (int row = 0; row < rowCount; ++row) {
-                if (0 < row) {
-                    sb.append(_separator);
-                }
-                sb.append(grid.get(Pair.of(row, column)));
-            }
-            sb.append("\n"); //$NON-NLS-1$
+//    private String columnMajorGrid(StringBuilder sb, Map<Pair<Integer, Integer>, String> grid, int rowCount) {
+//        for (int column = 0; column < _columnCount; ++column) {
+//            for (int row = 0; row < rowCount; ++row) {
+//                if (0 < row) {
+//                    sb.append(_separator);
+//                }
+//                sb.append(grid.get(Pair.of(row, column)));
+//            }
+//            sb.append("\n"); //$NON-NLS-1$
+//        }
+//        return sb.toString();
+//    }
+
+    @SafeVarargs
+    private static <T> T coalesce(T... items) {
+        for (final T item : items) {
+            if (item != null) return item;
         }
-        return sb.toString();
+        return null;
     }
 
     public enum Alignment {
@@ -155,7 +163,7 @@ public final class StringGrid {
             int decimalLeft = 0;
             int decimalRight = 0;
             for (int row = 0; row < rowCount; ++row) {
-                String value = NullSafe.coalesce(grid.get(Pair.of(row, column)), ""); //$NON-NLS-1$
+                String value = coalesce(grid.get(Pair.of(row, column)), ""); //$NON-NLS-1$
                 width = Math.max(width, value.length());
                 int decimal = value.indexOf('.');
                 if (-1 != decimal) {
@@ -169,7 +177,7 @@ public final class StringGrid {
 
             for (int row = 0; row < rowCount; ++row) {
                 Pair<Integer, Integer> rc = Pair.of(row, column);
-                String value = NullSafe.coalesce(grid.get(rc), ""); //$NON-NLS-1$
+                String value = coalesce(grid.get(rc), ""); //$NON-NLS-1$
                 String alignedValue = align(value, width, decimalLeft, decimalRight);
                 grid.put(rc, alignedValue);
             }
