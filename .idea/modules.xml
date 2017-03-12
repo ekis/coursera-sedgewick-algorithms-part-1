@@ -2,11 +2,24 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/coursera-sedgewick-algorithms-part-1.iml" filepath="$PROJECT_DIR$/coursera-sedgewick-algorithms-part-1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/testSupport/testSupport.iml" filepath="$PROJECT_DIR$/testSupport/testSupport.iml" />
-      <module fileurl="file://$PROJECT_DIR$/week1/week1.iml" filepath="$PROJECT_DIR$/week1/week1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/week2/week2.iml" filepath="$PROJECT_DIR$/week2/week2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/week3/week3.iml" filepath="$PROJECT_DIR$/week3/week3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common.iml" filepath="$PROJECT_DIR$/.idea/modules/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common-build.iml" filepath="$PROJECT_DIR$/.idea/modules/common-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/commonTest.iml" filepath="$PROJECT_DIR$/.idea/modules/commonTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/commonTest-build.iml" filepath="$PROJECT_DIR$/.idea/modules/commonTest-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/root.iml" filepath="$PROJECT_DIR$/.idea/modules/root.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/root-build.iml" filepath="$PROJECT_DIR$/.idea/modules/root-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week1.iml" filepath="$PROJECT_DIR$/.idea/modules/week1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week1-build.iml" filepath="$PROJECT_DIR$/.idea/modules/week1-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week2.iml" filepath="$PROJECT_DIR$/.idea/modules/week2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week2-build.iml" filepath="$PROJECT_DIR$/.idea/modules/week2-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week3.iml" filepath="$PROJECT_DIR$/.idea/modules/week3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week3-build.iml" filepath="$PROJECT_DIR$/.idea/modules/week3-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week4.iml" filepath="$PROJECT_DIR$/.idea/modules/week4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week4-build.iml" filepath="$PROJECT_DIR$/.idea/modules/week4-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week5.iml" filepath="$PROJECT_DIR$/.idea/modules/week5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week5-build.iml" filepath="$PROJECT_DIR$/.idea/modules/week5-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week6.iml" filepath="$PROJECT_DIR$/.idea/modules/week6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/week6-build.iml" filepath="$PROJECT_DIR$/.idea/modules/week6-build.iml" />
     </modules>
   </component>
 </project>
