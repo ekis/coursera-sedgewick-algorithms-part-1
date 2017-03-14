@@ -34,5 +34,6 @@ Codebase also mirrors the Coursera course on Algorithms, structuring code in wee
   - [x] Planar intersection (count identical 2D points in two sets without using hash-based data structure, sub-quadratic)
   - [x] Planar permutation (check if two sets of 2D points are permutation of each other without using hash-based data structure, sub-quadratic)
   - [x] Dutch national flag sort (Dijkstra's precursor idea for 3-way quick sort)
+  - [x] Binary search (requires pre-sorted input, O(lgN)) 
 4. (Week 4) Searching
-  - [x] Binary search (requires pre-sorted input, O(lgN))
+  
