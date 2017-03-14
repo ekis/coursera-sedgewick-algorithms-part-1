@@ -1,7 +1,6 @@
 package sort;
 
 import org.junit.Test;
-import util.DutchNationalFlagSort;
 
 import java.util.Collections;
 import java.util.List;

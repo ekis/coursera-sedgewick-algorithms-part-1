@@ -12,7 +12,7 @@ package sort;
  */
 public final class DutchNationalFlagSort {
 
-    static int[] sortedArray(int[] array) {
+    public static int[] sortedArray(int[] array) {
         int red = 0, white = 0;
         int blue = array.length - 1;
 
