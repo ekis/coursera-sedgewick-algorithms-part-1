@@ -1,5 +1,7 @@
 package symbolTable;
 
+import java.util.Optional;
+
 public interface MySymbolTable<K extends Comparable<? super K>, V> {
 
     /**
@@ -16,7 +18,7 @@ public interface MySymbolTable<K extends Comparable<? super K>, V> {
      * @param key key with which the specified value is to be associated
      * @return value paired with key; NULL if key is not found.
      */
-    V get(K key);
+    Optional<V> get(K key);
 
     /**
      * Removes key (and its value) from the table.
@@ -52,14 +54,14 @@ public interface MySymbolTable<K extends Comparable<? super K>, V> {
      *
      * @return the smallest key in this symbol table.
      */
-    K min();
+    Optional<K> min();
 
     /**
      * Returns the largest key in this symbol table.
      *
      * @return the largest key in this symbol table.
      */
-    K max();
+    Optional<K> max();
 
     /**
      * Returns the largest key less than or equal to key.

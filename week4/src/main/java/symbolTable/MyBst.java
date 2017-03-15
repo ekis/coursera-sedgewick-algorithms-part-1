@@ -1,5 +1,7 @@
 package symbolTable;
 
+import java.util.Optional;
+
 final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K, V> {
 
     private Node root;
@@ -70,9 +72,9 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
 
     // if <, go left; if >, go right; if ==, search hit; if null, search miss
     @Override
-    public V get(K key) {
+    public Optional<V> get(K key) {
         Node result = find(key, root);
-        return result == null ? null : result.value;
+        return result == null ? Optional.empty() : Optional.of(result.value);
     }
 
     // recursive find
@@ -117,13 +119,25 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
     }
 
     @Override
-    public K min() {
-        return null;
+    public Optional<K> min() {
+        K result = min(root);
+        return result == null ? Optional.empty() : Optional.of(result);
+    }
+
+    private K min(Node node) {
+        if (node.left == null) return node.key;
+        return min(node.left);
     }
 
     @Override
-    public K max() {
-        return null;
+    public Optional<K> max() {
+        K result = max(root);
+        return result == null ? Optional.empty() : Optional.of(result);
+    }
+
+    private K max(Node node) {
+        if (node.right == null) return node.key;
+        return max(node.right);
     }
 
     @Override

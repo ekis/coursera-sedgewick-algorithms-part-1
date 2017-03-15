@@ -3,6 +3,7 @@ package symbolTable;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,10 +22,12 @@ public final class MyBstTest {
         bst.put(15, "F");
         bst.put(4, "G");
         bst.put(2, "H");
-        checkEquality(bst, 2, "H");
-        checkEquality(bst, 15, "F");
-        checkEquality(bst, 4, "G");
-        checkEquality(bst, 10, "A");
+        checkGet(bst, 2, "H");
+        checkGet(bst, 15, "F");
+        checkGet(bst, 4, "G");
+        checkGet(bst, 10, "A");
+        checkMinMax(bst::min, 2);
+        checkMinMax(bst::max, 15);
     }
 
     @Test
@@ -49,11 +52,17 @@ public final class MyBstTest {
                             acc.put(key, val);
                         }, (u, v) -> {});
         assertEquals(T, bst.size());
+        checkMinMax(bst::min, 0);
+        checkMinMax(bst::max, 499999);
 
-        refMap.forEach((key, value) -> assertEquals(value, bst.get(key)));
+        refMap.forEach((key, value) -> assertEquals(value, bst.get(key).orElseThrow(IllegalStateException::new)));
     }
 
-    private static <K extends Comparable<? super K>, V> void checkEquality(MySymbolTable<K, V> bst, K key, V expectedValue) {
-        assertEquals(bst.get(key), expectedValue);
+    private static <K extends Comparable<? super K>, V> void checkGet(MySymbolTable<K, V> bst, K key, V expectedValue) {
+        assertEquals(expectedValue, bst.get(key).orElseThrow(IllegalStateException::new));
+    }
+
+    private static <K extends Comparable<? super K>> void checkMinMax(Supplier<Optional<K>> supplier, K expectedKey) {
+        assertEquals(expectedKey, supplier.get().orElseThrow(IllegalStateException::new));
     }
 }
