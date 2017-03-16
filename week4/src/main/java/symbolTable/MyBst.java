@@ -1,6 +1,8 @@
 package symbolTable;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K, V> {
 
@@ -16,9 +18,9 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
     // if <, go left; if >, go right; if null, insert; if ==, replace
     @Override
     public void put(K key, V value) {
+        if (key == null || value == null) throw new IllegalArgumentException("Key and/or value argument may not be null.");
         if (root == null) root = new Node(key, value);
         else insert(key, value, root);
-        //else insert(key, value);
     }
 
     // my insert w/o back link
@@ -35,68 +37,19 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
         else node.value = value ;
     }
 
-    // Sedgewick with back link
-    private Node insert(Node node, K key, V value) {
-        if (node == null) return new Node(key, value);
-        int cmp = key.compareTo(node.key);
-        if (cmp < 0) node.left = insert(node, key, value);
-        else if (cmp > 0) node.right = insert(node, key, value);
-        else node.value = value ;
-        return node;
-    }
-
-    // iterative insert
-    private void insert(K key, V value) {
-        Node x = root;
-
-        while (true) {
-            int cmp = key.compareTo(x.key);
-            if (cmp < 0) {
-                if (x.left == null) {
-                    x.left = new Node(key, value);
-                    break;
-                }
-                else x = x.left;
-            } else if (cmp > 0) {
-                if (x.right == null) {
-                    x.right = new Node(key, value);
-                    break;
-                }
-                else x = x.right;
-            } else {
-                x.value = value;
-                break;
-            }
-        }
-    }
-
     // if <, go left; if >, go right; if ==, search hit; if null, search miss
     @Override
     public Optional<V> get(K key) {
-        Node result = find(key, root);
-        return result == null ? Optional.empty() : Optional.of(result.value);
+        if (key == null) throw new IllegalArgumentException("Key argument may not be null.");
+        return find(key, root).map(node -> node.value);
     }
 
-    // recursive find
-    private Node find(K key, Node node) {
-        if (node == null) return null;
+    private Optional<Node> find(K key, Node node) {
+        if (node == null) return Optional.empty();
         int cmp = key.compareTo(node.key);
         if (cmp < 0) return find(key, node.left);
         if (cmp > 0) return find(key, node.right);
-        return node;
-    }
-
-    // Sedgewick iterative
-    private V find(K key) {
-        Node x = root;
-
-        while (x != null) {
-            int cmp = key.compareTo(x.key);
-            if (cmp < 0) x = x.left;
-            else if (cmp > 0) x = x.right;
-            else return x.value;
-        }
-        return null;
+        return Optional.of(node);
     }
 
     // if <, go left; if >, go right; if ==, delete; if null, nothing
@@ -120,8 +73,7 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
 
     @Override
     public Optional<K> min() {
-        K result = min(root);
-        return result == null ? Optional.empty() : Optional.of(result);
+        return checkAndFind(this::min);
     }
 
     private K min(Node node) {
@@ -131,8 +83,7 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
 
     @Override
     public Optional<K> max() {
-        K result = max(root);
-        return result == null ? Optional.empty() : Optional.of(result);
+        return checkAndFind(this::max);
     }
 
     private K max(Node node) {
@@ -145,9 +96,7 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
     // case 3 : [k >= the key at root]     -> floor(k) is in the RIGHT subtree (if there is any key <= k in right subtree; otherwise, the floor is the subtree root)
     @Override
     public Optional<K> floor(K key) {
-        if (key == null) throw new IllegalArgumentException("Key argument may not be null.");
-        if (isEmpty()) throw new IllegalStateException("Undefined for empty symbol table.");
-        return Optional.ofNullable(floor(key, root));
+        return checkAndFind(key, this::floor);
     }
 
     private K floor(K key, Node node) {
@@ -166,9 +115,7 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
     // case 3 : [k >= the key at root]     -> ceiling(k) is in the LEFT subtree (if there is any key <= k in left subtree; otherwise, the floor is the subtree root)
     @Override
     public Optional<K> ceiling(K key) {
-        if (key == null) throw new IllegalArgumentException("Key argument may not be null.");
-        if (isEmpty()) throw new IllegalStateException("Undefined for empty symbol table.");
-        return Optional.ofNullable(ceiling(key, root));
+        return checkAndFind(key, this::ceiling);
     }
 
     private K ceiling(K key, Node node) {
@@ -193,16 +140,6 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
     }
 
     @Override
-    public void deleteMin() {
-
-    }
-
-    @Override
-    public void deleteMax() {
-
-    }
-
-    @Override
     public int size(K lo, K hi) {
         return 0;
     }
@@ -215,6 +152,17 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
     @Override
     public Iterable<K> keys() {
         return null;
+    }
+
+    private Optional<K> checkAndFind(Function<Node, K> f) {
+        if (isEmpty()) throw new IllegalStateException("Undefined for empty symbol table.");
+        return Optional.ofNullable(f.apply(root));
+    }
+
+    private Optional<K> checkAndFind(K key, BiFunction<K, Node, K> f) {
+        if (key == null) throw new IllegalArgumentException("Key argument may not be null.");
+        if (isEmpty()) throw new IllegalStateException("Undefined for empty symbol table.");
+        return Optional.ofNullable(f.apply(key, root));
     }
 
     private class Node {

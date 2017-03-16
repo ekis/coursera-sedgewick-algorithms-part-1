@@ -1,6 +1,5 @@
 package symbolTable;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
@@ -8,7 +7,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public final class MyBstTest {
 

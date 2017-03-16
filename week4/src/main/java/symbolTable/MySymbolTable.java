@@ -98,12 +98,16 @@ public interface MySymbolTable<K extends Comparable<? super K>, V> {
     /**
      * Deletes the smallest key in this symbol table.
      */
-    void deleteMin();
+    default void deleteMin(){
+        min().ifPresent(this::delete);
+    }
 
     /**
      * Deletes the largest key in this symbol table.
      */
-    void deleteMax();
+    default void deleteMax() {
+        max().ifPresent(this::delete);
+    }
 
     /**
      * Returns the number of keys between [lo...hi].
