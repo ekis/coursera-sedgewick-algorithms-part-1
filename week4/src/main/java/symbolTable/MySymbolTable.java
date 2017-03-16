@@ -69,7 +69,7 @@ public interface MySymbolTable<K extends Comparable<? super K>, V> {
      * @param key
      * @return the largest key less than or equal to key
      */
-    K floor(K key);
+    Optional<K> floor(K key);
 
     /**
      * Returns the smallest key greater than or equal to key.
@@ -77,7 +77,7 @@ public interface MySymbolTable<K extends Comparable<? super K>, V> {
      * @param key
      * @return the smallest key greater than or equal to key
      */
-    K ceiling(K key);
+    Optional<K> ceiling(K key);
 
     /**
      * Returns number of keys less than key.

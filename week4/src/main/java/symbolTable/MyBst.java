@@ -140,14 +140,46 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
         return max(node.right);
     }
 
+    // case 1 : [k equals the key at root] -> floor(k) == k
+    // case 2 : [k <= the key at root]     -> floor(k) is in the LEFT subtree
+    // case 3 : [k >= the key at root]     -> floor(k) is in the RIGHT subtree (if there is any key <= k in right subtree; otherwise, the floor is the subtree root)
     @Override
-    public K floor(K key) {
-        return null;
+    public Optional<K> floor(K key) {
+        if (key == null) throw new IllegalArgumentException("Key argument may not be null.");
+        if (isEmpty()) throw new IllegalStateException("Undefined for empty symbol table.");
+        return Optional.ofNullable(floor(key, root));
     }
 
+    private K floor(K key, Node node) {
+        if (node == null) return null; // we hit the end of the tree without finding anything <= key
+        int cmp = key.compareTo(node.key);
+
+        if (cmp == 0) return node.key;
+        if (cmp < 0) return floor(key, node.left);
+
+        K smallerKey = floor(key, node.right);
+        return smallerKey == null ? node.key : smallerKey;
+    }
+
+    // case 1 : [k equals the key at root] -> ceiling(k) == k
+    // case 2 : [k <= the key at root]     -> ceiling(k) is in the RIGHT subtree
+    // case 3 : [k >= the key at root]     -> ceiling(k) is in the LEFT subtree (if there is any key <= k in left subtree; otherwise, the floor is the subtree root)
     @Override
-    public K ceiling(K key) {
-        return null;
+    public Optional<K> ceiling(K key) {
+        if (key == null) throw new IllegalArgumentException("Key argument may not be null.");
+        if (isEmpty()) throw new IllegalStateException("Undefined for empty symbol table.");
+        return Optional.ofNullable(ceiling(key, root));
+    }
+
+    private K ceiling(K key, Node node) {
+        if (node == null) return null; // we hit the end of the tree without finding anything <= key
+        int cmp = key.compareTo(node.key);
+
+        if (cmp == 0) return node.key;
+        if (cmp > 0) return ceiling(key, node.right);
+
+        K largerKey = ceiling(key, node.left);
+        return largerKey == null ? node.key : largerKey;
     }
 
     @Override
