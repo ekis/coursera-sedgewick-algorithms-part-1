@@ -36,4 +36,4 @@ Codebase also mirrors the Coursera course on Algorithms, structuring code in wee
   - [x] Dutch national flag sort (Dijkstra's precursor idea for 3-way quick sort)
   - [x] Binary search (requires pre-sorted input, O(lgN)) 
 4. (Week 4) Searching
-  
+  - [x] Symbol table (binary search tree, all ops O(lgN))
