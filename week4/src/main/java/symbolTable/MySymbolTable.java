@@ -16,7 +16,7 @@ public interface MySymbolTable<K extends Comparable<? super K>, V> {
      * * Retrieves value paired with key.
      *
      * @param key key with which the specified value is to be associated
-     * @return value paired with key; NULL if key is not found.
+     * @return value paired with key. Optional.empty() if key is not found.
      */
     Optional<V> get(K key);
 
@@ -52,48 +52,49 @@ public interface MySymbolTable<K extends Comparable<? super K>, V> {
     /**
      * Returns the smallest key in this symbol table.
      *
-     * @return the smallest key in this symbol table.
+     * @return the smallest key in this symbol table. Optional.empty() if symbol table is empty.
      */
     Optional<K> min();
 
     /**
      * Returns the largest key in this symbol table.
      *
-     * @return the largest key in this symbol table.
+     * @return the largest key in this symbol table. Optional.empty() if symbol table is empty.
      */
     Optional<K> max();
 
     /**
      * Returns the largest key less than or equal to key.
      *
-     * @param key
-     * @return the largest key less than or equal to key
+     * @param key the key
+     * @return the largest key less than or equal to key. Optional.empty() if no key found.
      */
     Optional<K> floor(K key);
 
     /**
      * Returns the smallest key greater than or equal to key.
      *
-     * @param key
-     * @return the smallest key greater than or equal to key
+     * @param key the key
+     * @return the smallest key greater than or equal to key. Optional.empty() if no key found.
      */
     Optional<K> ceiling(K key);
 
     /**
      * Returns number of keys less than key.
      *
-     * @param key
+     * @param key the key
      * @return number of keys less than key
      */
     int rank(K key);
 
+
     /**
-     * Retrieves key of rank k.
+     * Return the kth smallest key in the symbol table.
      *
-     * @param k rank
-     * @return key of rank k
+     * @param k the order statistic
+     * @return key of rank k. Optional.empty() if no key for given k found.
      */
-    K select(int k);
+    Optional<K> select(int k);
 
     /**
      * Deletes the smallest key in this symbol table.

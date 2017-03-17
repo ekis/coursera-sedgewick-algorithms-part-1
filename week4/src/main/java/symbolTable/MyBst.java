@@ -7,7 +7,6 @@ import java.util.function.Function;
 final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K, V> {
 
     private Node root;
-    private int N;
 
     private MyBst(){}
 
@@ -20,28 +19,24 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
     public void put(K key, V value) {
         if (key == null || value == null) throw new IllegalArgumentException("Key and/or value argument may not be null.");
         if (root == null) root = new Node(key, value);
-        else insert(key, value, root);
+        insert(key, value, root);
     }
 
     // my insert w/o back link
-    private void insert(K key, V value, Node node) {
+    private Node insert(K key, V value, Node node) {
+        if (node == null) return new Node(key, value);
         int cmp = key.compareTo(node.key);
-        if (cmp < 0) {
-            if (node.left == null) node.left = new Node(key, value);
-            else insert(key, value, node.left);
-        }
-        else if (cmp > 0) {
-            if (node.right == null) node.right = new Node(key, value);
-            else insert(key, value, node.right);
-        }
-        else node.value = value ;
+        if (cmp < 0) node.left = insert(key, value, node.left);
+        else if (cmp > 0) node.right = insert(key, value, node.right);
+        else node.value = value;
+        node.subtreeCount = 1 + size(node.left) + size(node.right);
+        return node;
     }
 
     // if <, go left; if >, go right; if ==, search hit; if null, search miss
     @Override
     public Optional<V> get(K key) {
-        if (key == null) throw new IllegalArgumentException("Key argument may not be null.");
-        return find(key, root).map(node -> node.value);
+        return size() == 0 ? Optional.empty() : checkAndFind(key, this::find).map(node -> node.value);
     }
 
     private Optional<Node> find(K key, Node node) {
@@ -64,16 +59,20 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size(root) == 0;
     }
 
     public int size() {
-        return N;
+        return size(root);
+    }
+
+    private int size(Node node) {
+        return node == null ? 0 : node.subtreeCount;
     }
 
     @Override
     public Optional<K> min() {
-        return checkAndFind(this::min);
+        return checkAndFindOptional(this::min);
     }
 
     private K min(Node node) {
@@ -83,7 +82,7 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
 
     @Override
     public Optional<K> max() {
-        return checkAndFind(this::max);
+        return checkAndFindOptional(this::max);
     }
 
     private K max(Node node) {
@@ -91,12 +90,12 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
         return max(node.right);
     }
 
-    // case 1 : [k equals the key at root] -> floor(k) == k
-    // case 2 : [k <= the key at root]     -> floor(k) is in the LEFT subtree
-    // case 3 : [k >= the key at root]     -> floor(k) is in the RIGHT subtree (if there is any key <= k in right subtree; otherwise, the floor is the subtree root)
+    // case 1 : [k == the key at root] -> floor(key) == key
+    // case 2 : [k <= the key at root] -> floor(key) is in the LEFT subtree
+    // case 3 : [k >= the key at root] -> floor(key) is in the RIGHT subtree (if there is any key <= k in right subtree; otherwise, the floor is the subtree root)
     @Override
     public Optional<K> floor(K key) {
-        return checkAndFind(key, this::floor);
+        return checkAndFindOptional(key, this::floor);
     }
 
     private K floor(K key, Node node) {
@@ -110,12 +109,12 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
         return smallerKey == null ? node.key : smallerKey;
     }
 
-    // case 1 : [k equals the key at root] -> ceiling(k) == k
-    // case 2 : [k <= the key at root]     -> ceiling(k) is in the RIGHT subtree
-    // case 3 : [k >= the key at root]     -> ceiling(k) is in the LEFT subtree (if there is any key <= k in left subtree; otherwise, the floor is the subtree root)
+    // case 1 : [k == the key at root] -> ceiling(key) == key
+    // case 2 : [k <= the key at root] -> ceiling(key) is in the RIGHT subtree
+    // case 3 : [k >= the key at root] -> ceiling(key) is in the LEFT subtree (if there is any key <= k in left subtree; otherwise, the floor is the subtree root)
     @Override
     public Optional<K> ceiling(K key) {
-        return checkAndFind(key, this::ceiling);
+        return checkAndFindOptional(key, this::ceiling);
     }
 
     private K ceiling(K key, Node node) {
@@ -129,14 +128,44 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
         return largerKey == null ? node.key : largerKey;
     }
 
+    // how many keys < k?
+    // case 1 : [k == the key at root] -> rank(key) is the node count in the LEFT subtree
+    // case 2 : [k <  the key at root] -> rank(key) is the rank of the key in the LEFT subtree
+    // case 3 : [k >  the key at root] -> rank(key) = 1 + node count in the LEFT subtree + rank of the of the key in the RIGHT subtree
+    // inverse of select()
     @Override
     public int rank(K key) {
-        return 0;
+        return checkAndFind(key, this::rank);
     }
 
+    private int rank(K key, Node node) {
+        if (node == null) return 0;
+        int cmp = key.compareTo(node.key);
+
+        if (cmp == 0) return size(node.left);
+        if (cmp < 0) return rank(key, node.left);
+
+        return 1 + size(node.left) + rank(key, node.right);
+    }
+
+    // what is the key of rank k?
+    // case 1 : [k == left subtree count] -> select(k) returns key at that node
+    // case 2 : [k <  left subtree count] -> select(k) return
+    // case 3 : [k >  left subtree count] -> select(k) key is in the LEFT subtree (computed recursively via rank())
+    // inverse of rank()
     @Override
-    public K select(int k) {
-        return null;
+    public Optional<K> select(int k) {
+        if (k < 0 || k > size()) throw new IllegalArgumentException("Argument k must be 0 < k < size().");
+        return Optional.ofNullable(select(k, root));
+    }
+
+    private K select(int k, Node node) {
+        if (node == null) return null;
+        int t = node.left == null ? 0 : node.left.subtreeCount;
+
+        if (k == t) return node.key;
+        if (k < t) return select(k, node.left);
+        return select(k - t - 1, node.right);
     }
 
     @Override
@@ -154,26 +183,30 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
         return null;
     }
 
-    private Optional<K> checkAndFind(Function<Node, K> f) {
+    private Optional<K> checkAndFindOptional(Function<Node, K> f) {
         if (isEmpty()) throw new IllegalStateException("Undefined for empty symbol table.");
         return Optional.ofNullable(f.apply(root));
     }
 
-    private Optional<K> checkAndFind(K key, BiFunction<K, Node, K> f) {
+    private Optional<K> checkAndFindOptional(K key, BiFunction<K, Node, K> f) {
+        return Optional.ofNullable(checkAndFind(key, f));
+    }
+
+    private <R> R checkAndFind(K key, BiFunction<K, Node, R> f) {
         if (key == null) throw new IllegalArgumentException("Key argument may not be null.");
         if (isEmpty()) throw new IllegalStateException("Undefined for empty symbol table.");
-        return Optional.ofNullable(f.apply(key, root));
+        return f.apply(key, root);
     }
 
     private class Node {
         private K key;
         private V value;
         private Node left, right;
+        private int subtreeCount = 1;
 
         private Node(K k, V v) {
             key = k;
             value = v;
-            N++;
         }
     }
 }
