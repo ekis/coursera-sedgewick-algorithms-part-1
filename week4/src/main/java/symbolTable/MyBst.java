@@ -1,5 +1,9 @@
 package symbolTable;
 
+import elementary.datastructures.queues.MyQueue;
+import elementary.datastructures.queues.Queues;
+
+import java.util.Collections;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -180,12 +184,20 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
 
     @Override
     public Iterable<K> keys(K lo, K hi) {
-        throw new UnsupportedOperationException("Not implemented");
+        if (lo == null || hi == null) throw new IllegalArgumentException("LO and/or HI argument may not be null.");
+        if (lo.compareTo(hi) > 0) return Collections.emptyList();
+        MyQueue<K> queue = Queues.simpleQueue();
+        traverseInorder(lo, hi, root, queue);
+        return queue;
     }
 
-    @Override
-    public Iterable<K> keys() {
-        throw new UnsupportedOperationException("Not implemented");
+    private void traverseInorder(K lo, K hi, Node node, MyQueue<K> queue) {
+        if (node == null) return;
+        int cmpLo = lo.compareTo(node.key);
+        int cmpHi = hi.compareTo(node.key);
+        if (cmpLo < 0) traverseInorder(lo, hi, node.left, queue);
+        if (cmpLo <= 0 && cmpHi >= 0) queue.enqueue(node.key); // filter out node key which are exceeding [lo...hi] boundaries
+        if (cmpHi > 0) traverseInorder(lo, hi, node.right, queue);
     }
 
     private Optional<K> checkAndFindOptional(Function<Node, K> f) {

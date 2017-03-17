@@ -28,7 +28,7 @@ lazy val week3 : Project = (project in file("week3"))
   .settings(testOptions ++= commonTestOptions)
 
 lazy val week4 : Project = (project in file("week4"))
-  .dependsOn(common, commonTest % "test -> test")
+  .dependsOn(week2, common, commonTest % "test -> test")
   .settings(commonSettings : _*)
   .settings(testOptions ++= commonTestOptions)
 

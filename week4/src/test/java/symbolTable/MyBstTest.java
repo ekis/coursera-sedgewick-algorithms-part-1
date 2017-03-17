@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 import static org.junit.Assert.*;
 
@@ -17,6 +18,8 @@ public final class MyBstTest {
 
         assertTrue(bst.isEmpty());
         bst.put(10, "A");
+        checkKeyReturningMethods(bst::min, 10); // min() returns 10
+        checkKeyReturningMethods(bst::max, 10); // max() returns 10
         assertFalse(bst.isEmpty());
         bst.put(8, "B");
         bst.put(11, "D");
@@ -87,6 +90,11 @@ public final class MyBstTest {
         checkIntReturningMethods(() -> bst.size(1, 20), bst.size());
         checkIntReturningMethods(() -> bst.size(4, 15), 6);
         assertFalse(bst.isEmpty());
+        checkKeys(bst::keys, "[1, 2, 4, 8, 9, 10, 11, 15, 17, 20]");
+        checkKeys(() -> bst.keys(3, 12), "[4, 8, 9, 10, 11]");
+        checkKeys(() -> bst.keys(1, 5), "[1, 2, 4]");
+        checkKeys(() -> bst.keys(8, 9), "[8, 9]");
+        checkKeys(() -> bst.keys(10, 16), "[10, 11, 15]");
     }
 
     @Test
@@ -144,20 +152,25 @@ public final class MyBstTest {
         checkIntReturningMethods(() -> bst.rank(601000), 500002);
         checkKeyReturningMethods(() -> bst.select(500002), 610000);
         checkIntReturningMethods(() -> bst.rank(610001), 500003);
-
+        checkKeys(() -> bst.keys(499998, 609000), "[499998, 499999, 590000, 600000]");
         assertFalse(bst.isEmpty());
     }
 
-    private static <V> void checkGet(Supplier<Optional<V>> actualF, V expectedValue) {
-        assertEquals(expectedValue, actualF.get().get());
+    private static <V> void checkGet(Supplier<Optional<V>> f, V expectedValue) {
+        assertEquals(expectedValue, f.get().get());
     }
 
-    private static <K extends Comparable<? super K>> void checkKeyReturningMethods(Supplier<Optional<K>> supplier, K expectedKey) {
-        assertEquals(expectedKey, supplier.get().get());
+    private static <K extends Comparable<? super K>> void checkKeyReturningMethods(Supplier<Optional<K>> f, K expectedKey) {
+        assertEquals(expectedKey, f.get().get());
     }
 
-    private static <T> void checkIntReturningMethods(Supplier<T> supplier, T expected) {
-        assertEquals(expected, supplier.get());
+    private static <T> void checkIntReturningMethods(Supplier<T> f, T expected) {
+        assertEquals(expected, f.get());
+    }
+
+    private static <K extends Comparable<? super K>> void checkKeys(Supplier<Iterable<K>> f, String expected) {
+        String actual = Arrays.toString(StreamSupport.stream(f.get().spliterator(), false).toArray());
+        assertEquals(expected, actual);
     }
 
     private static <K extends Comparable<? super K>> void expectFailOnKeyReturningMethods(Supplier<Optional<K>> supplier) {

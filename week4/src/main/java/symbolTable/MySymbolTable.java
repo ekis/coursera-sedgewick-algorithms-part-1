@@ -1,5 +1,6 @@
 package symbolTable;
 
+import java.util.Collections;
 import java.util.Optional;
 
 public interface MySymbolTable<K extends Comparable<? super K>, V> {
@@ -133,5 +134,8 @@ public interface MySymbolTable<K extends Comparable<? super K>, V> {
      *
      * @return all keys in the table, in sorted order.
      */
-    Iterable<K> keys();
+    default Iterable<K> keys() {
+        if (isEmpty()) return Collections.emptyList();
+        return keys(min().get(), max().get());
+    }
 }
