@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public final class MyBstTest {
 
     @Test
-    public void testBst() {
+    public void testBstSimple() {
         MySymbolTable<Integer, String> bst = SymbolTableFactory.bst();
 
         assertTrue(bst.isEmpty());
@@ -24,6 +24,11 @@ public final class MyBstTest {
         bst.put(15, "F");
         bst.put(4, "G");
         bst.put(2, "H");
+        assertTrue(bst.contains(10));
+        assertTrue(bst.contains(15));
+        assertTrue(bst.contains(2));
+        assertFalse(bst.contains(1));
+        assertFalse(bst.contains(100));
         assertEquals(7, bst.size());
         bst.put(2, "Z");
         bst.put(2, "H");
@@ -79,6 +84,8 @@ public final class MyBstTest {
         checkIntReturningMethods(() -> bst.rank(15), 7);
         checkKeyReturningMethods(() -> bst.select(7), 15);
         checkIntReturningMethods(() -> bst.rank(21), bst.size());
+        checkIntReturningMethods(() -> bst.size(1, 20), bst.size());
+        checkIntReturningMethods(() -> bst.size(4, 15), 6);
         assertFalse(bst.isEmpty());
     }
 
@@ -113,6 +120,7 @@ public final class MyBstTest {
             checkKeyReturningMethods(() -> bst.ceiling(key), key);
             checkIntReturningMethods(() -> bst.rank(key), key);
             checkKeyReturningMethods(() -> bst.select(key), key);
+            assertTrue(bst.contains(key));
         });
 
         bst.put(590000, "A");
@@ -120,7 +128,11 @@ public final class MyBstTest {
         bst.put(610000, "A");
         assertFalse(bst.isEmpty());
         assertEquals(bst.size(), 500003);
-        checkKeyReturningMethods(() -> bst.floor(591000), 590000); // spot checks
+        assertTrue(bst.contains(590000));  // spot checks
+        assertTrue(bst.contains(600000));
+        assertTrue(bst.contains(610000));
+        assertFalse(bst.contains(700000));
+        checkKeyReturningMethods(() -> bst.floor(591000), 590000);
         checkKeyReturningMethods(() -> bst.floor(601000), 600000);
         checkKeyReturningMethods(() -> bst.floor(611000), 610000);
         checkKeyReturningMethods(() -> bst.ceiling(581000), 590000);
@@ -144,7 +156,7 @@ public final class MyBstTest {
         assertEquals(expectedKey, supplier.get().get());
     }
 
-    private static <K extends Comparable<? super K>> void checkIntReturningMethods(Supplier<K> supplier, K expected) {
+    private static <T> void checkIntReturningMethods(Supplier<T> supplier, T expected) {
         assertEquals(expected, supplier.get());
     }
 

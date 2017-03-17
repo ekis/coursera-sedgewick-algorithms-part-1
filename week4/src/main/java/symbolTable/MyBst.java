@@ -50,11 +50,12 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
     // if <, go left; if >, go right; if ==, delete; if null, nothing
     @Override
     public void delete(K key) {
+        throw new UnsupportedOperationException("Not implemented.");
     }
 
     @Override
     public boolean contains(K key) {
-        return false;
+        return get(key).map(k -> true).orElse(false);
     }
 
     @Override
@@ -170,17 +171,21 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
 
     @Override
     public int size(K lo, K hi) {
-        return 0;
+        if (lo == null || hi == null) throw new IllegalArgumentException("LO and/or HI argument may not be null.");
+
+        if (lo.compareTo(hi) > 0) return 0;
+        if (contains(hi)) return rank(hi) - rank(lo) + 1;
+        return rank(hi) - rank(lo);
     }
 
     @Override
     public Iterable<K> keys(K lo, K hi) {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public Iterable<K> keys() {
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     private Optional<K> checkAndFindOptional(Function<Node, K> f) {
