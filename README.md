@@ -3,7 +3,8 @@
 Implementations of most significant algorithms and some of their applications.
 All implementations are in Java, closely following the book "Algorithms, 4th ed." by Sedgewick, R. and Wayne, K. (2012 edition).
 
-Codebase also mirrors the Coursera course on Algorithms, structuring code in week. Java 8, JUnit + Hamcrest core and [algs4.jar](http://algs4.cs.princeton.edu/code/algs4.jar) are required dependencies.
+Codebase also mirrors the Coursera course on Algorithms, structuring code in weeks. 
+Build is done via [SBT](http://www.scala-sbt.org/download.html), and uses automatic dependency management - except for [algs4.jar](http://algs4.cs.princeton.edu/code/algs4.jar) which is an unmanaged dependency.
 
 ## Current index:
 
