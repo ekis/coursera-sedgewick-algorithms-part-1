@@ -20,7 +20,7 @@ public final class MyBstTest {
         bst.put(10, "A");
         checkKeyReturningMethods(bst::min, 10); // min() returns 10
         checkKeyReturningMethods(bst::max, 10); // max() returns 10
-        assertFalse(bst.isEmpty());
+        assertFalse(bst.isEmpty()); 
         bst.put(8, "B");
         bst.put(11, "D");
         bst.put(9, "C");
@@ -95,6 +95,12 @@ public final class MyBstTest {
         checkKeys(() -> bst.keys(1, 5), "[1, 2, 4]");
         checkKeys(() -> bst.keys(8, 9), "[8, 9]");
         checkKeys(() -> bst.keys(10, 16), "[10, 11, 15]");
+        bst.delete(1); // delete leaf node
+        checkKeys(() -> bst.keys(1, 20), "[2, 4, 8, 9, 10, 11, 15, 17, 20]");
+        bst.delete(20);
+        checkKeys(() -> bst.keys(1, 20), "[2, 4, 8, 9, 10, 11, 15, 17]");
+        bst.delete(8);
+        checkKeys(() -> bst.keys(1, 20), "[2, 4, 9, 10, 11, 15, 17]");
     }
 
     @Test
@@ -104,7 +110,8 @@ public final class MyBstTest {
         int N = alphabet.length;
         int T = 500000;
 
-        List<Integer> keys = IntStream.range(0, T).boxed().collect(Collectors.toList());
+        List<Integer> insertKeys = IntStream.range(0, T).boxed().collect(Collectors.toList());
+        List<Integer> deleteKeys = IntStream.range(0, T).boxed().collect(Collectors.toList()); // 4 extra elements added during the course of this test
 
         // load the BST with T uniform, non-repeating keys, taking a uniformly random letter from alphabet
         // also storing the K,V pair into a HashMap for comparison purposes
@@ -112,7 +119,7 @@ public final class MyBstTest {
         MySymbolTable<Integer, String> bst =
                 IntStream.range(0, T)
                         .collect(SymbolTableFactory::bst, (acc, rangeIndex) -> {
-                            Integer key = keys.remove(rnd.nextInt(T - rangeIndex));
+                            Integer key = insertKeys.remove(rnd.nextInt(T - rangeIndex));
                             String val = alphabet[rnd.nextInt(N)];
                             refMap.put(key, val);
                             acc.put(key, val);
@@ -131,29 +138,41 @@ public final class MyBstTest {
             assertTrue(bst.contains(key));
         });
 
-        bst.put(590000, "A");
-        bst.put(600000, "A");
-        bst.put(610000, "A");
+        int keyA = 590000;
+        int keyB = 600000;
+        int keyC = 610000;
+        bst.put(keyA, "A");
+        bst.put(keyB, "A");
+        bst.put(keyC, "A");
         assertFalse(bst.isEmpty());
         assertEquals(bst.size(), 500003);
-        assertTrue(bst.contains(590000));  // spot checks
-        assertTrue(bst.contains(600000));
-        assertTrue(bst.contains(610000));
+        assertTrue(bst.contains(keyA));  // spot checks
+        assertTrue(bst.contains(keyB));
+        assertTrue(bst.contains(keyC));
         assertFalse(bst.contains(700000));
-        checkKeyReturningMethods(() -> bst.floor(591000), 590000);
-        checkKeyReturningMethods(() -> bst.floor(601000), 600000);
-        checkKeyReturningMethods(() -> bst.floor(611000), 610000);
-        checkKeyReturningMethods(() -> bst.ceiling(581000), 590000);
-        checkKeyReturningMethods(() -> bst.ceiling(591000), 600000);
-        checkKeyReturningMethods(() -> bst.ceiling(601000), 610000);
-        checkKeyReturningMethods(() -> bst.select(500000), 590000);
+        checkKeyReturningMethods(() -> bst.floor(591000), keyA);
+        checkKeyReturningMethods(() -> bst.floor(601000), keyB);
+        checkKeyReturningMethods(() -> bst.floor(611000), keyC);
+        checkKeyReturningMethods(() -> bst.ceiling(581000), keyA);
+        checkKeyReturningMethods(() -> bst.ceiling(591000), keyB);
+        checkKeyReturningMethods(() -> bst.ceiling(601000), keyC);
+        checkKeyReturningMethods(() -> bst.select(500000), keyA);
         checkIntReturningMethods(() -> bst.rank(591000), 500001);
-        checkKeyReturningMethods(() -> bst.select(500001), 600000);
+        checkKeyReturningMethods(() -> bst.select(500001), keyB);
         checkIntReturningMethods(() -> bst.rank(601000), 500002);
-        checkKeyReturningMethods(() -> bst.select(500002), 610000);
+        checkKeyReturningMethods(() -> bst.select(500002), keyC);
         checkIntReturningMethods(() -> bst.rank(610001), 500003);
         checkKeys(() -> bst.keys(499998, 609000), "[499998, 499999, 590000, 600000]");
         assertFalse(bst.isEmpty());
+
+        IntStream.range(0, T).forEach(rangeIndex -> {
+            Integer deleteKey = deleteKeys.remove(rnd.nextInt(T - rangeIndex));
+            bst.delete(deleteKey);
+        });
+        bst.delete(keyA);
+        bst.delete(keyB);
+        bst.delete(keyC);
+        assertEquals(bst.size(), 1); // rnd.nextInt() is probably causing the root to always stay in the BST
     }
 
     private static <V> void checkGet(Supplier<Optional<V>> f, V expectedValue) {

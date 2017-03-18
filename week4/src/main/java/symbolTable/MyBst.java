@@ -26,14 +26,14 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
         insert(key, value, root);
     }
 
-    // my insert w/o back link
+    // my insert with back link
     private Node insert(K key, V value, Node node) {
         if (node == null) return new Node(key, value);
         int cmp = key.compareTo(node.key);
         if (cmp < 0) node.left = insert(key, value, node.left);
         else if (cmp > 0) node.right = insert(key, value, node.right);
         else node.value = value;
-        node.subtreeCount = 1 + size(node.left) + size(node.right);
+        updateSubtreeCountFor(node);
         return node;
     }
 
@@ -52,9 +52,70 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
     }
 
     // if <, go left; if >, go right; if ==, delete; if null, nothing
+    // Hibbard deletion: to delete a node with key k: search for node T containing key K
+    // case 0 : [0 children] -> delete T by setting parent link to null
+    // case 1 : [1 children] -> delete T by replacing parent link (min-case)
+    // case 2 : [2 children] -> 1. find successor x of T - (find x such that x has no left child)
+    //                          2. delete the minimum in T's subtree (but don't GC x)
+    //                          3. put x in T's spot (still a BST)
     @Override
     public void delete(K key) {
-        throw new UnsupportedOperationException("Not implemented.");
+        delete(key, root);
+    }
+
+    private Node delete(K key, Node node) {
+        if (node == null) return null;
+        int cmp = key.compareTo(node.key);
+        if (cmp < 0)
+            node.left = delete(key, node.left);
+        else if (cmp > 0)
+            node.right = delete(key, node.right);
+        else {
+            switch (childrenCount(node)) {
+                case 0 :
+                    return null;
+                case 1 :
+                    node = node.left == null ? node.right : node.left;
+                    break;
+                case 2 :
+                    Node t = node;
+                    node = minimum(t.right); // should point to the BST containing all the keys larger than x.key
+                    node.right = deleteMinimum(t.right);
+                    node.left = t.left; // all the keys that are < both the deleted key and its successor
+                    break;
+                default :
+                    throw new IllegalStateException();
+            }
+        }
+        updateSubtreeCountFor(node);
+        return node;
+    }
+
+    private Node minimum(Node node) {
+        if (node.left == null) return node;
+        return minimum(node.left);
+    }
+
+    // 1. go left until finding a node with a null left link
+    // 2. replace that node by its right link
+    // 3. update subtree counts
+    private Node deleteMinimum(Node node) {
+        if (node.left == null) return node.right;
+        node.left = deleteMinimum(node.left);
+        updateSubtreeCountFor(node);
+        return node;
+    }
+
+    private void updateSubtreeCountFor(Node node) {
+        node.subtreeCount = 1 + size(node.left) + size(node.right);
+    }
+
+    // this should've been an enum but enums don't work with non-static class (Node class isn't) so that would mean that
+    // either we refactor this whole class, introduce a bunch of statics and spam those method signature with exactly
+    // the same generic type definitions, or we rely on the typedefs from this class instance and just do this dirtiness
+    private int childrenCount(Node node) {
+        if (node.left == null) return node.right == null ? 0 : 1;
+        return node.right == null ? 1 : 2;
     }
 
     @Override
@@ -95,9 +156,9 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
         return max(node.right);
     }
 
-    // case 1 : [k == the key at root] -> floor(key) == key
-    // case 2 : [k <= the key at root] -> floor(key) is in the LEFT subtree
-    // case 3 : [k >= the key at root] -> floor(key) is in the RIGHT subtree (if there is any key <= k in right subtree; otherwise, the floor is the subtree root)
+    // case 0 : [k == the key at root] -> floor(key) == key
+    // case 1 : [k <= the key at root] -> floor(key) is in the LEFT subtree
+    // case 2 : [k >= the key at root] -> floor(key) is in the RIGHT subtree (if there is any key <= k in right subtree; otherwise, the floor is the subtree root)
     @Override
     public Optional<K> floor(K key) {
         return checkAndFindOptional(key, this::floor);
@@ -114,9 +175,9 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
         return smallerKey == null ? node.key : smallerKey;
     }
 
-    // case 1 : [k == the key at root] -> ceiling(key) == key
-    // case 2 : [k <= the key at root] -> ceiling(key) is in the RIGHT subtree
-    // case 3 : [k >= the key at root] -> ceiling(key) is in the LEFT subtree (if there is any key <= k in left subtree; otherwise, the floor is the subtree root)
+    // case 0 : [k == the key at root] -> ceiling(key) == key
+    // case 1 : [k <= the key at root] -> ceiling(key) is in the RIGHT subtree
+    // case 2 : [k >= the key at root] -> ceiling(key) is in the LEFT subtree (if there is any key <= k in left subtree; otherwise, the floor is the subtree root)
     @Override
     public Optional<K> ceiling(K key) {
         return checkAndFindOptional(key, this::ceiling);
@@ -134,9 +195,9 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
     }
 
     // how many keys < k?
-    // case 1 : [k == the key at root] -> rank(key) is the node count in the LEFT subtree
-    // case 2 : [k <  the key at root] -> rank(key) is the rank of the key in the LEFT subtree
-    // case 3 : [k >  the key at root] -> rank(key) = 1 + node count in the LEFT subtree + rank of the of the key in the RIGHT subtree
+    // case 0 : [k == the key at root] -> rank(key) is the node count in the LEFT subtree
+    // case 1 : [k <  the key at root] -> rank(key) is the rank of the key in the LEFT subtree
+    // case 2 : [k >  the key at root] -> rank(key) = 1 + node count in the LEFT subtree + rank of the of the key in the RIGHT subtree
     // inverse of select()
     @Override
     public int rank(K key) {
@@ -154,9 +215,9 @@ final class MyBst<K extends Comparable<? super K>, V> implements MySymbolTable<K
     }
 
     // what is the key of rank k?
-    // case 1 : [k == left subtree count] -> select(k) returns key at that node
-    // case 2 : [k <  left subtree count] -> select(k) return
-    // case 3 : [k >  left subtree count] -> select(k) key is in the LEFT subtree (computed recursively via rank())
+    // case 0 : [k == left subtree count] -> select(k) returns key at that node
+    // case 1 : [k <  left subtree count] -> select(k) return
+    // case 2 : [k >  left subtree count] -> select(k) key is in the LEFT subtree (computed recursively via rank())
     // inverse of rank()
     @Override
     public Optional<K> select(int k) {

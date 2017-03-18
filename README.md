@@ -37,4 +37,4 @@ Build is done via [SBT](http://www.scala-sbt.org/download.html), and uses automa
   - [x] Dutch national flag sort (Dijkstra's precursor idea for 3-way quick sort)
   - [x] Binary search (requires pre-sorted input, O(lgN)) 
 4. (Week 4) Searching
-  - [x] Symbol table (binary search tree, all ops O(lgN))
+  - [x] Symbol table (binary search tree, all ops O(lgN), except delete operation which is sqrt(N))
