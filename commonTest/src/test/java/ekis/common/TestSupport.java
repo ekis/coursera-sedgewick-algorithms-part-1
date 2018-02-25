@@ -1,5 +1,6 @@
 package ekis.common;
 
+import ekis.common.grid.StringGrid;
 import org.junit.Assert;
 
 public final class TestSupport {
@@ -9,15 +10,14 @@ public final class TestSupport {
     }
 
     public static void check(StringGrid grid, String... expected) {
-        grid.separator(" | ");
         compare(grid.show(), expected);
     }
 
     public static void compare(String actual, String... expected) {
         TestSummarizer summarizer = new TestSummarizer();
-        summarizer.actual("%s", actual); //NON-NLS
+        summarizer.actual("%s", actual);
         summarizer.expected(expected);
-        summarizer.check("result"); //NON-NLS
+        summarizer.check("result");
     }
 
     public static void failAndCheck(Runnable task, String expectedErrorMessage) {
