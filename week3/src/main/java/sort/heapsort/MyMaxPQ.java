@@ -26,7 +26,8 @@ public final class MyMaxPQ<T extends Comparable<? super T>> {
         return new MyMaxPQ<>();
     }
 
-    public void insert(T... keys) {
+    @SafeVarargs
+    public final void insert(T... keys) {
         Stream.of(keys).forEach(this::insert);
     }
 

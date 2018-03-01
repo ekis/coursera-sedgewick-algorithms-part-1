@@ -1,7 +1,7 @@
 package sort;
 
 import ekis.SortRandomData;
-import ekis.common.StringGrid;
+import ekis.common.grid.StringGrid;
 import ekis.common.TestSupport;
 import util.SortUtility;
 import org.junit.Test;
@@ -65,7 +65,7 @@ public final class SortAlgorithmTest {
     }
 
     private static void sortAndTest(SortAlgorithm algorithm, SortRandomData data) {
-        String[] expectedGrid = new String[]{
+        String[] expected = new String[]{
                 "                     Input                       |                     Expected                     |                      Actual                      | Is sorted?", //
                 "                                                 |                                                  |                                                  |           ", //
                 "       [S, O, R, T, E, X, A, M, P, L, E]         |        [A, E, E, L, M, O, P, R, S, T, X]         |        [A, E, E, L, M, O, P, R, S, T, X]         |    true   ", //
@@ -85,7 +85,7 @@ public final class SortAlgorithmTest {
         grid.row("Uniformly random data input", "Sorted uniformly random data input", "Sorted uniformly random data input", testRandomSort(algorithm, data.randoms()));
         grid.row("Heavily duplicated data input", "Sorted data input", "Sorted data input", testRandomSort(algorithm, data.duplicates()));
 
-        TestSupport.check(grid, expectedGrid);
+        TestSupport.check(expected, grid);
     }
 
     private static <T extends Comparable<? super T>> boolean testRandomSort(SortAlgorithm algorithm, T[] values) {

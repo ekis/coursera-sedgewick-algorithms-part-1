@@ -1,4 +1,4 @@
-import ekis.common.StringGrid;
+import ekis.common.grid.StringGrid;
 import ekis.common.TestSupport;
 import org.junit.Test;
 
@@ -75,7 +75,6 @@ public class PercolationTest {
                 "(13, 1) ->   | (13, 2) ->   | (13, 3) ->   | (13, 4) ->   | (13, 5) ->   | (13, 6) ->   | (13, 7) ->   | (13, 8) ->   | (13, 9) ->   | (13, 10) ->   | (13, 11) ->   | (13, 12) ->   | (13, 13) ->   | (13, 14) ->   | (13, 15) ->  ", //
                 "(14, 1) ->   | (14, 2) ->   | (14, 3) ->   | (14, 4) ->   | (14, 5) ->   | (14, 6) ->   | (14, 7) ->   | (14, 8) ->   | (14, 9) ->   | (14, 10) ->   | (14, 11) ->   | (14, 12) ->   | (14, 13) ->   | (14, 14) ->   | (14, 15) ->  ", //
                 "(15, 1) ->   | (15, 2) ->   | (15, 3) ->   | (15, 4) ->   | (15, 5) ->   | (15, 6) ->   | (15, 7) ->   | (15, 8) ->   | (15, 9) ->   | (15, 10) ->   | (15, 11) ->   | (15, 12) ->   | (15, 13) ->   | (15, 14) ->   | (15, 15) ->  " //
-
         };
         testInitial(15, expected);
     }
@@ -310,7 +309,7 @@ public class PercolationTest {
 
     private static void testInitial(int rank, String[] expected) {
         String actual = show(new Percolation(rank), rank);
-        TestSupport.compare(actual, expected);
+        TestSupport.compare(expected, actual);
     }
 
     private static void assertPercolates(int rank, Percolation p, String[] expected) {
@@ -323,7 +322,7 @@ public class PercolationTest {
 
     private static void testPercolates(int rank, Percolation p, String[] expected, Predicate<Percolation> predicate) {
         String actual = show(p, rank);
-        TestSupport.compare(actual, expected);
+        TestSupport.compare(expected, actual);
         assertTrue(predicate.test(p));
     }
 
@@ -332,15 +331,14 @@ public class PercolationTest {
     }
 
     private static StringGrid gridOf(Percolation p, int rank) {
-        StringGrid grid = new StringGrid();
-        grid.separator(" | ");
+        StringGrid grid = StringGrid.defaultStringGrid();
         for (int i = 1; i <= rank; i++) {
             String[] row = new String[rank];
             for (int j = 1; j <= rank; j++) {
                 String s = testOpenAt(i, j, p);
                 row[j - 1] = s;
             }
-            grid.row((Object[]) row);
+            grid.row((Object []) row);
         }
         return grid;
     }

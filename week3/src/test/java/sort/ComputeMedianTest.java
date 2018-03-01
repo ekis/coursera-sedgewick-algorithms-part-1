@@ -1,17 +1,17 @@
 package sort;
 
-import ekis.common.StringGrid;
 import ekis.common.TestSupport;
+import ekis.common.grid.StringGrid;
+import org.junit.Test;
 import sort.quicksort.MyQuick;
 import sort.quicksort.MyQuickSelect;
-import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
-import static util.SortUtility.lessF;
 import static sort.SortTestSupport.*;
+import static util.SortUtility.lessF;
 
 public final class ComputeMedianTest {
 
@@ -32,12 +32,12 @@ public final class ComputeMedianTest {
         populateGridRow(grid, EXAMPLE_3);
         populateGridRow(grid, SEDGEWICK_DEMO_EXAMPLE);
 
-        TestSupport.check(grid, expected);
+        TestSupport.check(expected, grid);
     }
 
     @Test
     public void testQuickSelect() {
-        String[] expectedGrid = new String[]{
+        String[] expected = new String[]{
                 "                  Input Array                    |                                                           Actual Output [format: (index k -> array element)]                                                           ", //
                 "                                                 |                                                                                                                                                                        ", //
                 "       [S, O, R, T, E, X, A, M, P, L, E]         |                            [(1 -> A), (2 -> E), (3 -> E), (4 -> L), (5 -> M), (6 -> O), (7 -> P), (8 -> R), (9 -> S), (10 -> T), (11 -> X)]                            ", //
@@ -53,7 +53,7 @@ public final class ComputeMedianTest {
         populateGridRow(grid, SortTestSupport::copyExample3, EXAMPLE_3);
         populateGridRow(grid, SortTestSupport::copySedgewickExample, SEDGEWICK_DEMO_EXAMPLE);
 
-        TestSupport.check(grid, expectedGrid);
+        TestSupport.check(expected, grid);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -68,7 +68,9 @@ public final class ComputeMedianTest {
 
     private static void populateGridRow(StringGrid grid, Supplier<String[]> exampleSupplier, String[] input) {
         String[] example = exampleSupplier.get();
-        String[] actual = IntStream.rangeClosed(1, example.length).mapToObj(k -> String.format("(%s -> %s)", k, MyQuickSelect.select(example, k))).toArray(String[]::new);
+        String[] actual = IntStream.rangeClosed(1, example.length)
+                .mapToObj(k -> String.format("(%s -> %s)", k, MyQuickSelect.select(example, k)))
+                .toArray(String[]::new);
         grid.row(Arrays.toString(input), Arrays.toString(actual));
     }
 

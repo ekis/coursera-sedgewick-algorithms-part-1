@@ -9,11 +9,11 @@ public final class TestSupport {
         // utility class
     }
 
-    public static void check(StringGrid grid, String... expected) {
-        compare(grid.show(), expected);
+    public static void check(String[] expected, StringGrid grid) {
+        compare(expected, grid.show());
     }
 
-    public static void compare(String actual, String... expected) {
+    public static void compare(String[] expected, String actual) {
         TestSummarizer summarizer = new TestSummarizer();
         summarizer.actual("%s", actual);
         summarizer.expected(expected);

@@ -19,7 +19,7 @@ public class StringGridTest {
             .row("", "", "", "")
             .row("Title Column 1", "Title Column 2", "Title Column 3", "Title Column 4")
             .row();
-        TestSupport.check(grid, expected);
+        TestSupport.check(expected, grid);
     }
 
     @Test

@@ -1,8 +1,8 @@
 package sort;
 
 import ekis.common.Pair;
-import ekis.common.StringGrid;
 import ekis.common.TestSupport;
+import ekis.common.grid.StringGrid;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -93,20 +93,20 @@ public final class SortStabilityTest {
         // array will end up sorted in stable sort order, entirely by accident, which makes conclusions relying on
     }
 
-    private static void sortAndCheck(SortAlgorithm algorithm, String[] expectedGrid) {
+    private static void sortAndCheck(SortAlgorithm algorithm, String[] expected) {
         StringGrid grid = initialiseGrid();
 
-        Pair<Integer, String>[] unsorted = unsorted();
-        Pair<Integer, String>[] expected = unsorted();
-        Pair<Integer, String>[] actual = unsorted();
+        Pair<Integer, String>[] unsortedPairs = unsortedPairs();
+        Pair<Integer, String>[] expectedPairs = unsortedPairs();
+        Pair<Integer, String>[] actualPairs = unsortedPairs();
 
-        Arrays.sort(expected, BY_NAME);
-        Arrays.sort(expected, BY_ID);
-        algorithm.sort(actual, BY_NAME);
-        algorithm.sort(actual, BY_ID);
+        Arrays.sort(expectedPairs, BY_NAME);
+        Arrays.sort(expectedPairs, BY_ID);
+        algorithm.sort(actualPairs, BY_NAME);
+        algorithm.sort(actualPairs, BY_ID);
 
-        IntStream.range(0, 8).forEach(i -> grid.row(format(unsorted[i]), format(expected[i]), format(actual[i])));
-        TestSupport.check(grid, expectedGrid);
+        IntStream.range(0, 8).forEach(i -> grid.row(format(unsortedPairs[i]), format(expectedPairs[i]), format(actualPairs[i])));
+        TestSupport.check(expected, grid);
     }
 
     private static String format(Pair<Integer, String> pair) {
@@ -129,16 +129,14 @@ public final class SortStabilityTest {
     }
 
     private static StringGrid initialiseGrid() {
-        StringGrid grid = new StringGrid();
-        grid.row();
+        StringGrid grid = StringGrid.defaultStringGrid();
         grid.column("Unsorted input", "System sort output", "Actual output");
-        grid.alignments(StringGrid.Alignment.LEFT, StringGrid.Alignment.LEFT, StringGrid.Alignment.LEFT);
         grid.row();
         return grid;
     }
 
     @SuppressWarnings("unchecked")
-    private static Pair<Integer, String>[] unsorted() {
+    private static Pair<Integer, String>[] unsortedPairs() {
         List<Pair<Integer, String>> pairs = new ArrayList<>();
         pairs.add(Pair.of(3, "Kanaga"));
         pairs.add(Pair.of(3, "Chen"));
@@ -148,6 +146,6 @@ public final class SortStabilityTest {
         pairs.add(Pair.of(3, "Andrews"));
         pairs.add(Pair.of(4, "Battle"));
         pairs.add(Pair.of(1, "Furia"));
-        return pairs.toArray(new Pair[pairs.size()]);
+        return pairs.toArray(new Pair[0]);
     }
 }
