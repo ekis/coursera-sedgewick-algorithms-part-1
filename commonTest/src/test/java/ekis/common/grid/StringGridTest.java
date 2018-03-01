@@ -11,8 +11,8 @@ public class StringGridTest {
     @Test
     public void testEmptyFirstRow() {
         String[] expected = new String[]{
-                "               |                |                |               ", //
-                "Title Column 1 | Title Column 2 | Title Column 3 | Title Column 4", //
+                "               |                |                |               ",
+                "Title Column 1 | Title Column 2 | Title Column 3 | Title Column 4",
                 "               |                |                |               "};
         StringGrid grid = StringGrid.defaultStringGrid();
         grid.row()

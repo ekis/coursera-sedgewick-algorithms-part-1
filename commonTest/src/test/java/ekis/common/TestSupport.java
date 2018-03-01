@@ -14,10 +14,10 @@ public final class TestSupport {
     }
 
     public static void compare(String[] expected, String actual) {
-        TestSummarizer summarizer = new TestSummarizer();
-        summarizer.actual("%s", actual);
-        summarizer.expected(expected);
-        summarizer.check("result");
+        new TestSummarizer()
+                .expected(expected)
+                .actual(actual)
+                .validate();
     }
 
     public static void failAndCheck(Runnable task, String expectedErrorMessage) {
