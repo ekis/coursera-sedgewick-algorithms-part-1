@@ -2,9 +2,11 @@ package ekis.common.grid;
 
 import ekis.common.Pair;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -12,31 +14,25 @@ public final class StringGrid {
     private static final String EMPTY = "";
     private static final String CRLF = "\n";
 
-    private final Matrix _matrix = new Matrix();
-    private final Map<Integer, ColumnAligner> _columnMeta;
-    private final String _separator;
+    private final Matrix matrix = new Matrix();
+    private final Map<Integer, ColumnAligner> columnMeta;
+    private final String separator;
 
-    private final Function<Object, String> _converter;
-    private Function<Integer, String> _emptyCellValue;
+    private final Function<Object, String> converter;
+    private Function<Integer, String> emptyCellValue;
 
-    private StringGrid(String separator, Function<Object, String> converter, Function<Integer, String> emptyCell, Alignment... alignments) {
-        _separator = separator;
-        _emptyCellValue = emptyCell;
-        _converter = converter;
-        _columnMeta = Stream.iterate(0, x -> x + 1)
+    private StringGrid(String sep, Function<Object, String> converterF, Function<Integer, String> emptyCell, Alignment... alignments) {
+        separator = sep;
+        emptyCellValue = emptyCell;
+        converter = converterF;
+        columnMeta = Stream.iterate(0, x -> x + 1)
                 .limit(alignments.length)
                 .map(col -> Pair.of(col, new ColumnAligner(alignments[col])))
                 .collect(Collectors.toMap(Pair::x, Pair::y));
     }
 
-    public static StringGrid.Builder stringGridBuilder() {
-        return new Builder()
-                .converter(String::valueOf);
-    }
-
     public static StringGrid defaultStringGrid() {
-        return stringGridBuilder()
-                .build();
+        return builder().build();
     }
 
     public static StringGrid.Builder builder() {
@@ -47,15 +43,13 @@ public final class StringGrid {
         Stream.iterate(0, x -> x + 1)
                 .limit(values.length)
                 .forEachOrdered(idx -> {
-                    Pair<Integer, Integer> lastRowCol = maxKey();
-                    Integer maxElemRow = lastRowCol.x();
-                    Integer maxElemCol = lastRowCol.y();
-                    if (maxElemRow == -1) {
-                        insert(maxElemRow + 1, maxElemCol + 1, _converter.apply(values[idx]));
-                    } else if (maxElemRow == 0 || maxElemCol < maxCol()) {
-                        insert(maxElemRow, maxElemCol + 1, _converter.apply(values[idx]));
+                    Integer maxRow = maxRow();
+                    if (maxRow == -1) {
+                        insertColumnValueInEmptyMatrix(values[idx]);
+                    } else if (maxRow == 0 || lastCellCoordinates().y() < maxCol()) {
+                        insertColumnValueToCurrentRow(values[idx]);
                     } else {
-                        insert(maxElemRow + 1, 0, _converter.apply(values[idx]));
+                        insertColumnValueToNextRow(maxRow + 1, values[idx]);
                     }
                 });
         return this;
@@ -65,8 +59,8 @@ public final class StringGrid {
         Integer endIndex = values.length == 0 ? maxUsedCol() : values.length;
         Integer newRow = maxRow() + 1;
         Function<Integer, String> cellValueProvider = values.length == 0
-                ? _emptyCellValue
-                : cellValue -> _converter.apply(values[cellValue]);
+                ? emptyCellValue
+                : cellValue -> converter.apply(values[cellValue]);
         Stream.iterate(0, x -> x + 1)
                 .limit(endIndex)
                 .forEachOrdered(index -> insert(newRow, index, cellValueProvider.apply(index)));
@@ -79,15 +73,28 @@ public final class StringGrid {
         for (int row = 0; row <= maxRow(); row++) {
             for (int col = 0; col <= maxCol; col++) {
                 ColumnAligner columnAligner = getAligner(col);
-                String value = _matrix.get(Pair.of(row, col));
+                String value = matrix.get(Pair.of(row, col));
                 sb.append(columnAligner.align(value));
                 if (col != maxCol) {
-                    sb.append(_separator);
+                    sb.append(separator);
                 }
             }
             sb.append(CRLF);
         }
         return sb.toString();
+    }
+
+    private void insertColumnValueInEmptyMatrix(Object value) {
+        insert(0, 0, converter.apply(value));
+    }
+
+    private void insertColumnValueToCurrentRow(Object value) {
+        Pair<Integer, Integer> lastCell = lastCellCoordinates();
+        insert(lastCell.x(), lastCell.y() + 1, converter.apply(value));
+    }
+
+    private void insertColumnValueToNextRow(Integer nextRow, Object value) {
+        insert(nextRow, 0, converter.apply(value));
     }
 
     private void insert(Integer row, Integer col, String value) {
@@ -98,36 +105,36 @@ public final class StringGrid {
     private void updateColumnWidth(Integer currentCol, int strLen) {
         ColumnAligner columnAligner = getAligner(currentCol);
         columnAligner.updateWidth(strLen);
-        _columnMeta.put(currentCol, columnAligner);
+        columnMeta.put(currentCol, columnAligner);
     }
 
     private ColumnAligner getAligner(int column) {
-        return _columnMeta.getOrDefault(column, new ColumnAligner(Alignment.LEFT));
+        return columnMeta.getOrDefault(column, new ColumnAligner(Alignment.LEFT));
     }
 
     private int put(Integer row, Integer column, String value) {
-        _matrix.put(Pair.of(row, column), value);
+        matrix.put(Pair.of(row, column), value);
         return value.length();
     }
 
     private Integer maxRow() {
-        return maxKey().x();
+        return lastCellCoordinates().x();
     }
 
     private Integer maxCol() {
-        return _matrix.maxCol();
+        return matrix.maxCol();
     }
 
     private Integer maxUsedCol() {
         // this handles a corner case where client erroneously specifies more alignment cols than are actually used
         // in rare circumstances (row() followed immediately by column()) the inserted column value would end up one cell behind
         // so we have to push the value one column forward
-        return Math.min(maxCol() + 1, _columnMeta.size());
+        return Math.min(maxCol() + 1, columnMeta.size());
     }
 
-    private Pair<Integer, Integer> maxKey() {
-        Map.Entry<Pair<Integer, Integer>, String> lastEntry = _matrix.lastEntry();
-        return lastEntry == null ? nullMatrixCell() : lastEntry.getKey();
+    private Pair<Integer, Integer> lastCellCoordinates() {
+        Map.Entry<Pair<Integer, Integer>, String> lastCell = matrix.lastEntry();
+        return lastCell == null ? nullMatrixCell() : lastCell.getKey();
     }
 
     private static Pair<Integer, Integer> nullMatrixCell() {
@@ -138,13 +145,13 @@ public final class StringGrid {
         private final NavigableMap<Pair<Integer, Integer>, String> map = new TreeMap<>(pairComparator());
         private int maxCol = -1;
 
-        String get(Pair<Integer, Integer> key) {
-            return map.getOrDefault(key, EMPTY);
+        String get(Pair<Integer, Integer> cellCoordinates) {
+            return map.getOrDefault(cellCoordinates, EMPTY);
         }
 
-        void put(Pair<Integer, Integer> key, String value) {
-            map.put(key, value);
-            maxCol = Math.max(key.y(), maxCol);
+        void put(Pair<Integer, Integer> cellCoordinate, String value) {
+            map.put(cellCoordinate, value);
+            maxCol = Math.max(cellCoordinate.y(), maxCol);
         }
 
         Map.Entry<Pair<Integer, Integer>, String> lastEntry() {
@@ -156,9 +163,9 @@ public final class StringGrid {
         }
 
         private static Comparator<Pair<Integer, Integer>> pairComparator() {
-            return (p1, p2) -> p1.x().compareTo(p2.x()) == 0
-                    ? p1.y().compareTo(p2.y())
-                    : p1.x().compareTo(p2.x());
+            return (left, right) -> left.x().compareTo(right.x()) == 0
+                    ? left.y().compareTo(right.y())
+                    : left.x().compareTo(right.x());
         }
     }
 
@@ -185,7 +192,7 @@ public final class StringGrid {
         private Alignment[] alignmentArray = new Alignment[0];
         private String separator = DEFAULT_SEPARATOR;
 
-        private Function<Object, String> converter;
+        private Function<Object, String> converter = String::valueOf;
         private Function<Integer, String> emptyCellValue = any -> EMPTY;
 
         public Builder alignments(Alignment... alignments) {
@@ -209,9 +216,6 @@ public final class StringGrid {
         }
 
         public StringGrid build() {
-            if (converter == null) {
-                throw new IllegalStateException("Converter function must be specified");
-            }
             return new StringGrid(separator, converter, emptyCellValue, alignmentArray);
         }
     }
