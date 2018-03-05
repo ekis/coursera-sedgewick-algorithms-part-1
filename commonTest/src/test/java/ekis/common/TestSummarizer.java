@@ -18,25 +18,26 @@ public final class TestSummarizer {
     private List<String> actual = new ArrayList<>();
 
     public TestSummarizer expected(String... lines) {
-        expected = Stream.concat(expected.stream(), Stream.of(lines))
-                .collect(Collectors.toList());
+        expected = appendToTail(expected, Stream.of(lines));
         return this;
     }
 
     public TestSummarizer actual(String args) {
-        actual = Stream.concat(actual.stream(), Pattern.compile(NEWLINE_PATTERN).splitAsStream(args))
-                .collect(Collectors.toList());
+        actual = appendToTail(actual, Pattern.compile(NEWLINE_PATTERN).splitAsStream(args));
         return this;
     }
 
     public void validate() {
-        String expectedString = expected.stream()
-                .map(s -> PREFIX + s + SUFFIX)
-                .collect(Collectors.joining(EMPTY));
+        Assert.assertEquals(wrapLinesAndMerge(expected), wrapLinesAndMerge(actual));
+    }
 
-        String actualString = actual.stream()
+    private static <T> List<T> appendToTail(List<T> list, Stream<T> stream) {
+        return Stream.concat(list.stream(), stream).collect(Collectors.toList());
+    }
+
+    private static String wrapLinesAndMerge(List<String> list) {
+        return list.stream()
                 .map(s -> PREFIX + s + SUFFIX)
                 .collect(Collectors.joining(EMPTY));
-        Assert.assertEquals(expectedString, actualString);
     }
 }
