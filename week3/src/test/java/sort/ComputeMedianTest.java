@@ -1,7 +1,7 @@
 package sort;
 
 import ekis.common.TestSupport;
-import ekis.common.grid.StringGrid;
+import ekis.common.grid.TestGrid;
 import org.junit.Test;
 import sort.quicksort.MyQuick;
 import sort.quicksort.MyQuickSelect;
@@ -26,7 +26,7 @@ public final class ComputeMedianTest {
                 "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |      P      |        A       " //
         };
 
-        StringGrid grid = grid("Input Array", "Median of 3", "Tukey's Ninther");
+        TestGrid grid = grid("Input Array", "Median of 3", "Tukey's Ninther");
         populateGridRow(grid, EXAMPLE_1);
         populateGridRow(grid, EXAMPLE_2);
         populateGridRow(grid, EXAMPLE_3);
@@ -46,7 +46,7 @@ public final class ComputeMedianTest {
                 "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |            [(1 -> A), (2 -> B), (3 -> C), (4 -> D), (5 -> P), (6 -> P), (7 -> P), (8 -> P), (9 -> P), (10 -> V), (11 -> W), (12 -> X), (13 -> Y), (14 -> Z)]           " //
         };
 
-        StringGrid grid = grid("Input Array", "Actual Output [format: (index k -> array element)]");
+        TestGrid grid = grid("Input Array", "Actual Output [format: (index k -> array element)]");
 
         populateGridRow(grid, SortTestSupport::copyExample1, EXAMPLE_1);
         populateGridRow(grid, SortTestSupport::copyExample2, EXAMPLE_2);
@@ -66,7 +66,7 @@ public final class ComputeMedianTest {
         MyQuickSelect.select(EXAMPLE_1, 12);
     }
 
-    private static void populateGridRow(StringGrid grid, Supplier<String[]> exampleSupplier, String[] input) {
+    private static void populateGridRow(TestGrid grid, Supplier<String[]> exampleSupplier, String[] input) {
         String[] example = exampleSupplier.get();
         String[] actual = IntStream.rangeClosed(1, example.length)
                 .mapToObj(k -> String.format("(%s -> %s)", k, MyQuickSelect.select(example, k)))
@@ -74,7 +74,7 @@ public final class ComputeMedianTest {
         grid.row(Arrays.toString(input), Arrays.toString(actual));
     }
 
-    private static void populateGridRow(StringGrid grid, String[] input) {
+    private static void populateGridRow(TestGrid grid, String[] input) {
         grid.row(Arrays.toString(input), input[MyQuick.medianOf3(input, lessF())], input[MyQuick.ninther(input, lessF())]);
     }
 }

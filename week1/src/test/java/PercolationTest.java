@@ -1,4 +1,4 @@
-import ekis.common.grid.StringGrid;
+import ekis.common.grid.TestGrid;
 import ekis.common.TestSupport;
 import org.junit.Test;
 
@@ -330,8 +330,8 @@ public class PercolationTest {
         return gridOf(p, rank).show();
     }
 
-    private static StringGrid gridOf(Percolation p, int rank) {
-        StringGrid grid = StringGrid.defaultStringGrid();
+    private static TestGrid gridOf(Percolation p, int rank) {
+        TestGrid grid = TestGrid.defaultStringGrid();
         for (int i = 1; i <= rank; i++) {
             String[] row = new String[rank];
             for (int j = 1; j <= rank; j++) {

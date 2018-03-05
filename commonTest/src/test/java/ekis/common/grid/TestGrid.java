@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class StringGrid {
+public final class TestGrid {
     private static final String EMPTY = "";
     private static final String CRLF = "\n";
 
@@ -21,7 +21,7 @@ public final class StringGrid {
 
     private final Function<Object, String> converter;
 
-    private StringGrid(String sep, Function<Object, String> converterF, BiFunction<Integer, Integer, String> emptyCellF, Alignment... alignments) {
+    private TestGrid(String sep, Function<Object, String> converterF, BiFunction<Integer, Integer, String> emptyCellF, Alignment... alignments) {
         matrix = new Matrix(emptyCellF);
         separator = sep;
         converter = converterF;
@@ -31,15 +31,15 @@ public final class StringGrid {
                 .collect(Collectors.toMap(Pair::x, Pair::y));
     }
 
-    public static StringGrid defaultStringGrid() {
+    public static TestGrid defaultStringGrid() {
         return builder().build();
     }
 
-    public static StringGrid.Builder builder() {
+    public static TestGrid.Builder builder() {
         return new Builder();
     }
 
-    public StringGrid column(Object... values) {
+    public TestGrid column(Object... values) {
         Stream.iterate(0, x -> x + 1)
                 .limit(values.length)
                 .forEachOrdered(idx -> {
@@ -55,7 +55,7 @@ public final class StringGrid {
         return this;
     }
 
-    public StringGrid row(Object... values) {
+    public TestGrid row(Object... values) {
         Integer rowLength = values.length;
         Integer endIndex = Math.max(rowLength, maxUsedCol());
         Integer newRow = maxRow() + 1;
@@ -224,8 +224,8 @@ public final class StringGrid {
             return this;
         }
 
-        public StringGrid build() {
-            return new StringGrid(separator, converter, emptyCellValue, alignmentArray);
+        public TestGrid build() {
+            return new TestGrid(separator, converter, emptyCellValue, alignmentArray);
         }
     }
 }

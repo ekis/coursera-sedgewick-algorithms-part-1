@@ -1,7 +1,7 @@
 package sort;
 
 import ekis.SortRandomData;
-import ekis.common.grid.StringGrid;
+import ekis.common.grid.TestGrid;
 import ekis.common.TestSupport;
 import util.SortUtility;
 import org.junit.Test;
@@ -76,7 +76,7 @@ public final class SortAlgorithmTest {
                 "         Heavily duplicated data input           |                Sorted data input                 |                Sorted data input                 |    true   " //
         };
 
-        StringGrid grid = grid("Input", "Expected", "Actual", "Is sorted?");
+        TestGrid grid = grid("Input", "Expected", "Actual", "Is sorted?");
 
         populateGridRow(grid, EXAMPLE_1, EXPECTED_1, SortTestSupport::copyExample1, algorithm);
         populateGridRow(grid, EXAMPLE_2, EXPECTED_2, SortTestSupport::copyExample2, algorithm);
@@ -93,7 +93,7 @@ public final class SortAlgorithmTest {
         return SortUtility.isSorted(values);
     }
 
-    private static void populateGridRow(StringGrid grid, String[] example, String[] expected, Supplier<String[]> actualSupplier, SortAlgorithm algorithm) {
+    private static void populateGridRow(TestGrid grid, String[] example, String[] expected, Supplier<String[]> actualSupplier, SortAlgorithm algorithm) {
         String[] actual = actualSupplier.get();
         algorithm.sort(actual);
         grid.row(Arrays.toString(example), Arrays.toString(expected), Arrays.toString(actual), SortUtility.isSorted(actual));

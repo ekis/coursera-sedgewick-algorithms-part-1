@@ -1,7 +1,7 @@
 package sort;
 
 import ekis.common.grid.Alignment;
-import ekis.common.grid.StringGrid;
+import ekis.common.grid.TestGrid;
 
 import java.util.Arrays;
 
@@ -19,11 +19,11 @@ final class SortTestSupport {
     static final String[] SEDGEWICK_DEMO_EXAMPLE = "PABXWPPVPDPCYZ".split("");
     static final String[] SEDGEWICK_DEMO_EXPECTED = "ABCDPPPPPVWXYZ".split("");
 
-    static StringGrid grid(Object... columnNames) {
+    static TestGrid grid(Object... columnNames) {
 //        Alignment[] alignments = IntStream.range(0, columnNames.length)
 //                .mapToObj(x -> Alignment.CENTRE)
 //                .toArray(value -> new Alignment[columnNames.length]);
-        StringGrid grid = StringGrid.builder()
+        TestGrid grid = TestGrid.builder()
                 .alignments(Alignment.CENTRE, Alignment.CENTRE, Alignment.CENTRE, Alignment.CENTRE)
                 .converter(String::valueOf)
                 .build();

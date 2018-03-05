@@ -1,6 +1,6 @@
 package ekis.common;
 
-import ekis.common.grid.StringGrid;
+import ekis.common.grid.TestGrid;
 import org.junit.Assert;
 
 public final class TestSupport {
@@ -9,7 +9,7 @@ public final class TestSupport {
         // utility class
     }
 
-    public static void check(String[] expected, StringGrid grid) {
+    public static void check(String[] expected, TestGrid grid) {
         compare(expected, grid.show());
     }
 

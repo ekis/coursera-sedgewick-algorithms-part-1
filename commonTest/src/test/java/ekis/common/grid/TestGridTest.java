@@ -4,7 +4,7 @@ import ekis.common.Pair;
 import ekis.common.TestSupport;
 import org.junit.Test;
 
-public class StringGridTest {
+public class TestGridTest {
 
     @Test
     public void defaultStringGrid_rowsOnly_defaultAlignment_expectValidString() {
@@ -15,7 +15,7 @@ public class StringGridTest {
                 "               |                |                |               ",
         };
 
-        StringGrid grid = StringGrid.defaultStringGrid();
+        TestGrid grid = TestGrid.defaultStringGrid();
         grid.row("Title Column 1", "Title Column 2", "Title Column 3", "Title Column 4")
             .row("A", "B", "C", "D")
             .row("E", "F", "G")
@@ -34,7 +34,7 @@ public class StringGridTest {
                 "Row 4    | 42       |          |          |         ",
         };
 
-        StringGrid grid = StringGrid.defaultStringGrid();
+        TestGrid grid = TestGrid.defaultStringGrid();
         grid.row()
                 .row("/", "Column 1", "Column 2", "Column 3", "Column 4")
                 .row("--------", "--------", "--------", "--------", "--------")
@@ -52,7 +52,7 @@ public class StringGridTest {
                 "Title Column 1 | Title Column 2 | Title Column 3 | Title Column 4",
         };
 
-        StringGrid grid = StringGrid.defaultStringGrid();
+        TestGrid grid = TestGrid.defaultStringGrid();
         grid.row() // first empty row is ignored as the code cannot guess how many columns to inject
             .row("", "", "", "") // this is how we would define an empty first row
             .row("Title Column 1", "Title Column 2", "Title Column 3", "Title Column 4");
@@ -72,7 +72,7 @@ public class StringGridTest {
                 "F              |                |                |               ",
                 "G              |                |                |               ",
         };
-        StringGrid grid = StringGrid.defaultStringGrid();
+        TestGrid grid = TestGrid.defaultStringGrid();
         grid.row("Title Column 1", "Title Column 2", "Title Column 3", "Title Column 4") // first, establish the header row...
             .row() // ... enter a new row so as to define the width of the matrix....
             .row("A") // ....and then continue to insert cell values
@@ -93,7 +93,7 @@ public class StringGridTest {
                 "A              | B              | C              | D             ",
                 "E              | F              | G              |               ",
         };
-        StringGrid grid = StringGrid.defaultStringGrid();
+        TestGrid grid = TestGrid.defaultStringGrid();
         grid.column("Title Column 1", "Title Column 2", "Title Column 3", "Title Column 4")
                 .row()
                 .column("A", "B")
@@ -112,7 +112,7 @@ public class StringGridTest {
                 "A              | B              | C              | D             ",
                 "E              | F              | G              |               ",
         };
-        StringGrid grid = StringGrid.defaultStringGrid();
+        TestGrid grid = TestGrid.defaultStringGrid();
         grid.column("Title Column 1", "Title Column 2", "Title Column 3", "Title Column 4") // first, establish the header row...
             .row() // ... enter a new row so as to define the width of the matrix....
             .column("A") // ....and then continue to insert cell values
@@ -142,7 +142,7 @@ public class StringGridTest {
                 "42             |                |                |                 ",
         };
 
-        StringGrid grid = StringGrid.defaultStringGrid();
+        TestGrid grid = TestGrid.defaultStringGrid();
         grid.row("", "", "", "")
             .row("Title Column 1", "Title Column 2", "Title Column 3", "Title Column 4")
             .row()
@@ -171,7 +171,7 @@ public class StringGridTest {
                 "1234                | 1234                | 1234                | 1234567890123456789 | 1234               ",
                 "1234                | 1234                | 1234                | 1234                | 1234567890123456789",
         };
-        StringGrid grid = StringGrid.defaultStringGrid();
+        TestGrid grid = TestGrid.defaultStringGrid();
         grid.column("H123456789", "H123456789", "H123456789", "H123456789", "H123456789")
                 .row()
                 .row(1234, 1234, 1234, 1234, 1234)
@@ -197,7 +197,7 @@ public class StringGridTest {
                 "1     | 2     | 3     | 4 | 5 | 6 | 7 | 8 | 9",
         };
 
-        StringGrid grid = StringGrid.defaultStringGrid();
+        TestGrid grid = TestGrid.defaultStringGrid();
         grid.row("Col 1", "Col 2", "Col 3")
             .row(1, 2, 3)
             .row(1, 2, 3, 4)
@@ -221,7 +221,7 @@ public class StringGridTest {
                 "5     | 6     | 7     | 8 | 1 | 2 | 3 | 4 | 5 | 6 | 7            ",
                 "8     | 9     |       |   |   |   |   |   |   |   |              ",
         };
-        StringGrid grid = StringGrid.defaultStringGrid();
+        TestGrid grid = TestGrid.defaultStringGrid();
         grid.column("Col 1", "Col 2", "Col 3")
             .column(1, 2, 3)
             .column(1, 2, 3, 4, "New Empty Row")
@@ -253,7 +253,7 @@ public class StringGridTest {
                 "                42 |                     |                   |                     |                   ",
         };
 
-        StringGrid grid = StringGrid.builder()
+        TestGrid grid = TestGrid.builder()
                 // length of alignment list matches matrix rank
                 .alignments(Alignment.RIGHT, Alignment.CENTRE, Alignment.LEFT, Alignment.CENTRE, Alignment.RIGHT)
                 .build();
@@ -296,7 +296,7 @@ public class StringGridTest {
                 "                42 |                     |                     |                    |                                       ",
         };
 
-        StringGrid grid = StringGrid.builder()
+        TestGrid grid = TestGrid.builder()
                 // length of alignment list is less than matrix rank => assume default
                 .alignments(Alignment.RIGHT, Alignment.CENTRE, Alignment.CENTRE, Alignment.RIGHT)
                 .build();
@@ -340,7 +340,7 @@ public class StringGridTest {
                 "             RIGHT |       CENTRE        |                   |       CENTRE        |              RIGHT |   42   |        |       ",
         };
 
-        StringGrid grid = StringGrid.builder()
+        TestGrid grid = TestGrid.builder()
                 // length of alignment list matches matrix rank -> simply ignore the extra definition(s) until the rank is increased with row() containing extra cols
                 .alignments(Alignment.RIGHT, Alignment.CENTRE, Alignment.LEFT, Alignment.CENTRE, Alignment.RIGHT, Alignment.CENTRE, Alignment.RIGHT, Alignment.LEFT)
                 .build();
@@ -378,7 +378,7 @@ public class StringGridTest {
                 "1 | 2             | 3             | 4             | 5            ",
         };
 
-        StringGrid grid = StringGrid.builder()
+        TestGrid grid = TestGrid.builder()
                 .emptyCell((row, col) -> String.format("N/A at (%s, %s)", row, col))
                 .build();
 
@@ -402,7 +402,7 @@ public class StringGridTest {
                 "1   '   2   '   3   '   4   '   5",
         };
 
-        StringGrid grid = StringGrid.builder()
+        TestGrid grid = TestGrid.builder()
                 .separator("   '   ")
                 .build();
 
@@ -427,7 +427,7 @@ public class StringGridTest {
                 "Example row is -> ID: 6000 | Description: Row 6 | Coordinates: (x, y) -> (5, 0)",
         };
 
-        StringGrid grid = StringGrid.builder()
+        TestGrid grid = TestGrid.builder()
                 .converter(exampleRow -> String.format("Example row is -> ID: %s | Description: %s | Coordinates: %s", ((TestExampleRow) exampleRow).id, ((TestExampleRow) exampleRow).description, ((TestExampleRow) exampleRow).coordinates.toString()))
                 .build();
 

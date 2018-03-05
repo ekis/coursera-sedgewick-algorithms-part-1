@@ -2,7 +2,7 @@ package sort;
 
 import ekis.common.Pair;
 import ekis.common.TestSupport;
-import ekis.common.grid.StringGrid;
+import ekis.common.grid.TestGrid;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -94,7 +94,7 @@ public final class SortStabilityTest {
     }
 
     private static void sortAndCheck(SortAlgorithm algorithm, String[] expected) {
-        StringGrid grid = initialiseGrid();
+        TestGrid grid = initialiseGrid();
 
         Pair<Integer, String>[] unsortedPairs = unsortedPairs();
         Pair<Integer, String>[] expectedPairs = unsortedPairs();
@@ -128,8 +128,8 @@ public final class SortStabilityTest {
         };
     }
 
-    private static StringGrid initialiseGrid() {
-        StringGrid grid = StringGrid.defaultStringGrid();
+    private static TestGrid initialiseGrid() {
+        TestGrid grid = TestGrid.defaultStringGrid();
         grid.column("Unsorted input", "System sort output", "Actual output");
         grid.row();
         return grid;
