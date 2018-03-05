@@ -9,34 +9,34 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class TestSummarizer {
-    private static final String EMPTY = "";
+    private static final String EMPTY = "\n";
     private static final String PREFIX = "\"";
-    private static final String SUFFIX = "\", \n";
+    private static final String SUFFIX = PREFIX + ",";
     private static final String NEWLINE_PATTERN = "\r?\n";
 
     private List<String> expected = new ArrayList<>();
     private List<String> actual = new ArrayList<>();
 
     public TestSummarizer expected(String... lines) {
-        expected = concat(expected, Stream.of(lines));
+        expected = Stream.concat(expected.stream(), Stream.of(lines))
+                .collect(Collectors.toList());
         return this;
     }
 
     public TestSummarizer actual(String args) {
-        actual = concat(actual, Pattern.compile(NEWLINE_PATTERN).splitAsStream(args));
+        actual = Stream.concat(actual.stream(), Pattern.compile(NEWLINE_PATTERN).splitAsStream(args))
+                .collect(Collectors.toList());
         return this;
     }
 
     public void validate() {
-        Assert.assertEquals(coalesce(expected), coalesce(actual));
-    }
+        String expectedString = expected.stream()
+                .map(s -> PREFIX + s + SUFFIX)
+                .collect(Collectors.joining(EMPTY));
 
-    private static <T> List<T> concat(List<T> list, Stream<T> tailElements) {
-        return Stream.concat(list.stream(), tailElements)
-                .collect(Collectors.toList());
-    }
-
-    private static String coalesce(List<String> list) {
-        return list.stream().collect(Collectors.joining(EMPTY, PREFIX, SUFFIX));
+        String actualString = actual.stream()
+                .map(s -> PREFIX + s + SUFFIX)
+                .collect(Collectors.joining(EMPTY));
+        Assert.assertEquals(expectedString, actualString);
     }
 }

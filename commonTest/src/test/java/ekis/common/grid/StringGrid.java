@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,16 +15,15 @@ public final class StringGrid {
     private static final String EMPTY = "";
     private static final String CRLF = "\n";
 
-    private final Matrix matrix = new Matrix();
+    private final Matrix matrix;
     private final Map<Integer, ColumnAligner> columnMeta;
     private final String separator;
 
     private final Function<Object, String> converter;
-    private Function<Integer, String> emptyCellValue;
 
-    private StringGrid(String sep, Function<Object, String> converterF, Function<Integer, String> emptyCell, Alignment... alignments) {
+    private StringGrid(String sep, Function<Object, String> converterF, BiFunction<Integer, Integer, String> emptyCellF, Alignment... alignments) {
+        matrix = new Matrix(emptyCellF);
         separator = sep;
-        emptyCellValue = emptyCell;
         converter = converterF;
         columnMeta = Stream.iterate(0, x -> x + 1)
                 .limit(alignments.length)
@@ -56,24 +56,26 @@ public final class StringGrid {
     }
 
     public StringGrid row(Object... values) {
-        Integer endIndex = values.length == 0 ? maxUsedCol() : values.length;
+        Integer rowLength = values.length;
+        Integer endIndex = Math.max(rowLength, maxUsedCol());
         Integer newRow = maxRow() + 1;
-        Function<Integer, String> cellValueProvider = values.length == 0
-                ? emptyCellValue
-                : cellValue -> converter.apply(values[cellValue]);
         Stream.iterate(0, x -> x + 1)
                 .limit(endIndex)
-                .forEachOrdered(index -> insert(newRow, index, cellValueProvider.apply(index)));
+                .forEachOrdered(index -> {
+                    insert(newRow, index, index < rowLength ? values[index] : null);
+                });
         return this;
     }
 
     public String show() {
         StringBuilder sb = new StringBuilder();
+        int maxRow = maxRow();
         int maxCol = maxCol();
-        for (int row = 0; row <= maxRow(); row++) {
+        for (int row = 0; row <= maxRow; row++) {
             for (int col = 0; col <= maxCol; col++) {
                 ColumnAligner columnAligner = getAligner(col);
                 String value = matrix.get(Pair.of(row, col));
+                updateColumnWidth(col, value.length()); // we need to update the width here because of the default cell values
                 sb.append(columnAligner.align(value));
                 if (col != maxCol) {
                     sb.append(separator);
@@ -85,19 +87,19 @@ public final class StringGrid {
     }
 
     private void insertColumnValueInEmptyMatrix(Object value) {
-        insert(0, 0, converter.apply(value));
+        insert(0, 0, value);
     }
 
     private void insertColumnValueToCurrentRow(Object value) {
         Pair<Integer, Integer> lastCell = lastCellCoordinates();
-        insert(lastCell.x(), lastCell.y() + 1, converter.apply(value));
+        insert(lastCell.x(), lastCell.y() + 1, value);
     }
 
     private void insertColumnValueToNextRow(Integer nextRow, Object value) {
-        insert(nextRow, 0, converter.apply(value));
+        insert(nextRow, 0, value);
     }
 
-    private void insert(Integer row, Integer col, String value) {
+    private void insert(Integer row, Integer col, Object value) {
         int stringLength = put(row, col, value);
         updateColumnWidth(col, stringLength);
     }
@@ -112,9 +114,10 @@ public final class StringGrid {
         return columnMeta.getOrDefault(column, new ColumnAligner(Alignment.LEFT));
     }
 
-    private int put(Integer row, Integer column, String value) {
-        matrix.put(Pair.of(row, column), value);
-        return value.length();
+    private int put(Integer row, Integer column, Object value) {
+        String convertedValue = value == null ? null : converter.apply(value);
+        matrix.put(Pair.of(row, column), convertedValue);
+        return value == null ? 0 : convertedValue.length();
     }
 
     private Integer maxRow() {
@@ -143,10 +146,16 @@ public final class StringGrid {
 
     private static class Matrix {
         private final NavigableMap<Pair<Integer, Integer>, String> map = new TreeMap<>(pairComparator());
+        private final BiFunction<Integer, Integer, String> emptyCell;
         private int maxCol = -1;
 
+        private Matrix(BiFunction<Integer, Integer, String> emptyCellF) {
+            emptyCell = emptyCellF;
+        }
+
         String get(Pair<Integer, Integer> cellCoordinates) {
-            return map.getOrDefault(cellCoordinates, EMPTY);
+            String value = map.get(cellCoordinates);
+            return value == null ? emptyCell.apply(cellCoordinates.x(), cellCoordinates.y()) : value;
         }
 
         void put(Pair<Integer, Integer> cellCoordinate, String value) {
@@ -193,7 +202,7 @@ public final class StringGrid {
         private String separator = DEFAULT_SEPARATOR;
 
         private Function<Object, String> converter = String::valueOf;
-        private Function<Integer, String> emptyCellValue = any -> EMPTY;
+        private BiFunction<Integer, Integer, String> emptyCellValue = (row, col) -> EMPTY;
 
         public Builder alignments(Alignment... alignments) {
             alignmentArray = alignments;
@@ -210,7 +219,7 @@ public final class StringGrid {
             return this;
         }
 
-        public Builder emptyCell(Function<Integer, String> emptyCellValueProvider) {
+        public Builder emptyCell(BiFunction<Integer, Integer, String> emptyCellValueProvider) {
             emptyCellValue = emptyCellValueProvider;
             return this;
         }
