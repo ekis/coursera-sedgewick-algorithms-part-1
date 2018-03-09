@@ -18,12 +18,12 @@ public final class ComputeMedianTest {
     @Test
     public void testMedianOf3() {
         String[] expected = new String[] {
-                "                  Input Array                    | Median of 3 | Tukey's Ninther", //
-                "                                                 |             |                ", //
-                "       [S, O, R, T, E, X, A, M, P, L, E]         |      S      |        R       ", //
-                "[M, E, R, G, E, S, O, R, T, E, X, A, M, P, L, E] |      M      |        M       ", //
-                "[Q, U, I, C, K, S, O, R, T, E, X, A, M, P, L, E] |      Q      |        Q       ", //
-                "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |      P      |        A       " //
+                "                  Input Array                    | Median of 3 | Tukey's Ninther",
+                "                                                 |             |                ",
+                "       [S, O, R, T, E, X, A, M, P, L, E]         |      S      |        R       ",
+                "[M, E, R, G, E, S, O, R, T, E, X, A, M, P, L, E] |      M      |        M       ",
+                "[Q, U, I, C, K, S, O, R, T, E, X, A, M, P, L, E] |      Q      |        Q       ",
+                "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |      P      |        A       "
         };
 
         TestGrid grid = grid("Input Array", "Median of 3", "Tukey's Ninther");
@@ -38,12 +38,12 @@ public final class ComputeMedianTest {
     @Test
     public void testQuickSelect() {
         String[] expected = new String[]{
-                "                  Input Array                    |                                                           Actual Output [format: (index k -> array element)]                                                           ", //
-                "                                                 |                                                                                                                                                                        ", //
-                "       [S, O, R, T, E, X, A, M, P, L, E]         |                            [(1 -> A), (2 -> E), (3 -> E), (4 -> L), (5 -> M), (6 -> O), (7 -> P), (8 -> R), (9 -> S), (10 -> T), (11 -> X)]                            ", //
-                "[M, E, R, G, E, S, O, R, T, E, X, A, M, P, L, E] | [(1 -> A), (2 -> E), (3 -> E), (4 -> E), (5 -> E), (6 -> G), (7 -> L), (8 -> M), (9 -> M), (10 -> O), (11 -> P), (12 -> R), (13 -> R), (14 -> S), (15 -> T), (16 -> X)]", //
-                "[Q, U, I, C, K, S, O, R, T, E, X, A, M, P, L, E] | [(1 -> A), (2 -> C), (3 -> E), (4 -> E), (5 -> I), (6 -> K), (7 -> L), (8 -> M), (9 -> O), (10 -> P), (11 -> Q), (12 -> R), (13 -> S), (14 -> T), (15 -> U), (16 -> X)]", //
-                "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |            [(1 -> A), (2 -> B), (3 -> C), (4 -> D), (5 -> P), (6 -> P), (7 -> P), (8 -> P), (9 -> P), (10 -> V), (11 -> W), (12 -> X), (13 -> Y), (14 -> Z)]           " //
+                "                  Input Array                    |                                                           Actual Output [format: (index k -> array element)]                                                           ",
+                "                                                 |                                                                                                                                                                        ",
+                "       [S, O, R, T, E, X, A, M, P, L, E]         |                            [(1 -> A), (2 -> E), (3 -> E), (4 -> L), (5 -> M), (6 -> O), (7 -> P), (8 -> R), (9 -> S), (10 -> T), (11 -> X)]                            ",
+                "[M, E, R, G, E, S, O, R, T, E, X, A, M, P, L, E] | [(1 -> A), (2 -> E), (3 -> E), (4 -> E), (5 -> E), (6 -> G), (7 -> L), (8 -> M), (9 -> M), (10 -> O), (11 -> P), (12 -> R), (13 -> R), (14 -> S), (15 -> T), (16 -> X)]",
+                "[Q, U, I, C, K, S, O, R, T, E, X, A, M, P, L, E] | [(1 -> A), (2 -> C), (3 -> E), (4 -> E), (5 -> I), (6 -> K), (7 -> L), (8 -> M), (9 -> O), (10 -> P), (11 -> Q), (12 -> R), (13 -> S), (14 -> T), (15 -> U), (16 -> X)]",
+                "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |            [(1 -> A), (2 -> B), (3 -> C), (4 -> D), (5 -> P), (6 -> P), (7 -> P), (8 -> P), (9 -> P), (10 -> V), (11 -> W), (12 -> X), (13 -> Y), (14 -> Z)]           "
         };
 
         TestGrid grid = grid("Input Array", "Actual Output [format: (index k -> array element)]");

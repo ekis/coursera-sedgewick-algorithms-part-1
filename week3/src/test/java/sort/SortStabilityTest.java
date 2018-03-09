@@ -20,16 +20,16 @@ public final class SortStabilityTest {
     @Test
     public void testSelectionSortStability() {
         String[] expected = new String[] {
-                "Unsorted input             | System sort output         | Actual output             ", //
-                "                           |                            |                           ", //
-                "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ", //
-                "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ", //
-                "(ID, Name) -> (4, Gazsi)   | (ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Chen)   ", //
-                "(ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Chen)    | (ID, Name) -> (3, Fox)    ", //
-                "(ID, Name) -> (2, Rohde)   | (ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Andrews)", //
-                "(ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Kanaga)  | (ID, Name) -> (3, Kanaga) ", //
-                "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Gazsi)  ", //
-                "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Battle) " //
+                "Unsorted input             | System sort output         | Actual output             ",
+                "                           |                            |                           ",
+                "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ",
+                "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ",
+                "(ID, Name) -> (4, Gazsi)   | (ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Chen)   ",
+                "(ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Chen)    | (ID, Name) -> (3, Fox)    ",
+                "(ID, Name) -> (2, Rohde)   | (ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Andrews)",
+                "(ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Kanaga)  | (ID, Name) -> (3, Kanaga) ",
+                "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Gazsi)  ",
+                "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Battle) "
         };
         sortAndCheck(SELECTION, expected);
     }
@@ -42,16 +42,16 @@ public final class SortStabilityTest {
     @Test
     public void testShellSortStability() {
         String[] expected = new String[] {
-                "Unsorted input             | System sort output         | Actual output             ", //
-                "                           |                            |                           ", //
-                "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ", //
-                "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ", //
-                "(ID, Name) -> (4, Gazsi)   | (ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Chen)   ", //
-                "(ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Chen)    | (ID, Name) -> (3, Andrews)", //
-                "(ID, Name) -> (2, Rohde)   | (ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Kanaga) ", //
-                "(ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Kanaga)  | (ID, Name) -> (3, Fox)    ", //
-                "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle) ", //
-                "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Gazsi)  " //
+                "Unsorted input             | System sort output         | Actual output             ",
+                "                           |                            |                           ",
+                "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ",
+                "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ",
+                "(ID, Name) -> (4, Gazsi)   | (ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Chen)   ",
+                "(ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Chen)    | (ID, Name) -> (3, Andrews)",
+                "(ID, Name) -> (2, Rohde)   | (ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Kanaga) ",
+                "(ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Kanaga)  | (ID, Name) -> (3, Fox)    ",
+                "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle) ",
+                "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Gazsi)  "
         };
         sortAndCheck(SHELL, expected);
     }
@@ -59,16 +59,16 @@ public final class SortStabilityTest {
     @Test
     public void testShellSortViaArrayStability() {
         String[] expected = new String[] {
-                "Unsorted input             | System sort output         | Actual output             ", //
-                "                           |                            |                           ", //
-                "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ", //
-                "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ", //
-                "(ID, Name) -> (4, Gazsi)   | (ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Chen)   ", //
-                "(ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Chen)    | (ID, Name) -> (3, Andrews)", //
-                "(ID, Name) -> (2, Rohde)   | (ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Kanaga) ", //
-                "(ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Kanaga)  | (ID, Name) -> (3, Fox)    ", //
-                "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle) ", //
-                "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Gazsi)  " //
+                "Unsorted input             | System sort output         | Actual output             ",
+                "                           |                            |                           ",
+                "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ",
+                "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ",
+                "(ID, Name) -> (4, Gazsi)   | (ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Chen)   ",
+                "(ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Chen)    | (ID, Name) -> (3, Andrews)",
+                "(ID, Name) -> (2, Rohde)   | (ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Kanaga) ",
+                "(ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Kanaga)  | (ID, Name) -> (3, Fox)    ",
+                "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle) ",
+                "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Gazsi)  "
         };
         sortAndCheck(SHELL_VIA_ARRAY, expected);
     }
@@ -115,16 +115,16 @@ public final class SortStabilityTest {
 
     private static String[] stableSortExpectation() {
         return new String[]{
-                "Unsorted input             | System sort output         | Actual output             ", //
-                "                           |                            |                           ", //
-                "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ", //
-                "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ", //
-                "(ID, Name) -> (4, Gazsi)   | (ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Andrews)", //
-                "(ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Chen)    | (ID, Name) -> (3, Chen)   ", //
-                "(ID, Name) -> (2, Rohde)   | (ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Fox)    ", //
-                "(ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Kanaga)  | (ID, Name) -> (3, Kanaga) ", //
-                "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle) ", //
-                "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Gazsi)  " //
+                "Unsorted input             | System sort output         | Actual output             ",
+                "                           |                            |                           ",
+                "(ID, Name) -> (3, Kanaga)  | (ID, Name) -> (1, Furia)   | (ID, Name) -> (1, Furia)  ",
+                "(ID, Name) -> (3, Chen)    | (ID, Name) -> (2, Rohde)   | (ID, Name) -> (2, Rohde)  ",
+                "(ID, Name) -> (4, Gazsi)   | (ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Andrews)",
+                "(ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Chen)    | (ID, Name) -> (3, Chen)   ",
+                "(ID, Name) -> (2, Rohde)   | (ID, Name) -> (3, Fox)     | (ID, Name) -> (3, Fox)    ",
+                "(ID, Name) -> (3, Andrews) | (ID, Name) -> (3, Kanaga)  | (ID, Name) -> (3, Kanaga) ",
+                "(ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle)  | (ID, Name) -> (4, Battle) ",
+                "(ID, Name) -> (1, Furia)   | (ID, Name) -> (4, Gazsi)   | (ID, Name) -> (4, Gazsi)  "
         };
     }
 

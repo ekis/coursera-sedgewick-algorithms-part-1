@@ -66,14 +66,14 @@ public final class SortAlgorithmTest {
 
     private static void sortAndTest(SortAlgorithm algorithm, SortRandomData data) {
         String[] expected = new String[]{
-                "                     Input                       |                     Expected                     |                      Actual                      | Is sorted?", //
-                "                                                 |                                                  |                                                  |           ", //
-                "       [S, O, R, T, E, X, A, M, P, L, E]         |        [A, E, E, L, M, O, P, R, S, T, X]         |        [A, E, E, L, M, O, P, R, S, T, X]         |    true   ", //
-                "[M, E, R, G, E, S, O, R, T, E, X, A, M, P, L, E] | [A, E, E, E, E, G, L, M, M, O, P, R, R, S, T, X] | [A, E, E, E, E, G, L, M, M, O, P, R, R, S, T, X] |    true   ", //
-                "[Q, U, I, C, K, S, O, R, T, E, X, A, M, P, L, E] | [A, C, E, E, I, K, L, M, O, P, Q, R, S, T, U, X] | [A, C, E, E, I, K, L, M, O, P, Q, R, S, T, U, X] |    true   ", //
-                "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |    [A, B, C, D, P, P, P, P, P, V, W, X, Y, Z]    |    [A, B, C, D, P, P, P, P, P, V, W, X, Y, Z]    |    true   ", //
-                "          Uniformly random data input            |        Sorted uniformly random data input        |        Sorted uniformly random data input        |    true   ", //
-                "         Heavily duplicated data input           |                Sorted data input                 |                Sorted data input                 |    true   " //
+                "                     Input                       |                     Expected                     |                      Actual                      | Is sorted?",
+                "                                                 |                                                  |                                                  |           ",
+                "       [S, O, R, T, E, X, A, M, P, L, E]         |        [A, E, E, L, M, O, P, R, S, T, X]         |        [A, E, E, L, M, O, P, R, S, T, X]         |    true   ",
+                "[M, E, R, G, E, S, O, R, T, E, X, A, M, P, L, E] | [A, E, E, E, E, G, L, M, M, O, P, R, R, S, T, X] | [A, E, E, E, E, G, L, M, M, O, P, R, R, S, T, X] |    true   ",
+                "[Q, U, I, C, K, S, O, R, T, E, X, A, M, P, L, E] | [A, C, E, E, I, K, L, M, O, P, Q, R, S, T, U, X] | [A, C, E, E, I, K, L, M, O, P, Q, R, S, T, U, X] |    true   ",
+                "   [P, A, B, X, W, P, P, V, P, D, P, C, Y, Z]    |    [A, B, C, D, P, P, P, P, P, V, W, X, Y, Z]    |    [A, B, C, D, P, P, P, P, P, V, W, X, Y, Z]    |    true   ",
+                "          Uniformly random data input            |        Sorted uniformly random data input        |        Sorted uniformly random data input        |    true   ",
+                "         Heavily duplicated data input           |                Sorted data input                 |                Sorted data input                 |    true   "
         };
 
         TestGrid grid = grid("Input", "Expected", "Actual", "Is sorted?");
