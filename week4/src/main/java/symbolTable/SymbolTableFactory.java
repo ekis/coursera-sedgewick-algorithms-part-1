@@ -8,4 +8,7 @@ public final class SymbolTableFactory {
         return MyBst.create();
     }
 
+    public static <K extends Comparable<? super K>, V> MySymbolTable<K, V> redBlack() {
+        return MyRedBlack.create();
+    }
 }

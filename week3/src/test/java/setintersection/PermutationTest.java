@@ -52,10 +52,11 @@ public final class PermutationTest {
     @Test
     public void testPermutationRandom() {
         List<Pair<Integer, Integer>> list = IntStream.range(0, 1000) // generate (x, y) pairs
+                .sequential()
                 .collect(ArrayList::new,
                         (acc, x) -> IntStream.range(0, 1000)
                                 .forEach(y -> acc.add(Pair.of(x, y))),
-                        null);
+                        ArrayList::addAll);
         SetArrays s = new SetArrays();
 
         list.forEach(pair -> s.addToA(pair.x(), pair.y()));

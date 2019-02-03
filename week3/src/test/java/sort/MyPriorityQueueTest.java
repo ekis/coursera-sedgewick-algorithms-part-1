@@ -51,13 +51,21 @@ public final class MyPriorityQueueTest {
         String[] alphabet = "ABCDEFGHIJKLMNOPQRSTUV".split(""); // WXYZ missing
         int startSize = 10000000; // 10^7 elements
         // take random string from alphabet and insert it into the queue; there are 22 letters in our alphabet
-        MyMaxPQ<String> queue = IntStream.range(0, startSize).collect(MyMaxPQ::create, (pq, x) -> pq.insert(alphabet[rnd.nextInt(22)]), null);
+        MyMaxPQ<String> queue = IntStream.range(0, startSize)
+                .mapToObj(x -> randomCharIn(alphabet, rnd))
+                .collect(MyMaxPQ.collectorOf(MyMaxPQ::insert));
         queue.insert("W", "Z", "X", "Y");
-        queue.insert(IntStream.range(0, startSize).mapToObj(x -> alphabet[rnd.nextInt(22)]).toArray(String[]::new));
+        queue.insert(IntStream.range(0, startSize)
+                .mapToObj(x -> randomCharIn(alphabet, rnd))
+                .toArray(String[]::new));
         assertEquals("Z", queue.delMax());
         assertEquals("Y", queue.delMax());
         assertEquals("X", queue.delMax());
         assertEquals("W", queue.delMax());
         assertEquals(2 * startSize, queue.size());
+    }
+
+    private static String randomCharIn(String[] alphabet, Random rnd) {
+        return alphabet[rnd.nextInt(22)];
     }
 }

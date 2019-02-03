@@ -1,5 +1,7 @@
 package sort.heapsort;
 
+import java.util.function.BiConsumer;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 /**
@@ -63,6 +65,15 @@ public final class MyMaxPQ<T extends Comparable<? super T>> {
 
     public int size() {
         return N - 1;
+    }
+
+    public static <T extends Comparable<? super T>> Collector<T, MyMaxPQ<T>, MyMaxPQ<T>> collectorOf(BiConsumer<MyMaxPQ<T>, T> accumulator) {
+        return Collector.of(MyMaxPQ::create,
+                accumulator,
+                (left, right) -> {
+                    left.insert(right.pq);
+                    return left;
+                });
     }
 
     /**

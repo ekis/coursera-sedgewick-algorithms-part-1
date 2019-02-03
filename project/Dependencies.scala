@@ -13,7 +13,7 @@ object Dependencies {
   lazy val commonSettings: Seq[Def.Setting[String]] = Seq(
     organization := "ekis",
     version := "1.0.0-SNAPSHOT",
-    scalaVersion := "2.12.4",
+    scalaVersion := "2.12.8",
     name := baseDirectory.value.getName
     //name := "Algorithms Implementation"
   )
